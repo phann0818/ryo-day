@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishes - Letters to Ryo</title>
+    <style>
+        /* Reset */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Zpix', monospace, sans-serif;
+          background-color: #2a9b65;
+          color: #174619;
+          line-height: 1.5;
+          min-height: 100vh;
+          padding: 0;
+          margin: 0;
+        }
+
+        /* Header */
+        .header {
+          height: 80px;
+          background-image: url('header.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 0 20px;
+          position: relative;
+          z-index: 1;
+        }
+
+        .header-title {
+          font-size: 24px;
+          color: #174619;
+          font-weight: bold;
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Main Container */
+        .main-container {
+          max-width: 1200px;
+          margin: 20px auto 40px auto;
+          padding: 0 20px;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Year Navigation */
+        .year-navigation {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 30px;
+        }
+
+        .nav-arrow {
+          width: 40px;
+          height: 40px;
+          background-color: #2a9b65;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 20px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background-color 0.3s;
+        }
+
+        .nav-arrow:hover {
+          background-color: #1e6b47;
+        }
+
+        .year-btn {
+          width: 120px;
+          height: 50px;
+          background-image: url('button.png');
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-color: transparent;
+          color: #174619;
+          border: none;
+          font-size: 18px;
+          cursor: pointer;
+          font-family: inherit;
+          font-weight: bold;
+          text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+          transition: transform 0.2s, filter 0.2s;
+        }
+
+        .year-btn:hover {
+          transform: scale(1.05);
+          filter: brightness(1.1);
+        }
+
+        .year-btn.active {
+          transform: scale(1.1);
+          filter: brightness(1.2);
+        }
+
+        /* Messages Grid */
+        .messages-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+
+        .message-card {
+          background-color: #f1e4a9;
+          border: 3px solid #2a9b65;
+          border-radius: 8px;
+          padding: 20px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+          position: relative;
+          min-height: 200px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .message-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .message-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+          padding-bottom: 10px;
+          border-bottom: 2px solid #2a9b65;
+        }
+
+        .message-avatar {
+          width: 40px;
+          height: 40px;
+          background-color: #2a9b65;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+          margin-right: 12px;
+        }
+
+        .message-info {
+          flex: 1;
+        }
+
+        .message-author {
+          font-weight: bold;
+          color: #174619;
+          font-size: 14px;
+          margin-bottom: 2px;
+        }
+
+        .message-date {
+          color: #2a5f2a;
+          font-size: 12px;
+        }
+
+        .message-preview {
+          color: #174619;
+          font-size: 14px;
+          line-height: 1.6;
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+        }
+
+        .read-more {
+          color: #2a9b65;
+          font-size: 12px;
+          font-weight: bold;
+          margin-top: 10px;
+          text-align: right;
+        }
+
+        /* Popup Modal */
+        .popup-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .popup-overlay.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .popup-content {
+          background-image: url('popup.png');
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 90%;
+          max-width: 600px;
+          height: 80vh;
+          max-height: 500px;
+          position: relative;
+          padding: 60px 40px 40px 40px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .popup-close {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 30px;
+          height: 30px;
+          background-image: url('x_button.png');
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+          transition: transform 0.2s;
+        }
+
+        .popup-close:hover {
+          transform: scale(1.1);
+        }
+
+        .popup-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          padding-bottom: 15px;
+          border-bottom: 2px solid #2a9b65;
+        }
+
+        .popup-avatar {
+          width: 50px;
+          height: 50px;
+          background-color: #2a9b65;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: bold;
+          font-size: 20px;
+          margin-right: 15px;
+        }
+
+        .popup-info {
+          flex: 1;
+        }
+
+        .popup-author {
+          font-weight: bold;
+          color: #174619;
+          font-size: 16px;
+          margin-bottom: 4px;
+        }
+
+        .popup-date {
+          color: #2a5f2a;
+          font-size: 14px;
+        }
+
+        .popup-message {
+          color: #174619;
+          font-size: 14px;
+          line-height: 1.7;
+          flex: 1;
+          overflow-y: auto;
+          padding-right: 10px;
+        }
+
+        .popup-message::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .popup-message::-webkit-scrollbar-track {
+          background: rgba(241, 228, 169, 0.3);
+          border-radius: 3px;
+        }
+
+        .popup-message::-webkit-scrollbar-thumb {
+          background: #2a9b65;
+          border-radius: 3px;
+        }
+
+        .popup-message::-webkit-scrollbar-thumb:hover {
+          background: #1e6b47;
+        }
+
+        /* Footer */
+        .footer {
+          height: 80px;
+          background-image: url('footer.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        .footer-content p {
+          font-size: 18px;
+          color: #174619;
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+          .main-container {
+            margin: 20px;
+            padding: 0 10px;
+          }
+
+          .messages-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+          }
+
+          .popup-content {
+            width: 95%;
+            padding: 50px 30px 30px 30px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .messages-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+          }
+
+          .message-card {
+            padding: 15px;
+            min-height: 180px;
+          }
+
+          .popup-content {
+            width: 95%;
+            height: 85vh;
+            padding: 45px 25px 25px 25px;
+          }
+
+          .popup-close {
+            top: 15px;
+            right: 15px;
+            width: 25px;
+            height: 25px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .main-container {
+            margin: 10px;
+            padding: 0 5px;
+          }
+
+          .messages-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+          }
+
+          .message-card {
+            padding: 12px;
+            min-height: 160px;
+          }
+
+          .message-preview {
+            font-size: 13px;
+          }
+
+          .popup-content {
+            width: 98%;
+            height: 90vh;
+            padding: 40px 20px 20px 20px;
+          }
+
+          .popup-message {
+            font-size: 13px;
+          }
+
+          .year-btn {
+            width: 100px;
+            height: 45px;
+            font-size: 16px;
+          }
+
+          .nav-arrow {
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+          }
+
+          .header-title {
+            font-size: 20px;
+          }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title">wishes</h1>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Year Navigation -->
+        <div class="year-navigation">
+            <button class="nav-arrow nav-arrow-left">‹</button>
+            <button class="year-btn active">2025</button>
+            <button class="nav-arrow nav-arrow-right">›</button>
+        </div>
+
+        <!-- Messages Grid -->
+        <div class="messages-grid">
+            <!-- Message Card 1 -->
+            <div class="message-card" onclick="openPopup(0)">
+                <div class="message-header">
+                    <div class="message-avatar">L</div>
+                    <div class="message-info">
+                        <div class="message-author">Linh</div>
+                        <div class="message-date">January 15, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 2 -->
+            <div class="message-card" onclick="openPopup(1)">
+                <div class="message-header">
+                    <div class="message-avatar">M</div>
+                    <div class="message-info">
+                        <div class="message-author">Mai</div>
+                        <div class="message-date">January 12, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day. As a Vietnamese fan, I want you to know that we support you wholeheartedly in all your endeavors.
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 3 -->
+            <div class="message-card" onclick="openPopup(2)">
+                <div class="message-header">
+                    <div class="message-avatar">T</div>
+                    <div class="message-info">
+                        <div class="message-author">Trang</div>
+                        <div class="message-date">January 10, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。これからも健康で幸せでいてください。ベトナムからたくさんの愛を送ります。
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 4 -->
+            <div class="message-card" onclick="openPopup(3)">
+                <div class="message-header">
+                    <div class="message-avatar">H</div>
+                    <div class="message-info">
+                        <div class="message-author">Huong</div>
+                        <div class="message-date">January 8, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    Ryo, watching you grow as an artist has been such a joy. Your passion for music and performance shines through everything you do. We Vietnamese fans are so proud of you and will always cheer you on.
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 5 -->
+            <div class="message-card" onclick="openPopup(4)">
+                <div class="message-header">
+                    <div class="message-avatar">N</div>
+                    <div class="message-info">
+                        <div class="message-author">Nga</div>
+                        <div class="message-date">January 5, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    リョウさん、あなたのダンスと歌声は本当に素晴らしいです。NCT WISHの一員として、あなたがもっと輝いてくれることを願っています。体調に気をつけて、いつも笑顔でいてください。
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 6 -->
+            <div class="message-card" onclick="openPopup(5)">
+                <div class="message-header">
+                    <div class="message-avatar">A</div>
+                    <div class="message-info">
+                        <div class="message-author">Anh</div>
+                        <div class="message-date">January 3, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    Hi Ryo! Your energy and enthusiasm are contagious. Every time I see you perform, it brings so much happiness to my day. Thank you for working so hard and for being such an amazing person.
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 7 -->
+            <div class="message-card" onclick="openPopup(6)">
+                <div class="message-header">
+                    <div class="message-avatar">Q</div>
+                    <div class="message-info">
+                        <div class="message-author">Quynh</div>
+                        <div class="message-date">January 1, 2025</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    新年おめでとうございます、リョウくん！2025年があなたにとって素晴らしい年になりますように。あなたの夢が全て叶い、NCT WISHと共にさらに大きな成功を収めることを祈っています。
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+
+            <!-- Message Card 8 -->
+            <div class="message-card" onclick="openPopup(7)">
+                <div class="message-header">
+                    <div class="message-avatar">V</div>
+                    <div class="message-info">
+                        <div class="message-author">Vy</div>
+                        <div class="message-date">December 28, 2024</div>
+                    </div>
+                </div>
+                <div class="message-preview">
+                    Ryo, your kindness and humility make you such a wonderful role model. We appreciate not just your talent, but also your character. Keep being the amazing person you are!
+                </div>
+                <div class="read-more">続きを読む...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()"></button>
+            <div class="popup-header">
+                <div class="popup-avatar" id="popupAvatar">L</div>
+                <div class="popup-info">
+                    <div class="popup-author" id="popupAuthor">Linh</div>
+                    <div class="popup-date" id="popupDate">January 15, 2025</div>
+                </div>
+            </div>
+            <div class="popup-message" id="popupMessage">
+                <!-- Full message content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>from Vietnamese fans</p>
+        </div>
+    </footer>
+
+    <script>
+        // Message data
+        const messages = [
+            {
+                author: "Linh",
+                date: "January 15, 2025",
+                avatar: "L",
+                preview: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。",
+                full: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。あなたのダンスと歌声は本当に素晴らしく、いつも私たちを感動させてくれます。ベトナムから、たくさんの愛とサポートを送ります。これからも健康で幸せでいてください。あなたの夢が全て叶いますように。私たちはいつもあなたを応援しています。頑張って！"
+            },
+            {
+                author: "Mai",
+                date: "January 12, 2025",
+                avatar: "M",
+                preview: "Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day. As a Vietnamese fan, I want you to know that we support you wholeheartedly in all your endeavors.",
+                full: "Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day. As a Vietnamese fan, I want you to know that we support you wholeheartedly in all your endeavors. Your performances always bring joy to our hearts, and we're so proud to see you grow as an artist with NCT WISH. Please take care of your health and know that you have fans all over the world who love and support you. We believe in you and can't wait to see what amazing things you'll accomplish next. Keep shining bright!"
+            },
+            {
+                author: "Trang",
+                date: "January 10, 2025",
+                avatar: "T",
+                preview: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。これからも健康で幸せでいてください。ベトナムからたくさんの愛を送ります。",
+                full: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。これからも健康で幸せでいてください。ベトナムからたくさんの愛を送ります。あなたの笑顔を見ると、私たちも元気になります。NCT WISHのメンバーとして、あなたがさらに輝いてくれることを願っています。どんな時でも、私たちがついています。あなたの音楽は世界中の人々に希望と喜びを与えてくれます。本当にありがとう。"
+            },
+            {
+                author: "Huong",
+                date: "January 8, 2025",
+                avatar: "H",
+                preview: "Ryo, watching you grow as an artist has been such a joy. Your passion for music and performance shines through everything you do. We Vietnamese fans are so proud of you and will always cheer you on.",
+                full: "Ryo, watching you grow as an artist has been such a joy. Your passion for music and performance shines through everything you do. We Vietnamese fans are so proud of you and will always cheer you on. Every stage you perform on becomes brighter because of your presence. Your hard work and dedication don't go unnoticed - we see how much effort you put into everything. Thank you for being such an inspiration to all of us. We hope you continue to pursue your dreams with the same enthusiasm and never forget how loved you are by fans around the world."
+            },
+            {
+                author: "Nga",
+                date: "January 5, 2025",
+                avatar: "N",
+                preview: "リョウさん、あなたのダンスと歌声は本当に素晴らしいです。NCT WISHの一員として、あなたがもっと輝いてくれることを願っています。体調に気をつけて、いつも笑顔でいてください。",
+                full: "リョウさん、あなたのダンスと歌声は本当に素晴らしいです。NCT WISHの一員として、あなたがもっと輝いてくれることを願っています。体調に気をつけて、いつも笑顔でいてください。あなたのパフォーマンスを見るたびに、感動で涙が出そうになります。あなたの才能と努力に心から敬意を表します。ベトナムのファンとして、私たちはあなたを誇りに思います。これからも私たちと一緒に素晴らしい思い出を作っていきましょう。愛しています！"
+            },
+            {
+                author: "Anh",
+                date: "January 3, 2025",
+                avatar: "A",
+                preview: "Hi Ryo! Your energy and enthusiasm are contagious. Every time I see you perform, it brings so much happiness to my day. Thank you for working so hard and for being such an amazing person.",
+                full: "Hi Ryo! Your energy and enthusiasm are contagious. Every time I see you perform, it brings so much happiness to my day. Thank you for working so hard and for being such an amazing person. Your positive attitude and genuine personality make you such a wonderful idol to look up to. We love how you always give your best in everything you do. Please remember to take breaks and take care of yourself too. Your Vietnamese fans will always be here to support you through everything. We're excited to see all the amazing things you'll achieve in the future!"
+            },
+            {
+                author: "Quynh",
+                date: "January 1, 2025",
+                avatar: "Q",
+                preview: "新年おめでとうございます、リョウくん！2025年があなたにとって素晴らしい年になりますように。あなたの夢が全て叶い、NCT WISHと共にさらに大きな成功を収めることを祈っています。",
+                full: "新年おめでとうございます、リョウくん！2025年があなたにとって素晴らしい年になりますように。あなたの夢が全て叶い、NCT WISHと共にさらに大きな成功を収めることを祈っています。新しい年が始まったこの特別な時に、あなたへの感謝の気持ちを伝えたいと思います。あなたの存在は私たちにとって本当に大切です。今年もあなたの活動を応援し続けます。健康で幸せな一年を過ごしてください。ベトナムからの愛を込めて。"
+            },
+            {
+                author: "Vy",
+                date: "December 28, 2024",
+                avatar: "V",
+                preview: "Ryo, your kindness and humility make you such a wonderful role model. We appreciate not just your talent, but also your character. Keep being the amazing person you are!",
+                full: "Ryo, your kindness and humility make you such a wonderful role model. We appreciate not just your talent, but also your character. Keep being the amazing person you are! In a world where it's easy to get caught up in fame, you remain grounded and genuine. Your interactions with fans and fellow members show what a caring person you are. We're grateful to have someone like you to admire and support. Thank you for being authentic and for sharing your journey with us. Your Vietnamese fans will always be here cheering you on. We love you so much!"
+            }
+        ];
+
+        // Popup functions
+        function openPopup(index) {
+            const message = messages[index];
+            document.getElementById('popupAvatar').textContent = message.avatar;
+            document.getElementById('popupAuthor').textContent = message.author;
+            document.getElementById('popupDate').textContent = message.date;
+            document.getElementById('popupMessage').textContent = message.full;
+            document.getElementById('popupOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('popupOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html>
