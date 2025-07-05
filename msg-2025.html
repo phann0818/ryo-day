@@ -118,7 +118,10 @@
         }
 
         .message-card {
-          background-color: #f1e4a9;
+          background-image: url('dialog_bg.png');
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
           border: 3px solid #2a9b65;
           border-radius: 8px;
           padding: 20px;
@@ -145,17 +148,17 @@
         }
 
         .message-avatar {
-          width: 40px;
-          height: 40px;
-          background-color: #2a9b65;
+          width: 35px;
+          height: 35px;
+          background-color: transparent;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
           font-weight: bold;
-          font-size: 16px;
-          margin-right: 12px;
+          font-size: 20px;
+          margin-right: 10px;
         }
 
         .message-info {
@@ -165,7 +168,7 @@
         .message-author {
           font-weight: bold;
           color: #174619;
-          font-size: 14px;
+          font-size: 12px;
           margin-bottom: 2px;
         }
 
@@ -260,16 +263,16 @@
         }
 
         .popup-avatar {
-          width: 50px;
-          height: 50px;
-          background-color: #2a9b65;
+          width: 45px;
+          height: 45px;
+          background-color: transparent;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
           font-weight: bold;
-          font-size: 20px;
+          font-size: 24px;
           margin-right: 15px;
         }
 
@@ -280,7 +283,7 @@
         .popup-author {
           font-weight: bold;
           color: #174619;
-          font-size: 16px;
+          font-size: 14px;
           margin-bottom: 4px;
         }
 
@@ -449,10 +452,9 @@
             <!-- Message Card 1 -->
             <div class="message-card" onclick="openPopup(0)">
                 <div class="message-header">
-                    <div class="message-avatar">L</div>
+                    <div class="message-avatar">🦭</div>
                     <div class="message-info">
                         <div class="message-author">Linh</div>
-                        <div class="message-date">January 15, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -464,10 +466,9 @@
             <!-- Message Card 2 -->
             <div class="message-card" onclick="openPopup(1)">
                 <div class="message-header">
-                    <div class="message-avatar">M</div>
+                    <div class="message-avatar">🐶</div>
                     <div class="message-info">
                         <div class="message-author">Mai</div>
-                        <div class="message-date">January 12, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -479,10 +480,9 @@
             <!-- Message Card 3 -->
             <div class="message-card" onclick="openPopup(2)">
                 <div class="message-header">
-                    <div class="message-avatar">T</div>
+                    <div class="message-avatar">🎁</div>
                     <div class="message-info">
                         <div class="message-author">Trang</div>
-                        <div class="message-date">January 10, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -494,10 +494,9 @@
             <!-- Message Card 4 -->
             <div class="message-card" onclick="openPopup(3)">
                 <div class="message-header">
-                    <div class="message-avatar">H</div>
+                    <div class="message-avatar">❤️</div>
                     <div class="message-info">
                         <div class="message-author">Huong</div>
-                        <div class="message-date">January 8, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -509,10 +508,9 @@
             <!-- Message Card 5 -->
             <div class="message-card" onclick="openPopup(4)">
                 <div class="message-header">
-                    <div class="message-avatar">N</div>
+                    <div class="message-avatar">💚</div>
                     <div class="message-info">
                         <div class="message-author">Nga</div>
-                        <div class="message-date">January 5, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -524,10 +522,9 @@
             <!-- Message Card 6 -->
             <div class="message-card" onclick="openPopup(5)">
                 <div class="message-header">
-                    <div class="message-avatar">A</div>
+                    <div class="message-avatar">💛</div>
                     <div class="message-info">
                         <div class="message-author">Anh</div>
-                        <div class="message-date">January 3, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -539,10 +536,9 @@
             <!-- Message Card 7 -->
             <div class="message-card" onclick="openPopup(6)">
                 <div class="message-header">
-                    <div class="message-avatar">Q</div>
+                    <div class="message-avatar">🍀</div>
                     <div class="message-info">
                         <div class="message-author">Quynh</div>
-                        <div class="message-date">January 1, 2025</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -554,10 +550,9 @@
             <!-- Message Card 8 -->
             <div class="message-card" onclick="openPopup(7)">
                 <div class="message-header">
-                    <div class="message-avatar">V</div>
+                    <div class="message-avatar">🦭</div>
                     <div class="message-info">
                         <div class="message-author">Vy</div>
-                        <div class="message-date">December 28, 2024</div>
                     </div>
                 </div>
                 <div class="message-preview">
@@ -573,10 +568,9 @@
         <div class="popup-content">
             <button class="popup-close" onclick="closePopup()"></button>
             <div class="popup-header">
-                <div class="popup-avatar" id="popupAvatar">L</div>
+                <div class="popup-avatar" id="popupAvatar">🦭</div>
                 <div class="popup-info">
                     <div class="popup-author" id="popupAuthor">Linh</div>
-                    <div class="popup-date" id="popupDate">January 15, 2025</div>
                 </div>
             </div>
             <div class="popup-message" id="popupMessage">
@@ -597,57 +591,49 @@
         const messages = [
             {
                 author: "Linh",
-                date: "January 15, 2025",
-                avatar: "L",
+                avatar: "🦭",
                 preview: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。",
                 full: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。あなたのダンスと歌声は本当に素晴らしく、いつも私たちを感動させてくれます。ベトナムから、たくさんの愛とサポートを送ります。これからも健康で幸せでいてください。あなたの夢が全て叶いますように。私たちはいつもあなたを応援しています。頑張って！"
             },
             {
                 author: "Mai",
-                date: "January 12, 2025",
-                avatar: "M",
+                avatar: "🐶",
                 preview: "Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day. As a Vietnamese fan, I want you to know that we support you wholeheartedly in all your endeavors.",
                 full: "Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day. As a Vietnamese fan, I want you to know that we support you wholeheartedly in all your endeavors. Your performances always bring joy to our hearts, and we're so proud to see you grow as an artist with NCT WISH. Please take care of your health and know that you have fans all over the world who love and support you. We believe in you and can't wait to see what amazing things you'll accomplish next. Keep shining bright!"
             },
             {
                 author: "Trang",
-                date: "January 10, 2025",
-                avatar: "T",
+                avatar: "🎁",
                 preview: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。これからも健康で幸せでいてください。ベトナムからたくさんの愛を送ります。",
                 full: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。これからも健康で幸せでいてください。ベトナムからたくさんの愛を送ります。あなたの笑顔を見ると、私たちも元気になります。NCT WISHのメンバーとして、あなたがさらに輝いてくれることを願っています。どんな時でも、私たちがついています。あなたの音楽は世界中の人々に希望と喜びを与えてくれます。本当にありがとう。"
             },
             {
                 author: "Huong",
-                date: "January 8, 2025",
-                avatar: "H",
+                avatar: "❤️",
                 preview: "Ryo, watching you grow as an artist has been such a joy. Your passion for music and performance shines through everything you do. We Vietnamese fans are so proud of you and will always cheer you on.",
                 full: "Ryo, watching you grow as an artist has been such a joy. Your passion for music and performance shines through everything you do. We Vietnamese fans are so proud of you and will always cheer you on. Every stage you perform on becomes brighter because of your presence. Your hard work and dedication don't go unnoticed - we see how much effort you put into everything. Thank you for being such an inspiration to all of us. We hope you continue to pursue your dreams with the same enthusiasm and never forget how loved you are by fans around the world."
             },
             {
                 author: "Nga",
-                date: "January 5, 2025",
-                avatar: "N",
+                avatar: "💚",
                 preview: "リョウさん、あなたのダンスと歌声は本当に素晴らしいです。NCT WISHの一員として、あなたがもっと輝いてくれることを願っています。体調に気をつけて、いつも笑顔でいてください。",
                 full: "リョウさん、あなたのダンスと歌声は本当に素晴らしいです。NCT WISHの一員として、あなたがもっと輝いてくれることを願っています。体調に気をつけて、いつも笑顔でいてください。あなたのパフォーマンスを見るたびに、感動で涙が出そうになります。あなたの才能と努力に心から敬意を表します。ベトナムのファンとして、私たちはあなたを誇りに思います。これからも私たちと一緒に素晴らしい思い出を作っていきましょう。愛しています！"
             },
             {
                 author: "Anh",
-                date: "January 3, 2025",
-                avatar: "A",
+                avatar: "💛",
                 preview: "Hi Ryo! Your energy and enthusiasm are contagious. Every time I see you perform, it brings so much happiness to my day. Thank you for working so hard and for being such an amazing person.",
                 full: "Hi Ryo! Your energy and enthusiasm are contagious. Every time I see you perform, it brings so much happiness to my day. Thank you for working so hard and for being such an amazing person. Your positive attitude and genuine personality make you such a wonderful idol to look up to. We love how you always give your best in everything you do. Please remember to take breaks and take care of yourself too. Your Vietnamese fans will always be here to support you through everything. We're excited to see all the amazing things you'll achieve in the future!"
             },
             {
                 author: "Quynh",
-                date: "January 1, 2025",
-                avatar: "Q",
+                avatar: "🍀",
                 preview: "新年おめでとうございます、リョウくん！2025年があなたにとって素晴らしい年になりますように。あなたの夢が全て叶い、NCT WISHと共にさらに大きな成功を収めることを祈っています。",
                 full: "新年おめでとうございます、リョウくん！2025年があなたにとって素晴らしい年になりますように。あなたの夢が全て叶い、NCT WISHと共にさらに大きな成功を収めることを祈っています。新しい年が始まったこの特別な時に、あなたへの感謝の気持ちを伝えたいと思います。あなたの存在は私たちにとって本当に大切です。今年もあなたの活動を応援し続けます。健康で幸せな一年を過ごしてください。ベトナムからの愛を込めて。"
             },
             {
                 author: "Vy",
-                date: "December 28, 2024",
-                avatar: "V",
+                avatar: "🦭",
                 preview: "Ryo, your kindness and humility make you such a wonderful role model. We appreciate not just your talent, but also your character. Keep being the amazing person you are!",
                 full: "Ryo, your kindness and humility make you such a wonderful role model. We appreciate not just your talent, but also your character. Keep being the amazing person you are! In a world where it's easy to get caught up in fame, you remain grounded and genuine. Your interactions with fans and fellow members show what a caring person you are. We're grateful to have someone like you to admire and support. Thank you for being authentic and for sharing your journey with us. Your Vietnamese fans will always be here cheering you on. We love you so much!"
             }
@@ -658,7 +644,6 @@
             const message = messages[index];
             document.getElementById('popupAvatar').textContent = message.avatar;
             document.getElementById('popupAuthor').textContent = message.author;
-            document.getElementById('popupDate').textContent = message.date;
             document.getElementById('popupMessage').textContent = message.full;
             document.getElementById('popupOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
