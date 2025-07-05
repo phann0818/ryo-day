@@ -6,165 +6,358 @@
 }
 
 body {
-  font-family: 'Zpix', sans-serif;
+  font-family: 'Zpix', monospace, sans-serif;
   background-color: #2a9b65;
   color: #174619;
   line-height: 1.5;
-  text-align: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
 }
 
-.wrapper {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 20px;
+/* Background grid pattern */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: -1;
 }
 
+/* Header */
 .header {
   height: 80px;
-  background-image: url('assets/header.png');
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%);
+  border-bottom: 4px solid #f1e4a9;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-title {
+  font-size: 24px;
+  color: #174619;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Main Frame */
+.main-frame {
+  max-width: 1200px;
+  margin: 40px auto;
+  background-color: #f1e4a9;
+  border: 4px solid #2a9b65;
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* Main Title Section */
+.main-title-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   margin-bottom: 40px;
+}
+
+.icon-left, .icon-right {
+  width: 60px;
+  height: 60px;
+  padding: 8px;
+  background-color: white;
+  border: 2px solid #2a9b65;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-left img, .icon-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .main-title {
   font-size: 48px;
   color: #174619;
-  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
 }
 
-.main-description {
+/* Main Message */
+.main-msg {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.japanese-text {
   font-size: 16px;
   color: #174619;
-  max-width: 1027px;
-  margin: 0 auto 40px;
-  padding: 0 10px;
+  margin-bottom: 20px;
+  line-height: 1.8;
 }
 
-.button-group {
+.english-text {
+  font-size: 14px;
+  color: #2a5f2a;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Year Navigation */
+.year-navigation {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.year-button {
-  width: 150px;
-  height: 70px;
-  font-size: 24px;
-  color: #F1E4A9;
-  background-image: url('assets/button.png');
-  background-size: cover;
-  background-position: center;
-  border: none;
-  cursor: pointer;
-  font-family: 'Zpix', sans-serif;
-}
-
-.moment-section {
-  background-color: #1b6d3d;
-  padding: 40px 20px;
-  margin-bottom: 40px;
-  box-shadow: inset 0 4px 4px rgba(0,0,0,0.25), 0 4px 4px rgba(0,0,0,0.25);
-}
-
-.moment-header {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  font-size: 36px;
-  color: #F1E4A9;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.icon {
-  width: 60px;
-  height: auto;
-}
-
-.moment-content {
-  height: 240px;
+.nav-arrow {
+  width: 40px;
+  height: 40px;
   background-color: #2a9b65;
-  margin: 0 auto;
-  width: 90%;
-  border: 4px solid #f1e4a9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
 }
 
-.footer {
-  height: 80px;
-  background-image: url('assets/footer.png');
-  background-size: cover;
-  background-position: center;
+.nav-arrow:hover {
+  background-color: #1e6b47;
+}
+
+.year-btn {
+  padding: 10px 20px;
+  background-color: #2a9b65;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.3s;
+}
+
+.year-btn:hover {
+  background-color: #1e6b47;
+}
+
+.year-btn.active {
+  background-color: #174619;
+}
+
+/* Frame 2: Ryo's Moment Section */
+.frame-2 {
+  background-color: #1b6d3d;
+  padding: 30px 20px;
+  margin: 40px auto;
+  max-width: 1200px;
+  border: 4px solid #f1e4a9;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.main-title-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.moment-icon-left, .moment-icon-right {
+  width: 50px;
+  height: 50px;
+  padding: 6px;
+  background-color: white;
+  border: 2px solid #f1e4a9;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.footer-text {
-  font-size: 24px;
-  color: #174619;
+.moment-icon-left img, .moment-icon-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.moment-title {
+  font-size: 36px;
+  color: #f1e4a9;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+/* Frame 1: Image Gallery */
+.frame-1 {
+  background-color: #2a9b65;
+  padding: 40px 20px;
+  margin: 0 auto 40px;
+  max-width: 1200px;
+  border: 4px solid #f1e4a9;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-container {
+  width: 100%;
+  min-height: 200px;
+  background-color: rgba(241, 228, 169, 0.1);
+  border: 2px dashed #f1e4a9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-placeholder {
+  text-align: center;
+  color: #f1e4a9;
+  font-size: 18px;
+}
+
+/* Footer */
+.footer {
+  background-color: #1b6d3d;
+  padding: 20px;
+  text-align: center;
+  border-top: 4px solid #f1e4a9;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-content p {
+  font-size: 18px;
+  color: #f1e4a9;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .main-frame {
+    margin: 20px;
+    padding: 30px;
+  }
+
   .main-title {
     font-size: 36px;
   }
 
-  .year-button {
-    width: 130px;
-    height: 60px;
-    font-size: 20px;
+  .moment-title {
+    font-size: 28px;
   }
 
-  .moment-header {
-    font-size: 30px;
+  .frame-2, .frame-1 {
+    margin: 20px;
   }
 }
 
 @media (max-width: 768px) {
-  .main-title {
-    font-size: 28px;
+  .main-title-section {
+    flex-direction: column;
+    gap: 15px;
   }
 
-  .main-description {
+  .main-title {
+    font-size: 32px;
+  }
+
+  .icon-left, .icon-right {
+    width: 50px;
+    height: 50px;
+  }
+
+  .japanese-text {
     font-size: 14px;
   }
 
-  .year-button {
-    width: 120px;
-    height: 55px;
-    font-size: 18px;
+  .english-text {
+    font-size: 12px;
   }
 
-  .moment-content {
-    height: 200px;
+  .year-navigation {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .footer-text {
-    font-size: 20px;
+  .moment-title {
+    font-size: 24px;
+  }
+
+  .moment-icon-left, .moment-icon-right {
+    width: 40px;
+    height: 40px;
   }
 }
 
 @media (max-width: 480px) {
+  .main-frame {
+    margin: 10px;
+    padding: 20px;
+  }
+
   .main-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
-  .year-button {
-    width: 100px;
-    height: 50px;
-    font-size: 16px;
+  .main-title-section {
+    gap: 10px;
   }
 
-  .icon {
+  .icon-left, .icon-right {
     width: 40px;
+    height: 40px;
   }
 
-  .moment-header {
-    font-size: 24px;
+  .japanese-text {
+    font-size: 12px;
+  }
+
+  .english-text {
+    font-size: 11px;
+  }
+
+  .year-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .nav-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+
+  .moment-title {
+    font-size: 20px;
+  }
+
+  .header-title {
+    font-size: 20px;
   }
 }
