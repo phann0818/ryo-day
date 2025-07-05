@@ -146,6 +146,10 @@ body {
 .year-btn {
   width: 120px;
   height: 50px;
+  display: inline-flex;      /* Ensures <a> behaves like a button */
+  align-items: center;       /* Vertically centers the text */
+  justify-content: center;   /* Horizontally centers the text */
+  text-decoration: none;     /* Removes underline from <a> */
   background-image: url('button.png');
   background-size: 100% 100%;
   background-position: center;
@@ -170,6 +174,7 @@ body {
   transform: scale(1.1);
   filter: brightness(1.2);
 }
+
 
 /* Frame 2: Ryo's Moment Section */
 .frame-2 {
