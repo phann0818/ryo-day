@@ -44,9 +44,7 @@ body {
   background-color: #22c55e;
   border: 2px solid #15803d;
   padding: 12px;
-  background-image: linear-gradient(45deg, #22c55e 25%, transparent 25%),
-    linear-gradient(-45deg, #22c55e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #16a34a 75%),
-    linear-gradient(-45deg, transparent 75%, #16a34a 75%);
+  background-image: url('ryo-day/header.png');
   background-size: 8px 8px;
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 }
@@ -163,6 +161,7 @@ body {
 
 .year-btn {
   background-color: #22c55e;
+  background-images: url('ryo-day/button.png')
   color: #000;
   border: 3px solid #15803d;
   padding: 12px 20px;
@@ -260,9 +259,7 @@ body {
   background-color: #22c55e;
   border: 2px solid #15803d;
   padding: 12px;
-  background-image: linear-gradient(45deg, #22c55e 25%, transparent 25%),
-    linear-gradient(-45deg, #22c55e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #16a34a 75%),
-    linear-gradient(-45deg, transparent 75%, #16a34a 75%);
+  background-image: url('ryo-day/footer.png');
   background-size: 8px 8px;
   background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
 }
