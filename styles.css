@@ -165,9 +165,10 @@ body {
   transition: transform 0.2s, filter 0.2s;
 }
 
-.year-btn:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
+.year-btn:hover,
+.year-btn.active:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
 }
 
 .year-btn.active {
