@@ -1,326 +1,170 @@
-/* Reset and Base Styles */
+/* Reset */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  font-family: "Courier New", "Monaco", "Menlo", "Consolas", monospace;
-  font-weight: bold;
-  overflow-x: hidden;
-  position: relative;
-  min-height: 100vh;
+  font-family: 'Zpix', sans-serif;
+  background-color: #2a9b65;
+  color: #174619;
+  line-height: 1.5;
+  text-align: center;
 }
 
-/* Background */
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #22c55e;
-  background-image: radial-gradient(circle at 25% 25%, #16a34a 2px, transparent 2px),
-    radial-gradient(circle at 75% 75%, #15803d 2px, transparent 2px),
-    radial-gradient(circle at 25% 75%, #22c55e 1px, transparent 1px),
-    radial-gradient(circle at 75% 25%, #16a34a 1px, transparent 1px);
-  background-size: 20px 20px, 20px 20px, 10px 10px, 10px 10px;
-  background-position: 0 0, 0 0, 0 0, 0 0;
-  z-index: -1;
-}
-
-/* Header */
-.header {
-  margin: 20px;
-  background-color: #16a34a;
-  border: 4px solid #fbbf24;
-  padding: 8px;
-  position: relative;
-  z-index: 10;
-}
-
-.header-content {
-  background-color: #22c55e;
-  border: 2px solid #15803d;
-  padding: 12px;
-  background-image: url('ryo-day/header.png');
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
-}
-
-.header-title {
-  color: #000;
-  font-size: 2rem;
-  text-align: left;
-  letter-spacing: 2px;
-  text-rendering: optimizeSpeed;
-  -webkit-font-smoothing: none;
-}
-
-/* Main Frame */
-.main-frame {
-  margin: 20px;
-  background-color: #fbbf24;
-  border: 4px solid #f59e0b;
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 20px;
-  position: relative;
-  z-index: 10;
 }
 
-/* Main Title Section */
-.main-title-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  background-color: #fef3c7;
-  padding: 15px;
-  border: 2px solid #d97706;
-}
-
-.icon-left,
-.icon-right {
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  border: 2px solid #9ca3af;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
+.header {
+  height: 80px;
+  background-image: url('assets/header.png');
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 40px;
 }
 
 .main-title {
-  color: #000;
-  font-size: 2.5rem;
-  text-align: center;
-  letter-spacing: 3px;
-  flex-grow: 1;
-}
-
-/* Main Message */
-.main-msg {
-  background-color: #fef3c7;
-  padding: 20px;
-  border: 2px solid #d97706;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.center-text {
-  text-align: center;
-}
-
-.center-text .japanese-text,
-.center-text .english-text {
-  text-align: center;
-}
-
-.japanese-text {
-  color: #000;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-  letter-spacing: 1px;
-}
-
-.english-text {
-  color: #15803d;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-/* Year Navigation */
-.year-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  background-color: #fef3c7;
-  padding: 25px;
-  border: 2px solid #d97706;
-}
-
-.nav-arrow {
-  background-color: #6b7280;
-  color: white;
-  border: 3px solid #374151;
-  padding: 8px 12px;
-  font-size: 1.2rem;
-  font-family: inherit;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s ease;
-  border-radius: 4px;
-}
-
-.nav-arrow:hover {
-  background-color: #4b5563;
-  transform: translate(1px, 1px);
-}
-
-.year-btn {
-  background-color: #22c55e;
-  background-images: url('ryo-day/button.png')
-  color: #000;
-  border: 3px solid #15803d;
-  padding: 12px 20px;
-  font-size: 1.2rem;
-  font-family: inherit;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.1s ease;
-  letter-spacing: 1px;
-  border-radius: 6px;
-}
-
-.year-btn:hover {
-  background-color: #16a34a;
-  transform: translate(1px, 1px);
-}
-
-.year-btn.active {
-  background-color: #15803d;
-  color: white;
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Frame 2: Ryo's Moment */
-.frame-2 {
-  margin: 20px;
-  position: relative;
-  z-index: 10;
-}
-
-.main-title-2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  font-size: 48px;
+  color: #174619;
   margin-bottom: 20px;
 }
 
-.moment-icon-left,
-.moment-icon-right {
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border: 2px solid #9ca3af;
+.main-description {
+  font-size: 16px;
+  color: #174619;
+  max-width: 1027px;
+  margin: 0 auto 40px;
+  padding: 0 10px;
+}
+
+.button-group {
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-.moment-title {
-  color: #fef3c7;
-  font-size: 3rem;
-  text-align: center;
-  letter-spacing: 4px;
-  text-shadow: 2px 2px 0px #000;
+.year-button {
+  width: 150px;
+  height: 70px;
+  font-size: 24px;
+  color: #F1E4A9;
+  background-image: url('assets/button.png');
+  background-size: cover;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  font-family: 'Zpix', sans-serif;
 }
 
-/* Frame 1: Gallery */
-.frame-1 {
-  margin: 20px;
-  background-color: #fbbf24;
-  border: 4px solid #f59e0b;
-  padding: 8px;
-  position: relative;
-  z-index: 10;
+.moment-section {
+  background-color: #1b6d3d;
+  padding: 40px 20px;
+  margin-bottom: 40px;
+  box-shadow: inset 0 4px 4px rgba(0,0,0,0.25), 0 4px 4px rgba(0,0,0,0.25);
 }
 
-.gallery-container {
-  background-color: #22c55e;
-  border: 2px solid #16a34a;
-  min-height: 300px;
+.moment-header {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 36px;
+  color: #F1E4A9;
+  margin-bottom: 20px;
 }
 
-.gallery-placeholder {
-  color: #15803d;
-  font-size: 1.2rem;
-  text-align: center;
+.icon {
+  width: 60px;
+  height: auto;
 }
 
-/* Footer */
+.moment-content {
+  height: 240px;
+  background-color: #2a9b65;
+  margin: 0 auto;
+  width: 90%;
+  border: 4px solid #f1e4a9;
+}
+
 .footer {
-  margin: 20px;
-  background-color: #16a34a;
-  border: 4px solid #fbbf24;
-  padding: 8px;
-  position: relative;
-  z-index: 10;
+  height: 80px;
+  background-image: url('assets/footer.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.footer-content {
-  background-color: #22c55e;
-  border: 2px solid #15803d;
-  padding: 12px;
-  background-image: url('ryo-day/footer.png');
-  background-size: 8px 8px;
-  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
-}
-
-.footer-content p {
-  color: #000;
-  font-size: 1rem;
-  text-align: right;
-  letter-spacing: 2px;
+.footer-text {
+  font-size: 24px;
+  color: #174619;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  .header-title {
-    font-size: 1.5rem;
-  }
-
+@media (max-width: 1024px) {
   .main-title {
-    font-size: 2rem;
+    font-size: 36px;
   }
 
-  .moment-title {
-    font-size: 2rem;
+  .year-button {
+    width: 130px;
+    height: 60px;
+    font-size: 20px;
   }
 
-  .main-title-section {
-    flex-direction: column;
-    gap: 15px;
+  .moment-header {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 28px;
   }
 
-  .year-navigation {
-    flex-direction: column;
-    gap: 15px;
+  .main-description {
+    font-size: 14px;
   }
 
-  .japanese-text,
-  .english-text {
-    font-size: 0.8rem;
+  .year-button {
+    width: 120px;
+    height: 55px;
+    font-size: 18px;
+  }
+
+  .moment-content {
+    height: 200px;
+  }
+
+  .footer-text {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .main-frame,
-  .frame-1,
-  .frame-2,
-  .header,
-  .footer {
-    margin: 10px;
+  .main-title {
+    font-size: 24px;
   }
 
-  .icon-left,
-  .icon-right {
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
+  .year-button {
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
   }
 
-  .moment-icon-left,
-  .moment-icon-right {
+  .icon {
     width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+  }
+
+  .moment-header {
+    font-size: 24px;
   }
 }
