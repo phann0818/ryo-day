@@ -68,6 +68,7 @@ body {
 .main-title-section {
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
   justify-content: center;
   gap: 20px;
   margin-bottom: 30px;
@@ -93,6 +94,13 @@ body {
   font-weight: bold;
   text-align: center;
   margin: 0;
+}
+
+/* Let the title image shrink nicely */
+.main-title-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Main Message */
@@ -374,30 +382,35 @@ body {
     font-size: 20px;
   }
 
-  @media (max-width: 768px) {
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
   .main-title-img {
-    max-width: 250px;
+    max-width: 200px; /* ⬅️ narrower title image */
   }
 
   .icon-left,
-  .icon-right,
-  .moment-icon-left,
-  .moment-icon-right {
+  .icon-right {
     width: 40px;
     height: 40px;
+  }
+
+  .main-title-section {
+    gap: 12px; /* slightly reduce spacing between icons and title */
   }
 }
 
 @media (max-width: 480px) {
   .main-title-img {
-    max-width: 200px;
+    max-width: 160px; /* ⬅️ even narrower on small phones */
   }
 
   .icon-left,
-  .icon-right,
-  .moment-icon-left,
-  .moment-icon-right {
+  .icon-right {
     width: 30px;
     height: 30px;
+  }
+
+  .main-title-section {
+    gap: 8px;
   }
 }
