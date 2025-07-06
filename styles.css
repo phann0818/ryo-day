@@ -99,7 +99,8 @@ body {
 /* Let the title image shrink nicely */
 .main-title-img {
   max-width: 100%;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: auto;
   display: block;
 }
@@ -113,7 +114,7 @@ body {
 .japanese-text {
   font-size: 16px;
   color: #174619;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   line-height: 1.8;
 }
 
