@@ -373,4 +373,31 @@ body {
   .header-title {
     font-size: 20px;
   }
+
+  @media (max-width: 768px) {
+  .main-title-img {
+    max-width: 250px;
+  }
+
+  .icon-left,
+  .icon-right,
+  .moment-icon-left,
+  .moment-icon-right {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title-img {
+    max-width: 200px;
+  }
+
+  .icon-left,
+  .icon-right,
+  .moment-icon-left,
+  .moment-icon-right {
+    width: 30px;
+    height: 30px;
+  }
 }
