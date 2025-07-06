@@ -395,7 +395,7 @@ body {
   }
 
   .main-title-section {
-    gap: 12px; /* slightly reduce spacing between icons and title */
+    gap: 8px; /* slightly reduce spacing between icons and title */
   }
 }
 
@@ -411,6 +411,6 @@ body {
   }
 
   .main-title-section {
-    gap: 8px;
+    gap: 6px;
   }
 }
