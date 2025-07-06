@@ -99,6 +99,7 @@ body {
 /* Let the title image shrink nicely */
 .main-title-img {
   max-width: 100%;
+  margin-bottom: 30px;
   height: auto;
   display: block;
 }
@@ -106,13 +107,13 @@ body {
 /* Main Message */
 .main-msg {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .japanese-text {
   font-size: 16px;
   color: #174619;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   line-height: 1.8;
 }
 
@@ -121,6 +122,7 @@ body {
   color: #2a5f2a;
   line-height: 1.6;
   font-style: italic;
+  margin-bottom: 15px;
 }
 
 /* Year Navigation */
@@ -129,7 +131,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .nav-arrow {
