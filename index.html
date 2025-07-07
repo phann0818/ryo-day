@@ -61,14 +61,25 @@
         </div>
     </section>
 
-    <!-- Frame 1: Image Gallery -->
-    <section class="frame-1">
-        <div class="gallery-container">
-            <div class="gallery-placeholder">
-                <p>Image gallery will be displayed here</p>
+<!-- Frame 1: Image Gallery -->
+<section class="frame-1">
+    <div class="gallery-container">
+        <div class="slideshow-container">
+            <div class="loading-message">
+                Loading images from collections folder...
+            </div>
+            
+            <!-- Navigation arrows -->
+            <button class="prev" onclick="changeSlide(-1)">‹</button>
+            <button class="next" onclick="changeSlide(1)">›</button>
+            
+            <!-- Slide indicators -->
+            <div class="slide-controls" id="slideControls">
+                <!-- Dots will be generated dynamically -->
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">
