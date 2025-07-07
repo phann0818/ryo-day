@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wishes - Letters to Ryo</title>
   <style>
-    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -60,7 +59,7 @@
     }
     .messages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
 
@@ -68,13 +67,19 @@
       background-color: #fef6d7;
       border: 4px solid #174619;
       border-radius: 8px;
-      padding: 20px;
+      aspect-ratio: 5 / 4;
       box-shadow: 2px 2px 0 #2a9b65;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       transition: 0.3s;
+      padding: 20px;
     }
+    .message-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 4px 4px 0 #174619;
+    }
+
     .message-header {
       display: flex;
       align-items: center;
@@ -131,7 +136,6 @@
       position: relative;
       box-shadow: 6px 6px 0 #f1c40f, 12px 12px 0 #174619;
     }
-
     .popup-topbar {
       background: #0b491c;
       height: 40px;
@@ -149,7 +153,6 @@
       border: none;
       cursor: pointer;
     }
-
     .popup-headerbar {
       background: white;
       height: 35px;
@@ -158,13 +161,11 @@
       padding: 0 12px;
       font-weight: bold;
     }
-
     .popup-message-box {
       flex: 1;
       padding: 20px;
       overflow-y: auto;
     }
-
     .popup-icon {
       position: absolute;
       bottom: 10px;
@@ -173,6 +174,16 @@
       height: 50px;
     }
 
+    @media (min-width: 1024px) {
+      .messages-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .messages-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
     @media (max-width: 600px) {
       .popup-content-pixel {
         width: 95vw;
@@ -185,16 +196,13 @@
   <header class="header">
     <h1 class="header-title">wishes</h1>
   </header>
-
   <div class="tabs">
     <button class="tab-btn active" onclick="switchLang('jp')">Japanese</button>
     <button class="tab-btn" onclick="switchLang('vi')">Vietnamese</button>
   </div>
-
   <div class="main-container">
     <div class="messages-grid" id="messageGrid"></div>
   </div>
-
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content-pixel">
       <div class="popup-topbar">
@@ -205,10 +213,15 @@
       <img src="seal_icon_1.png" alt="seal icon" class="popup-icon" />
     </div>
   </div>
-
   <script>
     let messages = {};
     let currentLang = 'jp';
+
+    async function loadMessages() {
+      const res = await fetch('messages.json');
+      messages = await res.json();
+      renderMessages();
+    }
 
     function switchLang(lang) {
       currentLang = lang;
@@ -246,12 +259,7 @@
       document.getElementById('popupOverlay').classList.remove('active');
     }
 
-    fetch('2025.json')
-      .then(res => res.json())
-      .then(data => {
-        messages = data;
-        renderMessages();
-      });
+    loadMessages();
   </script>
 </body>
 </html>
