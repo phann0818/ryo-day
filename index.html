@@ -63,22 +63,28 @@
 
 <!-- Frame 1: Image Gallery -->
 <section class="frame-1">
-    <div class="gallery-container">
-        <div class="slideshow-container">
-            <div class="loading-message">
-                Loading images from collections folder...
-            </div>
-            
-            <!-- Navigation arrows -->
-            <button class="prev" onclick="changeSlide(-1)">‹</button>
-            <button class="next" onclick="changeSlide(1)">›</button>
-            
-            <!-- Slide indicators -->
-            <div class="slide-controls" id="slideControls">
-                <!-- Dots will be generated dynamically -->
-            </div>
-        </div>
+  <div class="gallery-container">
+    
+    <!-- Slide area -->
+    <div class="slideshow-container">
+      <!-- Slides will be injected here dynamically by JS -->
     </div>
+
+    <!-- Navigation arrows -->
+    <button class="prev" onclick="changeSlide(-1)">‹</button>
+    <button class="next" onclick="changeSlide(1)">›</button>
+
+    <!-- Slide indicators (dots) -->
+    <div class="slide-controls" id="slideControls">
+      <!-- Dots will be added here dynamically -->
+    </div>
+
+    <!-- Loading message -->
+    <div class="loading-message">
+      Loading images from collections folder...
+    </div>
+
+  </div>
 </section>
 
     <!-- Footer -->
