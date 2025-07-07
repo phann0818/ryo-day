@@ -98,106 +98,164 @@ async function loadImagesFromFolder() {
     const container = document.querySelector('.slideshow-container');
     const loadingMessage = document.querySelector('.loading-message');
     
-    // Replace this array with your actual image list
+    // Your image list
     const sampleImages = [
-        // PASTE YOUR 100 IMAGE PATHS HERE
-        // Example format:
-        // 'collections/image1.jpg',
-        // 'collections/image2.png',
-        // 'collections/image3.gif',
-        // Add all your images here...
-         'collections/001.jpg'
-        , 'collections/002.jpg'
-        , 'collections/003.jpg'
-        , 'collections/004.jpg'
-        , 'collections/005.jpg'
-        , 'collections/006.jpg'
-        , 'collections/007.jpg'
-        , 'collections/008.jpg'
-        , 'collections/009.jpg'
-        , 'collections/010.jpg'
-        , 'collections/011.jpg'
-        , 'collections/012.jpg'
-        , 'collections/013.jpg'
-        , 'collections/014.jpg'
-        , 'collections/015.jpg'
-        , 'collections/016.jpg'
-        , 'collections/017.jpg'
-        , 'collections/018.jpg'
-        , 'collections/019.jpg'
-        , 'collections/020.jpg'
-        , 'collections/021.jpg'
-        , 'collections/022.jpg'
-        , 'collections/023.jpg'
-        , 'collections/024.jpg'
-        , 'collections/025.jpg'
-        , 'collections/026.jpg'
-        , 'collections/027.jpg'
-        , 'collections/028.jpg'
-        , 'collections/029.jpg'
-        , 'collections/030.jpg'  
-        , 'collections/031.jpg'
-        , 'collections/032.jpg'  
-        , 'collections/033.jpg'
-        , 'collections/034.jpg'
-        , 'collections/035.jpg'
-        , 'collections/036.jpg'
-        , 'collections/037.jpg'
-        , 'collections/038.jpg'
-        , 'collections/039.jpg'
-        , 'collections/040.jpg'
-        , 'collections/041.jpg'
-        , 'collections/042.jpg'
-        , 'collections/043.jpg'
-        , 'collections/044.jpg'
-        , 'collections/045.jpg'
-        , 'collections/046.jpg'
-        , 'collections/047.jpg'
-        , 'collections/048.jpg'
-        , 'collections/049.jpg'
-        , 'collections/050.jpg'
-        , 'collections/051.jpg'
-        , 'collections/052.jpg'
-        , 'collections/053.jpg'
-        , 'collections/054.jpg'
-        , 'collections/055.jpg'
-        , 'collections/056.jpg'
-        , 'collections/057.jpg'
-        , 'collections/058.jpg'
-        , 'collections/059.jpg'
-        , 'collections/060.jpg'
+        'collections/001.jpeg',
+        'collections/002.jpeg',
+        'collections/003.jpeg',
+        'collections/004.jpeg',
+        'collections/005.jpeg',
+        'collections/006.jpeg',
+        'collections/007.jpeg',
+        'collections/008.jpeg',
+        'collections/009.jpeg',
+        'collections/010.jpeg',
+        'collections/011.jpeg',
+        'collections/012.jpeg',
+        'collections/013.jpeg',
+        'collections/014.jpeg',
+        'collections/015.jpeg',
+        'collections/016.jpeg',
+        'collections/017.jpeg',
+        'collections/018.jpeg',
+        'collections/019.jpeg',
+        'collections/020.jpeg',
+        'collections/021.jpeg',
+        'collections/022.jpeg',
+        'collections/023.jpeg',
+        'collections/024.jpeg',
+        'collections/025.jpeg',
+        'collections/026.jpeg',
+        'collections/027.jpeg',
+        'collections/028.jpeg',
+        'collections/029.jpeg',
+        'collections/030.jpeg',
+        'collections/031.jpeg',
+        'collections/032.jpeg',
+        'collections/033.jpeg',
+        'collections/034.jpeg',
+        'collections/035.jpeg',
+        'collections/036.jpeg',
+        'collections/037.jpeg',
+        'collections/038.jpeg',
+        'collections/039.jpeg',
+        'collections/040.jpeg',
+        'collections/041.jpeg',
+        'collections/042.jpeg',
+        'collections/043.jpeg',
+        'collections/044.jpeg',
+        'collections/045.jpeg',
+        'collections/046.jpeg',
+        'collections/047.jpeg',
+        'collections/048.jpeg',
+        'collections/049.jpeg',
+        'collections/050.jpeg',
+        'collections/051.jpeg',
+        'collections/052.jpeg',
+        'collections/053.jpeg',
+        'collections/054.jpeg',
+        'collections/055.jpeg',
+        'collections/056.jpeg',
+        'collections/057.jpeg',
+        'collections/058.jpeg',
+        'collections/059.jpeg',
+        'collections/060.jpeg'
     ];
 
-    // Image validation
-    const validImages = [];
-    
-    for (const imagePath of sampleImages) {
-        try {
-            const img = new Image();
-            img.src = imagePath;
-            
-            await new Promise((resolve) => {
-                img.onload = () => {
-                    validImages.push(imagePath);
-                    resolve();
-                };
-                img.onerror = () => resolve();
-                setTimeout(() => resolve(), 2000);
-            });
-        } catch (error) {
-            console.log(`Could not load image: ${imagePath}`);
-        }
-    }
+    console.log('Starting to load images...');
+    console.log('Total images to check:', sampleImages.length);
 
-    if (validImages.length === 0) {
+    // Improved image validation with better error handling
+    const validImages = [];
+    let loadedCount = 0;
+    
+    // Show progress
+    if (loadingMessage) {
         loadingMessage.innerHTML = `
             <div style="text-align: center; padding: 2rem;">
-                <p style="margin-bottom: 1rem;">No images found in collections folder.</p>
-                <p style="font-size: 14px; color: rgba(241, 228, 169, 0.7);">
-                    Please add your images to the 'collections' folder and update the image list in script.js
-                </p>
+                <p>Loading images... (0/${sampleImages.length})</p>
             </div>
         `;
+    }
+
+    const imagePromises = sampleImages.map((imagePath, index) => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            
+            img.onload = () => {
+                console.log(`✓ Loaded: ${imagePath}`);
+                validImages.push(imagePath);
+                loadedCount++;
+                
+                // Update progress
+                if (loadingMessage) {
+                    loadingMessage.innerHTML = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <p>Loading images... (${loadedCount}/${sampleImages.length})</p>
+                        </div>
+                    `;
+                }
+                resolve(true);
+            };
+            
+            img.onerror = () => {
+                console.log(`✗ Failed to load: ${imagePath}`);
+                loadedCount++;
+                
+                // Update progress
+                if (loadingMessage) {
+                    loadingMessage.innerHTML = `
+                        <div style="text-align: center; padding: 2rem;">
+                            <p>Loading images... (${loadedCount}/${sampleImages.length})</p>
+                        </div>
+                    `;
+                }
+                resolve(false);
+            };
+            
+            // Set timeout to 5 seconds instead of 2
+            setTimeout(() => {
+                console.log(`⏱ Timeout: ${imagePath}`);
+                if (img.complete === false) {
+                    loadedCount++;
+                    if (loadingMessage) {
+                        loadingMessage.innerHTML = `
+                            <div style="text-align: center; padding: 2rem;">
+                                <p>Loading images... (${loadedCount}/${sampleImages.length})</p>
+                            </div>
+                        `;
+                    }
+                    resolve(false);
+                }
+            }, 5000);
+            
+            img.src = imagePath;
+        });
+    });
+
+    // Wait for all images to be checked
+    await Promise.all(imagePromises);
+
+    console.log(`Validation complete. Valid images found: ${validImages.length}`);
+
+    if (validImages.length === 0) {
+        console.error('No valid images found!');
+        if (loadingMessage) {
+            loadingMessage.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <p style="margin-bottom: 1rem; color: #ff6b6b;">No images found in collections folder.</p>
+                    <p style="font-size: 14px; color: rgba(241, 228, 169, 0.7); margin-bottom: 1rem;">
+                        Please check:
+                    </p>
+                    <ul style="font-size: 14px; color: rgba(241, 228, 169, 0.7); text-align: left; max-width: 300px; margin: 0 auto;">
+                        <li>The 'collections' folder exists in the same directory as your HTML file</li>
+                        <li>Your images are named 001.jpeg, 002.jpeg, etc.</li>
+                        <li>The image files are not corrupted</li>
+                        <li>Check the browser console for detailed error messages</li>
+                    </ul>
+                </div>
+            `;
+        }
         return;
     }
 
@@ -205,7 +263,11 @@ async function loadImagesFromFolder() {
     images = shuffleArray(validImages);
     
     // Remove loading message
-    loadingMessage.remove();
+    if (loadingMessage) {
+        loadingMessage.remove();
+    }
+    
+    console.log('Creating slides with', images.length, 'images');
     
     // Create slides
     createSlides();
@@ -218,6 +280,11 @@ async function loadImagesFromFolder() {
 function createSlides() {
     const container = document.querySelector('.slideshow-container');
     const controlsContainer = document.getElementById('slideControls');
+    
+    if (!container || !controlsContainer) {
+        console.error('Slideshow container or controls not found!');
+        return;
+    }
     
     // Clear existing slides
     slides = [];
@@ -246,6 +313,8 @@ function createSlides() {
         dot.addEventListener('click', () => goToSlide(index));
         controlsContainer.appendChild(dot);
     });
+    
+    console.log('Created', slides.length, 'slides');
 }
 
 // Function to change slide
