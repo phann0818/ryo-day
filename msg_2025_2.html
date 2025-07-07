@@ -154,6 +154,15 @@
       border: none;
       cursor: pointer;
     }
+    
+    .popup-icon-left {
+      height: 24px;
+      width: 24px;
+      background-image: url('clover_icon_1.png');
+      margin-right: auto;
+      margin-left: 10px;
+      object-fit: contain;
+    }
     .popup-headerbar {
       background: white;
       height: 35px;
@@ -207,6 +216,7 @@
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content-pixel">
       <div class="popup-topbar">
+        <div class="popup-icon-left"></div>
         <button class="popup-close" onclick="closePopup()"></button>
       </div>
       <div class="popup-headerbar" id="popupHeader"></div>
