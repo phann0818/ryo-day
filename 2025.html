@@ -29,8 +29,14 @@
       padding: 0 20px;
     }
     .header-title {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
+      color: #174619;
+      text-decoration: none;
+    }
+
+    .header-title:hover {
+      text-decoration: underline;
     }
 
     .tabs {
@@ -39,6 +45,7 @@
       margin: 20px 0;
       gap: 10px;
     }
+    
     .tab-btn {
       padding: 10px 20px;
       border: none;
@@ -47,6 +54,7 @@
       cursor: pointer;
       font-weight: bold;
     }
+    
     .tab-btn.active {
       background: #174619;
       color: #fff;
@@ -221,7 +229,7 @@
 </head>
 <body>
   <header class="header">
-    <h1 class="header-title">wishes</h1>
+    <a href="index.html" class="header-title">← back to home</a>
   </header>
   <div class="tabs">
     <button class="tab-btn active" onclick="switchLang('jp')">Japanese</button>
