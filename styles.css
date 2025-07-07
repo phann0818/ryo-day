@@ -23,8 +23,8 @@ body {
   width: 100%;
   height: 100%;
   background-image: url('blingbling.gif');
-  background-repeat: space;
-  z-index: -1;
+  background-repeat: repeat;
+/*   z-index: -1; */
 }
 
 /* Header */
