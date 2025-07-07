@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>new_msg_2025</title>
+  <title>Wishes - Letters to Ryo</title>
   <style>
+    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,194 +14,231 @@
     body {
       font-family: 'Zpix', monospace, sans-serif;
       background-color: #2a9b65;
-      padding: 20px;
       color: #174619;
+      line-height: 1.5;
+      min-height: 100vh;
     }
-    .tab-buttons {
+
+    /* Header */
+    .header {
+      height: 80px;
+      background-image: url('header.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+    .header-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Tabs */
+    .tabs {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      margin: 20px 0;
+      gap: 10px;
     }
-    .tab-buttons button {
-      background: #f1e4a9;
-      border: 2px solid #174619;
+    .tab-btn {
       padding: 10px 20px;
-      margin: 0 5px;
+      border: none;
+      background: #fef6d7;
+      border: 2px solid #174619;
       cursor: pointer;
       font-weight: bold;
     }
-    .tab-buttons .active {
+    .tab-btn.active {
       background: #174619;
       color: #fff;
+    }
+
+    /* Grid */
+    .main-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
     }
     .messages-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
     }
+
     .message-card {
-      background: #fdf5d8;
-      border: 4px solid #f1e4a9;
+      background-color: #fef6d7;
+      border: 4px solid #174619;
+      border-radius: 8px;
       padding: 20px;
-      box-shadow: 0 0 0 4px #174619, 0 0 0 8px #ffd12d;
-      position: relative;
+      box-shadow: 2px 2px 0 #2a9b65;
       cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
     }
     .message-header {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #2a9b65;
+      padding-bottom: 4px;
     }
     .message-avatar {
+      font-size: 20px;
       margin-right: 8px;
     }
     .message-author {
       font-weight: bold;
+      font-size: 14px;
     }
     .message-preview {
       font-size: 14px;
       margin-top: 10px;
     }
     .read-more {
-      margin-top: 10px;
-      text-align: right;
+      margin-top: 12px;
+      font-size: 13px;
       color: #2a9b65;
+      text-align: right;
       font-weight: bold;
     }
+
+    /* Popup */
     .popup-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       background: rgba(0, 0, 0, 0.7);
-      display: none;
-      align-items: center;
+      display: flex;
       justify-content: center;
-      z-index: 999;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
     }
     .popup-overlay.active {
-      display: flex;
+      opacity: 1;
+      pointer-events: auto;
     }
+
     .popup-content-pixel {
-      width: 95vw;
+      background-color: #f6f0d0;
+      border: 8px solid #174619;
+      padding: 0;
+      width: 90vw;
       max-width: 600px;
-      aspect-ratio: 5 / 4;
-      background: #fdf5d8;
-      border: 4px solid #f1e4a9;
-      box-shadow: 0 0 0 4px #174619, 0 0 0 8px #ffd12d;
+      aspect-ratio: 4 / 3;
       display: flex;
       flex-direction: column;
       position: relative;
-      overflow: hidden;
+      box-shadow: 6px 6px 0 #f1c40f, 12px 12px 0 #174619;
     }
+
     .popup-topbar {
-      background: #174619;
-      height: 30px;
+      background: #0b491c;
+      height: 40px;
       display: flex;
       justify-content: flex-end;
-      padding: 5px;
+      align-items: center;
+      padding: 0 10px;
     }
     .popup-close {
-      width: 20px;
-      height: 20px;
-      background: url('x_button.png') center/cover no-repeat;
+      width: 30px;
+      height: 30px;
+      background-image: url('x_button.png');
+      background-size: contain;
+      background-repeat: no-repeat;
       border: none;
       cursor: pointer;
     }
-    .popup-titlebar {
-      background: #fff;
-      padding: 10px;
+
+    .popup-headerbar {
+      background: white;
+      height: 35px;
       display: flex;
       align-items: center;
+      padding: 0 12px;
+      font-weight: bold;
     }
-    .popup-titlebar .popup-avatar {
-      margin-right: 10px;
-    }
-    .popup-message {
-      padding: 20px;
-      font-size: 14px;
-      overflow-y: auto;
+
+    .popup-message-box {
       flex: 1;
+      padding: 20px;
+      overflow-y: auto;
     }
-    .popup-seal {
+
+    .popup-icon {
       position: absolute;
-      right: 10px;
       bottom: 10px;
-      width: 40px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
     }
-    @media (max-width: 480px) {
+
+    /* Responsive */
+    @media (max-width: 600px) {
       .popup-content-pixel {
-        width: 98vw;
+        width: 95vw;
         aspect-ratio: 3 / 4;
       }
     }
   </style>
 </head>
 <body>
-  <div class="tab-buttons">
-    <button class="tab-btn active" data-tab="jp">Japanese</button>
-    <button class="tab-btn" data-tab="vn">Vietnamese</button>
-  </div>
-  <div class="messages-grid" id="messagesContainer"></div>
+  <header class="header">
+    <h1 class="header-title">wishes</h1>
+  </header>
 
-  <div class="popup-overlay" id="popup">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchLang('jp')">Japanese</button>
+    <button class="tab-btn" onclick="switchLang('vi')">Vietnamese</button>
+  </div>
+
+  <div class="main-container">
+    <div class="messages-grid" id="messageGrid"></div>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content-pixel">
       <div class="popup-topbar">
         <button class="popup-close" onclick="closePopup()"></button>
       </div>
-      <div class="popup-titlebar">
-        <span class="popup-avatar" id="popupAvatar"></span>
-        <span class="popup-author" id="popupAuthor"></span>
-      </div>
-      <div class="popup-message" id="popupMessage"></div>
-      <img src="seal_icon_1.png" alt="seal" class="popup-seal" />
+      <div class="popup-headerbar" id="popupHeader"></div>
+      <div class="popup-message-box" id="popupMessage"></div>
+      <img src="seal_icon_1.png" alt="seal icon" class="popup-icon" />
     </div>
   </div>
 
   <script>
     const messages = {
       jp: [
-        {
-          author: "Linh",
-          avatar: "🦭",
-          preview: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。",
-          full: "リョウへの私の気持ちを伝えたくて、この手紙を書いています。あなたの笑顔は私たちの心を温めてくれます。NCT WISHのメンバーとして、あなたがどんどん成長していく姿を見るのがとても嬉しいです。あなたのダンスと歌声は本当に素晴らしく、いつも私たちを感動させてくれます。ベトナムから、たくさんの愛とサポートを送ります。これからも健康で幸せでいてください。あなたの夢が全て叶いますように。私たちはいつもあなたを応援しています。頑張って！"
-        },
-        {
-          author: "Trang",
-          avatar: "🎁",
-          preview: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。...",
-          full: "リョウくん、いつも素晴らしいパフォーマンスをありがとう。あなたの努力と才能に心から感動しています。..."
-        }
+        { author: "Linh", avatar: "🦭", preview: "リョウへの私の気持ちを伝えたくて...", full: "リョウへの私の気持ちを伝えたくて、この手紙を書いています..." },
+        { author: "Trang", avatar: "🎁", preview: "リョウくん、いつも素晴らしい...", full: "リョウくん、いつも素晴らしいパフォーマンスをありがとう..." },
       ],
-      vn: [
-        {
-          author: "Mai",
-          avatar: "🐶",
-          preview: "Dear Ryo, I hope this message finds you well...",
-          full: "Dear Ryo, I hope this message finds you well. Your dedication and hard work inspire us every day..."
-        },
-        {
-          author: "Huong",
-          avatar: "❤️",
-          preview: "Ryo, watching you grow as an artist has been such a joy...",
-          full: "Ryo, watching you grow as an artist has been such a joy. Your passion for music..."
-        }
+      vi: [
+        { author: "Mai", avatar: "🐶", preview: "Dear Ryo, I hope this message...", full: "Dear Ryo, I hope this message finds you well. Your dedication..." },
+        { author: "Huong", avatar: "❤️", preview: "Ryo, watching you grow...", full: "Ryo, watching you grow as an artist has been such a joy..." },
       ]
     };
 
-    const messagesContainer = document.getElementById("messagesContainer");
-    const popup = document.getElementById("popup");
-    const popupAuthor = document.getElementById("popupAuthor");
-    const popupAvatar = document.getElementById("popupAvatar");
-    const popupMessage = document.getElementById("popupMessage");
+    let currentLang = 'jp';
 
-    function renderMessages(lang) {
-      messagesContainer.innerHTML = "";
-      messages[lang].forEach((msg, index) => {
-        const card = document.createElement("div");
-        card.className = "message-card";
+    function switchLang(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-btn')[lang === 'jp' ? 0 : 1].classList.add('active');
+      renderMessages();
+    }
+
+    function renderMessages() {
+      const grid = document.getElementById('messageGrid');
+      grid.innerHTML = '';
+      messages[currentLang].forEach((msg, i) => {
+        const card = document.createElement('div');
+        card.className = 'message-card';
         card.onclick = () => openPopup(msg);
         card.innerHTML = `
           <div class="message-header">
@@ -210,30 +248,22 @@
           <div class="message-preview">${msg.preview}</div>
           <div class="read-more">続きを読む...</div>
         `;
-        messagesContainer.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
     function openPopup(msg) {
-      popup.classList.add("active");
-      popupAuthor.textContent = msg.author;
-      popupAvatar.textContent = msg.avatar;
-      popupMessage.textContent = msg.full;
+      document.getElementById('popupHeader').textContent = `${msg.avatar} ${msg.author}`;
+      document.getElementById('popupMessage').textContent = msg.full;
+      document.getElementById('popupOverlay').classList.add('active');
     }
 
     function closePopup() {
-      popup.classList.remove("active");
+      document.getElementById('popupOverlay').classList.remove('active');
     }
 
-    document.querySelectorAll(".tab-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        renderMessages(btn.dataset.tab);
-      });
-    });
-
-    renderMessages("jp");
+    // Initial render
+    renderMessages();
   </script>
 </body>
 </html>
