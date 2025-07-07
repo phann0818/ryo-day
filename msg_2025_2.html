@@ -19,7 +19,6 @@
       min-height: 100vh;
     }
 
-    /* Header */
     .header {
       height: 80px;
       background-image: url('header.png');
@@ -35,7 +34,6 @@
       font-weight: bold;
     }
 
-    /* Tabs */
     .tabs {
       display: flex;
       justify-content: center;
@@ -44,18 +42,17 @@
     }
     .tab-btn {
       padding: 10px 20px;
-      border: 2px solid #174619;
+      border: none;
       background: #fef6d7;
+      border: 2px solid #174619;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 2px 2px 0 #2a9b65;
     }
     .tab-btn.active {
       background: #174619;
       color: #fff;
     }
 
-    /* Grid */
     .main-container {
       max-width: 1200px;
       margin: auto;
@@ -72,7 +69,7 @@
       border: 4px solid #174619;
       border-radius: 8px;
       padding: 20px;
-      box-shadow: 4px 4px 0 #f1c40f, 8px 8px 0 #174619;
+      box-shadow: 2px 2px 0 #2a9b65;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -105,7 +102,6 @@
       font-weight: bold;
     }
 
-    /* Popup */
     .popup-overlay {
       position: fixed;
       inset: 0;
@@ -125,6 +121,7 @@
 
     .popup-content-pixel {
       background-color: #f6f0d0;
+      border: 8px solid #174619;
       padding: 0;
       width: 90vw;
       max-width: 600px;
@@ -132,11 +129,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 4px solid #174619;
-      box-shadow:
-        0 0 0 4px #f1c40f,
-        0 0 0 8px #2a9b65,
-        0 0 0 12px #174619;
+      box-shadow: 6px 6px 0 #f1c40f, 12px 12px 0 #174619;
     }
 
     .popup-topbar {
@@ -164,9 +157,6 @@
       align-items: center;
       padding: 0 12px;
       font-weight: bold;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .popup-message-box {
@@ -183,7 +173,6 @@
       height: 50px;
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       .popup-content-pixel {
         width: 95vw;
@@ -206,7 +195,6 @@
     <div class="messages-grid" id="messageGrid"></div>
   </div>
 
-  <!-- Popup -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content-pixel">
       <div class="popup-topbar">
@@ -219,17 +207,7 @@
   </div>
 
   <script>
-    const messages = {
-      jp: [
-        { author: "Linh", avatar: "🦭", preview: "リョウへの私の気持ちを伝えたくて...", full: "リョウへの私の気持ちを伝えたくて、この手紙を書いています..." },
-        { author: "Trang", avatar: "🎁", preview: "リョウくん、いつも素晴らしい...", full: "リョウくん、いつも素晴らしいパフォーマンスをありがとう..." },
-      ],
-      vi: [
-        { author: "Mai", avatar: "🐶", preview: "Dear Ryo, I hope this message...", full: "Dear Ryo, I hope this message finds you well. Your dedication..." },
-        { author: "Huong", avatar: "❤️", preview: "Ryo, watching you grow...", full: "Ryo, watching you grow as an artist has been such a joy..." },
-      ]
-    };
-
+    let messages = {};
     let currentLang = 'jp';
 
     function switchLang(lang) {
@@ -242,7 +220,7 @@
     function renderMessages() {
       const grid = document.getElementById('messageGrid');
       grid.innerHTML = '';
-      messages[currentLang].forEach((msg, i) => {
+      messages[currentLang].forEach(msg => {
         const card = document.createElement('div');
         card.className = 'message-card';
         card.onclick = () => openPopup(msg);
@@ -268,8 +246,12 @@
       document.getElementById('popupOverlay').classList.remove('active');
     }
 
-    // Initial render
-    renderMessages();
+    fetch('2025.json')
+      .then(res => res.json())
+      .then(data => {
+        messages = data;
+        renderMessages();
+      });
   </script>
 </body>
 </html>
