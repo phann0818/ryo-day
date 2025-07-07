@@ -63,6 +63,14 @@
       gap: 20px;
     }
 
+    @keyframes glow-pulse {
+      from {
+        box-shadow: 0 0 4px #fff66c;
+      }
+      to {
+        box-shadow: 0 0 12px 4px #4cffc3;
+      }
+    }
     .message-card {
       background-color: #fef6d7;
       border: 4px solid #174619;
@@ -74,6 +82,10 @@
       flex-direction: column;
       transition: 0.3s;
       padding: 20px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 10px #fff66c;
+      animation: glow-pulse 1.5s ease-in-out infinite alternate;
     }
     .message-card:hover {
       transform: translateY(-5px);
