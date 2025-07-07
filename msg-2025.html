@@ -164,8 +164,8 @@
           visibility: visible;
         }
 
-        .popup-content {
-          aspect-ratio: 16 / 9; /* 🧩 Maintain consistent aspect ratio */
+/*         .popup-content {
+          aspect-ratio: 16 / 9; 
           width: 95vw;
           max-width: 800px;
           max-height: 90vh;
@@ -177,6 +177,32 @@
           padding: 60px 40px 40px 40px;
           display: flex;
           flex-direction: column;
+        } */
+        
+        .popup-content-pixel {
+          width: 90%;
+          max-width: 600px;
+          height: 80vh;
+          max-height: 500px;
+          display: flex;
+          flex-direction: column;
+          background-color: #f2ebcf; /* Light yellow */
+          border: 8px solid #174619; /* Dark green outer border */
+          box-shadow:
+            0 0 0 4px #ffd93b,     /* Yellow middle */
+            0 0 0 8px #174619;     /* Green inner */
+          position: relative;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        .popup-top-bar {
+          background-color: #174619;
+          height: 40px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          padding: 0 10px;
         }
 
         .popup-close {
@@ -199,12 +225,36 @@
           transform: scale(1.1);
         }
 
+        .popup-path-bar {
+          background-color: white;
+          color: #174619;
+          font-weight: bold;
+          padding: 8px 12px;
+          font-size: 14px;
+          border-bottom: 2px solid #f2ebcf;
+        }
+
         .popup-header {
           display: flex;
           align-items: center;
           margin-bottom: 20px;
           padding-bottom: 15px;
           border-bottom: 2px dashed #2a9b65;
+        }
+
+        .popup-body {
+          flex: 1;
+          position: relative;
+          padding: 20px;
+          overflow-y: auto;
+        }
+
+        .popup-icon {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          width: 40px;
+          height: 40px;
         }
 
         .popup-avatar {
@@ -489,7 +539,7 @@
     </div>
 
     <!-- Popup Modal -->
-    <div class="popup-overlay" id="popupOverlay">
+<!--     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-content">
             <button class="popup-close" onclick="closePopup()"></button>
             <div class="popup-header">
@@ -502,6 +552,22 @@
                 <!-- Full message content will be loaded here -->
             </div>
         </div>
+    </div> -->
+
+    <div class="popup-overlay" id="popupOverlay">
+      <div class="popup-content-pixel">
+        <div class="popup-top-bar">
+          <button class="popup-close" onclick="closePopup()"></button>
+        </div>
+        <div class="popup-path-bar">
+          <span class="popup-avatar" id="popupAvatar">🐶</span>
+          <span class="popup-author" id="popupAuthor">Mai</span>
+        </div>
+        <div class="popup-body">
+          <div class="popup-message" id="popupMessage"></div>
+          <img src="seal_icon_1.png" alt="Seal Icon" class="popup-icon-bottom" />
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
