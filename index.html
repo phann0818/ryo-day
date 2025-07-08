@@ -162,8 +162,8 @@
 
 .bling-wrapper {
   position: relative;
-  width: 120px;
-  height: 50px;
+  width: 140px;
+  height: 60px;
 }
 
 .year-btn {
@@ -196,20 +196,20 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
-  height: 50px;
+  width: 100%;      /* fills the wrapper */
+  height: 100%;     /* fills the wrapper */
   z-index: 1;
-  border-radius: 12px;
+  border-radius: 14px; /* slightly more than button for glowing feel */
   background-image:
-    radial-gradient(circle, #ffffffcc 1.5px, transparent 2px),
-    radial-gradient(circle, #ffffffaa 1px, transparent 1.8px),
-    radial-gradient(circle, #ffffff88 1.2px, transparent 1.5px);
+    radial-gradient(circle, #fff 1.5px, transparent 2px),
+    radial-gradient(circle, #fff8 1.2px, transparent 1.8px),
+    radial-gradient(circle, #ffffff 1px, transparent 1.4px);
   background-size: 40px 40px, 25px 25px, 15px 15px;
   background-position: 0 0, 10px 10px, 20px 20px;
   animation: sparkleMove 4s linear infinite;
-  opacity: 0.5;
-  pointer-events: none;
+  opacity: 0.8;
   mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 @keyframes sparkleMove {
