@@ -204,6 +204,10 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 10px;
+            position: relative;
+            height: 50px;
+            padding: 0 16px;
+            
         }
 
         .moment-icon-left, .moment-icon-right {
@@ -216,16 +220,22 @@
 
         .moment-icon-left img, .moment-icon-right img {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: auto;
+/*             object-fit: contain; */
+            display: block
         }
 
-        .moment-title {
-            font-size: 36px;
-            color: #f1e4a9;
+       .moment-title {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
             font-weight: bold;
-            text-align: center;
+            color: #f1e4a9;
             margin: 0;
+            white-space: nowrap;
+            pointer-events: none;
         }
 
         /* Frame 1: Video Gallery */
