@@ -13,7 +13,6 @@
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <img alt="Header icon" class="header-icon">
             <h1 class="header-title">letters to ryo</h1>
         </div>
     </header>
@@ -23,11 +22,11 @@
         <!-- Main Title -->
         <div class="main-title-section">
             <div class="icon-left">
-                <img alt="Left icon" class="seal-icon">
+                <img src="seal_icon_1.gif" alt="Left icon">
             </div>
-            <img alt="リョウへの手紙" class="main-title-img" />
+            <img src="logo_text.png" alt="リョウへの手紙" class="main-title-img" />
             <div class="icon-right">
-                <img alt="Right icon" class="clover-icon">
+                <img src="clover_icon_1.gif" alt="Right icon">
             </div>
         </div>
 
@@ -53,24 +52,40 @@
     <section class="frame-2">
         <div class="main-title-2">
             <div class="moment-icon-left">
-                 <img alt="Left icon" class="clover-icon-static">
+                 <img src="clover_icon_1.png" alt="Left icon">
             </div>
             <h3 class="moment-title">Ryo's moment</h3>
             <div class="moment-icon-right">
-                 <img alt="Right icon" class="seal-icon-static">
+                 <img src="seal_icon_1.png" alt="Right icon">
             </div>
         </div>
     </section>
 
-    <!-- Frame 1: YouTube Video Section -->
-<iframe 
-    class="youtube-video" 
-    src="https://www.youtube.com/embed/videoseries?list=PLjYMo6LzRYwJyu_zyXyON2I8y2bpyctlb" 
-    title="ryo-bday" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    allowfullscreen>
-</iframe>
+<!-- Frame 1: Image Gallery -->
+<section class="frame-1">
+  <div class="gallery-container">
+    
+    <!-- Slide area -->
+    <div class="slideshow-container">
+      <!-- Slides will be injected here dynamically by JS -->
+    </div>
+
+    <!-- Navigation arrows -->
+    <button class="prev" onclick="changeSlide(-1)">‹</button>
+    <button class="next" onclick="changeSlide(1)">›</button>
+
+    <!-- Slide indicators (dots) -->
+    <div class="slide-controls" id="slideControls">
+      <!-- Dots will be added here dynamically -->
+    </div>
+
+    <!-- Loading message -->
+    <div class="loading-message">
+      Loading images from collections folder...
+    </div>
+
+  </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">
