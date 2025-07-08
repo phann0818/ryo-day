@@ -167,6 +167,12 @@
   height: 50px;
 }
 
+.bling-wrapper {
+  position: relative;
+  width: 120px;
+  height: 50px;
+}
+
 .year-btn {
   width: 120px;
   height: 50px;
@@ -186,37 +192,31 @@
   font-family: inherit;
   font-weight: bold;
   text-shadow: 1px 1px 2px #ffffff4d;
-  z-index: 1;
   border-radius: 12px;
   position: relative;
-}
-
-.glow-border {
-  position: absolute;
-    justify-content: center;
-  top: 0;
-  left: 0;
-  width: 130px;
-  height: 60px;
-  pointer-events: none;
   z-index: 2;
 }
 
-.glow-border rect {
-  fill: none;
-  stroke: #ffffffcc;
-  stroke-width: 2;
-  stroke-dasharray: 340;
-  stroke-dashoffset: 340;
-  animation: dashGlow 2s linear infinite;
-  filter: drop-shadow(0 0 4px #ffffffaa);
-  rx: 12;
-  ry: 12;
+.bling-bg {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 50px;
+  background: radial-gradient(circle, #fff 0%, transparent 80%) center/10px 10px repeat;
+  animation: bling 2s linear infinite;
+  opacity: 0.3;
+  border-radius: 12px;
+  z-index: 1;
 }
 
-@keyframes dashGlow {
-  to {
-    stroke-dashoffset: 0;
+@keyframes bling {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
   }
 }
         .year-btn:hover,
@@ -733,14 +733,12 @@
         </div>
 
         <!-- Year Navigation -->
-      <div class="year-navigation">
+<div class="year-navigation">
   <button class="nav-arrow nav-arrow-left">‹</button>
 
-  <div class="glow-wrapper">
-    <a href="2025.html" class="year-btn active">2025</a>
-    <svg class="glow-border" viewBox="0 0 124 54" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="2" width="120" height="50" rx="12" ry="12" />
-    </svg>
+  <div class="bling-wrapper">
+    <a href="2025.html" class="year-btn">2025</a>
+    <div class="bling-bg"></div>
   </div>
 
   <button class="nav-arrow nav-arrow-right">›</button>
