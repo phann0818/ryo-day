@@ -867,12 +867,20 @@
             const yearButtons = document.querySelectorAll(".year-btn");
             const navArrows = document.querySelectorAll(".nav-arrow");
 
-            // Add click handlers to year buttons
+                        // Add click handlers to year buttons
             yearButtons.forEach((button) => {
                 button.addEventListener("click", function(e) {
-                    e.preventDefault();
                     const year = parseInt(this.textContent);
                     console.log("Year selected:", year);
+                    
+                    // If there's an href attribute, let it navigate naturally
+                    if (this.href) {
+                        // Allow default navigation
+                        return;
+                    }
+                    
+                    // Otherwise prevent default and handle with JavaScript
+                    e.preventDefault();
                     goToYear(year);
                 });
             });
