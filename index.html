@@ -160,8 +160,14 @@
           background-color: #1e6b47;
         }
 
-       .year-btn {
+.glow-wrapper {
   position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 50px;
+}
+
+.year-btn {
   width: 120px;
   height: 50px;
   display: inline-flex;
@@ -180,52 +186,38 @@
   font-family: inherit;
   font-weight: bold;
   text-shadow: 1px 1px 2px #ffffff4d;
-  transition: transform 0.2s, filter 0.2s;
   z-index: 1;
-  overflow: hidden;
   border-radius: 12px;
+  position: relative;
 }
 
-/* Glowing running border effect */
-.year-btn::before {
-  content: "";
+.glow-border {
   position: absolute;
-  top: -3px;
-  left: -3px;
-  width: calc(100% + 6px);
-  height: calc(100% + 6px);
-  border-radius: 12px;
-  background: conic-gradient(
-    from 0deg,
-    #ffffff00,
-    #ffffff00 10%,
-    #ffffffcc 30%,
-    #ffffff00 50%,
-    #ffffff00 100%
-  );
-  animation: rotateBorder 2s linear infinite;
-  z-index: 0;
-  mask: 
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: destination-out;
-  padding: 3px;
-  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 124px;
+  height: 54px;
+  pointer-events: none;
+  z-index: 2;
 }
 
-@keyframes rotateBorder {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.glow-border rect {
+  fill: none;
+  stroke: #ffffffcc;
+  stroke-width: 2;
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: dashGlow 2s linear infinite;
+  filter: drop-shadow(0 0 4px #ffffffaa);
+  rx: 12;
+  ry: 12;
 }
 
+@keyframes dashGlow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
         .year-btn:hover,
         .year-btn.active:hover {
           transform: scale(1.1);
@@ -740,11 +732,18 @@
         </div>
 
         <!-- Year Navigation -->
-        <div class="year-navigation">
-            <button class="nav-arrow nav-arrow-left">‹</button>
-            <a href="2025.html" class="year-btn active">2025</a>
-            <button class="nav-arrow nav-arrow-right">›</button>
-        </div>
+      <div class="year-navigation">
+  <button class="nav-arrow nav-arrow-left">‹</button>
+
+  <div class="glow-wrapper">
+    <a href="2025.html" class="year-btn active">2025</a>
+    <svg class="glow-border" viewBox="0 0 124 54" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="120" height="50" rx="12" ry="12" />
+    </svg>
+  </div>
+
+  <button class="nav-arrow nav-arrow-right">›</button>
+</div>
     </main>
 
     <!-- Frame 2: Ryo's Moment Section -->
