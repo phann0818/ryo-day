@@ -427,6 +427,20 @@
           line-height: 1.4;
         }
 
+        .toggleMusic {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 16px;
+          cursor: pointer;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
         /* Footer */
         .footer {
           height: 80px;
@@ -772,6 +786,13 @@
         </div>
     </section>
 
+    <!-- 🎵 Music player goes here -->
+    <audio id="backgroundMusic" autoplay loop>
+      <source src="far_away.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <button id="toggleMusic">🔊 Pause</button>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -947,6 +968,19 @@
                 }
             }
         }
+
+        const music = document.getElementById('backgroundMusic');
+const toggleBtn = document.getElementById('toggleMusic');
+
+toggleBtn.addEventListener('click', () => {
+  if (music.paused) {
+    music.play();
+    toggleBtn.textContent = "🔊 Pause";
+  } else {
+    music.pause();
+    toggleBtn.textContent = "🔈 Play";
+  }
+}
     </script>
 </body>
 </html>
