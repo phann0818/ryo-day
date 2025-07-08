@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letters to Ryo - Vietnamese Fans</title>
+    <title>Letters to Ryo - from Vietnamese Fans</title>
     <style>
         /* Reset */
         * {
@@ -427,19 +427,21 @@
           line-height: 1.4;
         }
 
-        .toggleMusic {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background-color: #4CAF50;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          padding: 10px 14px;
-          font-size: 16px;
-          cursor: pointer;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
+.music-button {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.music-button:hover {
+  background-color: #45a049;
+}
 
         /* Footer */
         .footer {
@@ -666,6 +668,7 @@
     <header class="header">
         <div class="header-content">
             <h1 class="header-title">letters to ryo</h1>
+             <button id="toggleMusic" class="music-button">🔊 Play Music</button>
         </div>
     </header>
 
@@ -969,18 +972,29 @@
             }
         }
 
-        const music = document.getElementById('backgroundMusic');
-const toggleBtn = document.getElementById('toggleMusic');
+document.addEventListener("DOMContentLoaded", function () {
+  const audio = document.getElementById("backgroundMusic");
+  const button = document.getElementById("toggleMusic");
 
-toggleBtn.addEventListener('click', () => {
-  if (music.paused) {
-    music.play();
-    toggleBtn.textContent = "🔊 Pause";
-  } else {
-    music.pause();
-    toggleBtn.textContent = "🔈 Play";
-  }
-}
+  let isPlaying = false;
+
+  button.addEventListener("click", () => {
+    if (!isPlaying) {
+      audio.play()
+        .then(() => {
+          button.textContent = "🔇 Pause Music";
+          isPlaying = true;
+        })
+        .catch(() => {
+          alert("Click to enable music.");
+        });
+    } else {
+      audio.pause();
+      button.textContent = "🔊 Play Music";
+      isPlaying = false;
+    }
+  });
+});;
     </script>
 </body>
 </html>
