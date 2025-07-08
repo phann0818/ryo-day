@@ -160,13 +160,6 @@
           background-color: #1e6b47;
         }
 
-.glow-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 120px;
-  height: 50px;
-}
-
 .bling-wrapper {
   position: relative;
   width: 120px;
@@ -195,28 +188,36 @@
   border-radius: 12px;
   position: relative;
   z-index: 2;
+  overflow: hidden;
 }
 
+/* 🌟 This is the sparkle layer */
 .bling-bg {
-  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 120px;
   height: 50px;
-  background: radial-gradient(circle, #fff 0%, transparent 80%) center/10px 10px repeat;
-  animation: bling 2s linear infinite;
-  opacity: 0.3;
-  border-radius: 12px;
   z-index: 1;
+  border-radius: 12px;
+  background-image:
+    radial-gradient(circle, #ffffffcc 1.5px, transparent 2px),
+    radial-gradient(circle, #ffffffaa 1px, transparent 1.8px),
+    radial-gradient(circle, #ffffff88 1.2px, transparent 1.5px);
+  background-size: 40px 40px, 25px 25px, 15px 15px;
+  background-position: 0 0, 10px 10px, 20px 20px;
+  animation: sparkleMove 4s linear infinite;
+  opacity: 0.5;
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
-@keyframes bling {
+@keyframes sparkleMove {
   0% {
-    background-position: 0 0;
+    background-position: 0 0, 10px 10px, 20px 20px;
   }
   100% {
-    background-position: 100px 100px;
+    background-position: 100px 60px, 110px 70px, 120px 80px;
   }
 }
         .year-btn:hover,
