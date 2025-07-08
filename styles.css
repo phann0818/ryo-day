@@ -11,7 +11,7 @@ body {
   color: #174619;
   line-height: 1.5;
   min-height: 100vh;
-  padding-top: 80px; /* Account for fixed header */
+  padding: 0;
   margin: 0;
 }
 
@@ -27,12 +27,8 @@ body {
   z-index: -1;
 }
 
-/* Header - Fixed position */
+/* Header */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 80px;
   background-image: url('header.png');
   background-size: cover;
@@ -42,20 +38,8 @@ body {
   align-items: center;
   justify-content: flex-start;
   padding: 0 20px;
-  z-index: 100;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.header-icon {
-  content: url('seal_icon_1.png');
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+  position: relative;
+  z-index: 1;
 }
 
 .header-title {
@@ -68,7 +52,7 @@ body {
 /* Main Frame */
 .main-frame {
   max-width: 1200px;
-  margin: 100px auto 30px auto; /* Increased top margin for fixed header */
+  margin: 20px auto 30px auto;
   background-color: #f1e4a9;
   border: 4px solid #2a9b65;
   border-radius: 8px;
@@ -110,17 +94,8 @@ body {
   margin: 0;
 }
 
-/* Image sources controlled by CSS */
-.seal-icon {
-  content: url('seal_icon_1.gif');
-}
-
-.clover-icon {
-  content: url('clover_icon_1.gif');
-}
-
+/* Let the title image shrink nicely */
 .main-title-img {
-  content: url('logo_text.png');
   max-width: 100%;
   margin-top: 10px;
   margin-bottom: 15px;
@@ -128,17 +103,10 @@ body {
   display: block;
 }
 
-.clover-icon-static {
-  content: url('clover_icon_1.png');
-}
-
-.seal-icon-static {
-  content: url('seal_icon_1.png');
-}
-
 /* Main Message */
 .main-msg {
   text-align: center;
+/*   margin-bottom: 20px; */
 }
 
 .japanese-text {
@@ -187,10 +155,10 @@ body {
 .year-btn {
   width: 120px;
   height: 50px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  display: inline-flex;      /* Ensures <a> behaves like a button */
+  align-items: center;       /* Vertically centers the text */
+  justify-content: center;   /* Horizontally centers the text */
+  text-decoration: none;     /* Removes underline from <a> */
   background-image: url('button.png');
   background-size: 100% 100%;
   background-position: center;
@@ -217,12 +185,16 @@ body {
   filter: brightness(1.2);
 }
 
+
 /* Frame 2: Ryo's Moment Section */
 .frame-2 {
   background-color: transparent;
   padding: 10px 20px;
   margin: 5px auto;
   max-width: 1200px;
+/*   border: 4px solid #f1e4a9;
+  border-radius: 8px; */
+/*   box-shadow: 0 8px 16px rgba(0,0,0,0.2); */
   position: relative;
   z-index: 1;
 }
@@ -257,7 +229,7 @@ body {
   margin: 0;
 }
 
-/* Frame 1: YouTube Video Carousel */
+/* Frame 1: Image Gallery */
 .frame-1 {
   background-color: #2a9b65;
   padding: 40px 20px;
@@ -270,91 +242,67 @@ body {
   z-index: 1;
 }
 
-.video-carousel-container {
+.gallery-container {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   background-color: rgba(241, 228, 169, 0.1);
   border: 2px dashed #f1e4a9;
   border-radius: 4px;
+  height: auto;
   padding: 4px;
 }
 
-.video-container {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  overflow: hidden;
-}
-
-.youtube-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 4px;
-}
-
-/* Video navigation arrows */
-.video-prev, .video-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(42, 155, 101, 0.8);
-  color: #f1e4a9;
-  border: 2px solid #f1e4a9;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  cursor: pointer;
+.slideshow-container {
   display: flex;
-  align-items: center;
+  transition: transform 0.5s ease-in-out;
   justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+  position: relative;
 }
 
-.video-prev {
-  left: 10px;
+.slide img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-.video-next {
-  right: 10px;
+.slide {
+  display: none;
+  width: fit-content;
+  height: fit-content;
 }
 
-.video-prev:hover, .video-next:hover {
-  background-color: rgba(42, 155, 101, 1);
-  transform: translateY(-50%) scale(1.1);
+
+.slide.active {
+  display: flex;
 }
 
-/* Video indicators */
-.video-controls {
+#slideControls {
   text-align: center;
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 1rem;
 }
 
-.video-dot {
+.dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  margin: 0 2px;
   background-color: #f1e4a9;
   border-radius: 50%;
   cursor: pointer;
   opacity: 0.5;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
+  transition: opacity 0.3s;
 }
 
-.video-dot.active {
+.dot.active {
   opacity: 1;
-  transform: scale(1.2);
-  border-color: #2a9b65;
 }
+
 
 /* Footer */
 .footer {
@@ -379,7 +327,7 @@ body {
 /* Responsive Design */
 @media (max-width: 1024px) {
   .main-frame {
-    margin: 100px 20px 30px 20px;
+    margin: 20px;
     padding: 30px;
   }
 
@@ -432,19 +380,11 @@ body {
     width: 40px;
     height: 40px;
   }
-
-  .main-title-img {
-    max-width: 200px;
-  }
-
-  .main-title-section {
-    gap: 8px;
-  }
 }
 
 @media (max-width: 480px) {
   .main-frame {
-    margin: 100px 10px 30px 10px;
+    margin: 10px;
     padding: 20px;
   }
 
@@ -488,17 +428,26 @@ body {
     font-size: 20px;
   }
 
-  .header-icon {
-    width: 30px;
-    height: 30px;
-  }
-
-  .header-content {
-    gap: 10px;
-  }
-
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
   .main-title-img {
-    max-width: 160px;
+    max-width: 200px; /* ⬅️ narrower title image */
+  }
+
+  .icon-left,
+  .icon-right {
+    width: 40px;
+    height: 40px;
+  }
+
+  .main-title-section {
+    gap: 8px; /* slightly reduce spacing between icons and title */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title-img {
+    max-width: 160px; /* ⬅️ even narrower on small phones */
   }
 
   .icon-left,
