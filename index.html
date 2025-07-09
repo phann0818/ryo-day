@@ -835,8 +835,24 @@
         const slides = document.querySelectorAll('.slide');
         const totalVideos = slides.length;
 
+        // Function to stop video playback
+        function stopVideoPlayback(slideIndex) {
+            const iframe = slides[slideIndex].querySelector('iframe');
+            if (iframe) {
+                // Get the current src to reload the iframe and stop playback
+                const currentSrc = iframe.src;
+                iframe.src = 'about:blank';
+                setTimeout(() => {
+                    iframe.src = currentSrc;
+                }, 100);
+            }
+        }
+
         // Function to change video
         function changeVideo(direction) {
+            // Stop current video before switching
+            stopVideoPlayback(currentVideo);
+            
             // Remove active class from current video, dot, and preview
             slides[currentVideo].classList.remove('active');
             document.querySelectorAll('.video-dot')[currentVideo].classList.remove('active');
@@ -862,6 +878,9 @@
 
         // Function to go to specific video
         function goToVideo(index) {
+            // Stop current video before switching
+            stopVideoPlayback(currentVideo);
+            
             // Remove active class from current video, dot, and preview
             slides[currentVideo].classList.remove('active');
             document.querySelectorAll('.video-dot')[currentVideo].classList.remove('active');
@@ -939,54 +958,4 @@
             // Handle navigation arrows
             navArrows.forEach((arrow) => {
                 arrow.addEventListener("click", function() {
-                    console.log(`Arrow clicked: ${this.classList.contains("nav-arrow-left") ? "Previous" : "Next"}`);
-                    if (this.classList.contains("nav-arrow-left")) {
-                        previousYear();
-                    } else if (this.classList.contains("nav-arrow-right")) {
-                        nextYear();
-                    }
-                });
-            });
-
-            updateActiveButton();
-            updateVideoInfo();
-            initializeMusic();
-        });
-
-        // Keyboard navigation for videos
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                changeVideo(-1);
-            } else if (e.key === 'ArrowRight') {
-                changeVideo(1);
-            }
-        });
-
-        // Touch/swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-            
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    changeVideo(1); // Swipe left, next video
-                } else {
-                    changeVideo(-1); // Swipe right, previous video
-                }
-            }
-        }
-    </script>
-</body>
-</html>
+                    console.log(`Arrow clicked: ${this.classList.contains("nav-arrow-left") ?
