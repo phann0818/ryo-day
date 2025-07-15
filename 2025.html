@@ -277,52 +277,69 @@
     </div>
   </div>
   <script>
-    let messages = {};
-    let currentLang = 'jp';
+let messages = {};
+let currentLang = 'jp';
 
-    async function loadMessages() {
-      const res = await fetch('2025.json');
-      messages = await res.json();
-      renderMessages();
-    }
+async function loadMessages() {
+  const res = await fetch('2025.json');
+  const flatData = await res.json();
+  
+  // Transform flat data to original structure
+  messages = {
+    jp: flatData.map(item => ({
+      author: item.author,
+      avatar: item.avatar,
+      preview: item.preview_jp,
+      full: item.full_jp
+    })),
+    vi: flatData.map(item => ({
+      author: item.author,
+      avatar: item.avatar,
+      preview: item.preview_vi,
+      full: item.full_vi
+    }))
+  };
+  
+  renderMessages();
+}
 
-    function switchLang(lang) {
-      currentLang = lang;
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-btn')[lang === 'jp' ? 0 : 1].classList.add('active');
-      renderMessages();
-    }
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-btn')[lang === 'jp' ? 0 : 1].classList.add('active');
+  renderMessages();
+}
 
-    function renderMessages() {
-      const grid = document.getElementById('messageGrid');
-      grid.innerHTML = '';
-      messages[currentLang].forEach(msg => {
-        const card = document.createElement('div');
-        card.className = 'message-card';
-        card.onclick = () => openPopup(msg);
-        card.innerHTML = `
-          <div class="message-header">
-            <div class="message-avatar">${msg.avatar}</div>
-            <div class="message-author">${msg.author}</div>
-          </div>
-          <div class="message-preview">${msg.preview}</div>
-          <div class="read-more">続きを読む...</div>
-        `;
-        grid.appendChild(card);
-      });
-    }
+function renderMessages() {
+  const grid = document.getElementById('messageGrid');
+  grid.innerHTML = '';
+  messages[currentLang].forEach(msg => {
+    const card = document.createElement('div');
+    card.className = 'message-card';
+    card.onclick = () => openPopup(msg);
+    card.innerHTML = `
+      <div class="message-header">
+        <div class="message-avatar">${msg.avatar}</div>
+        <div class="message-author">${msg.author}</div>
+      </div>
+      <div class="message-preview">${msg.preview}</div>
+      <div class="read-more">続きを読む...</div>
+    `;
+    grid.appendChild(card);
+  });
+}
 
-    function openPopup(msg) {
-      document.getElementById('popupHeader').textContent = `${msg.avatar} ${msg.author}`;
-      document.getElementById('popupMessage').textContent = msg.full;
-      document.getElementById('popupOverlay').classList.add('active');
-    }
+function openPopup(msg) {
+  document.getElementById('popupHeader').textContent = `${msg.avatar} ${msg.author}`;
+  document.getElementById('popupMessage').textContent = msg.full;
+  document.getElementById('popupOverlay').classList.add('active');
+}
 
-    function closePopup() {
-      document.getElementById('popupOverlay').classList.remove('active');
-    }
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('active');
+}
 
-    loadMessages();
+loadMessages();
   </script>
 </body>
 </html>
