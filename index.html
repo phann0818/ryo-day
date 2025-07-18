@@ -538,6 +538,28 @@
     margin: 0 auto;
 }
 
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: border 0.3s;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: #007bff; /* or any color you like */
+}        
+
 .image-slide {
     display: none;
     width: 100%;
@@ -1088,6 +1110,11 @@
                     Get to know Zeus here/Zeusについて
                 </div>
             </div>
+            <div class="thumbnail-container">
+    <img src="assets/pierogi.png" alt="Pierogi" class="thumbnail" onclick="showImage(0)">
+    <img src="assets/finley.png" alt="Finley" class="thumbnail" onclick="showImage(1)">
+    <img src="assets/zeus.png" alt="Zeus" class="thumbnail" onclick="showImage(2)">
+</div>
             
         </div>
 
@@ -1332,40 +1359,67 @@ function openImageLink(index) {
     }
 }
 
-// Add keyboard navigation for image carousel
-document.addEventListener('keydown', (e) => {
+  let currentSlide = 0;
+
+  function showImage(index) {
+    const slides = document.querySelectorAll('.image-slide');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+
+    thumbnails.forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+
+    currentSlide = index;
+  }
+
+  function changeImage(direction) {
+    const slides = document.querySelectorAll('.image-slide');
+    let newIndex = currentSlide + direction;
+
+    if (newIndex < 0) newIndex = slides.length - 1;
+    if (newIndex >= slides.length) newIndex = 0;
+
+    showImage(newIndex);
+  }
+
+  // Add keyboard navigation for image carousel
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') {
-        changeImage(-1);
+      changeImage(-1);
     } else if (e.key === 'ArrowDown') {
-        changeImage(1);
+      changeImage(1);
     }
-});
+  });
 
-// Add touch swipe support for image carousel
-let imageTouchStartY = 0;
-let imageTouchEndY = 0;
+  // Add touch swipe support for image carousel
+  let imageTouchStartY = 0;
+  let imageTouchEndY = 0;
 
-document.querySelector('.image-slideshow-container').addEventListener('touchstart', (e) => {
+  document.querySelector('.image-slideshow-container').addEventListener('touchstart', (e) => {
     imageTouchStartY = e.changedTouches[0].screenY;
-});
+  });
 
-document.querySelector('.image-slideshow-container').addEventListener('touchend', (e) => {
+  document.querySelector('.image-slideshow-container').addEventListener('touchend', (e) => {
     imageTouchEndY = e.changedTouches[0].screenY;
     handleImageSwipe();
-});
+  });
 
-function handleImageSwipe() {
+  function handleImageSwipe() {
     const swipeThreshold = 50;
     const diff = imageTouchStartY - imageTouchEndY;
 
     if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-            changeImage(1);
-        } else {
-            changeImage(-1);
-        }
+      if (diff > 0) {
+        changeImage(1);
+      } else {
+        changeImage(-1);
+      }
     }
-}
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     const slides = document.querySelectorAll('.image-slide');
@@ -1374,19 +1428,21 @@ function handleImageSwipe() {
       const link = slide.getAttribute('data-link');
       const descDiv = slide.querySelector('.image-description');
 
-      // Wrap description text in an anchor tag
       if (link && descDiv) {
         const anchor = document.createElement('a');
         anchor.href = link;
         anchor.textContent = descDiv.textContent;
-        anchor.className = 'image-description-link'; // for styling if needed
-        anchor.target = '_blank'; // optional: open in new tab
+        anchor.className = 'image-description-link';
+        anchor.target = '_blank';
 
-        descDiv.textContent = ''; // clear existing text
-        descDiv.appendChild(anchor); // insert the link
+        descDiv.textContent = '';
+        descDiv.appendChild(anchor);
       }
     });
+
+    showImage(0);
   });
+            
 
     </script>
 </body>
