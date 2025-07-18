@@ -437,6 +437,201 @@
             opacity: 0;
         }
 
+        <!-- Additional CSS to add to your existing <style> section -->
+<style>
+/* Image Carousel Section */
+.frame-3 {
+    background-color: #2a9b65;
+    padding: 10px 20px;
+    margin: 5px auto;
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+.seal-title-section {
+    position: relative;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.seal-icon-left,
+.seal-icon-right {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.seal-icon-left img,
+.seal-icon-right img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.seal-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+    font-weight: bold;
+    color: #f1e4a9;
+    margin: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 2;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Image Carousel Frame */
+.frame-image-carousel {
+    background-color: #2a9b65;
+    padding: 20px;
+    margin: 0 auto 20px;
+    max-width: 1200px;
+    border: 2px solid #f1e4a9;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+    opacity: 0.95;
+}
+
+.image-carousel-container {
+    position: relative;
+    width: 100%;
+    background-color: rgba(241, 228, 169, 0.1);
+    border: 2px dashed #f1e4a9;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.image-carousel-msg {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-carousel-msg .japanese-text {
+    font-size: 16px;
+    color: #f1e4a9;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.image-carousel-msg .english-text {
+    font-family: Montserrat;
+    font-size: 16px;
+    color: rgba(241, 228, 169, 0.8);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.image-slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.image-slide {
+    display: none;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.image-slide.active {
+    display: block;
+}
+
+.image-slide img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-slide img:hover {
+    transform: scale(1.02);
+}
+
+.image-description {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(241, 228, 169, 0.1);
+    border-radius: 4px;
+    color: #f1e4a9;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.image-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(241, 228, 169, 0.9);
+    border: 2px solid #f1e4a9;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: #174619;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.image-nav:hover {
+    background-color: #f1e4a9;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.image-nav.prev {
+    left: -25px;
+}
+
+.image-nav.next {
+    right: -25px;
+}
+
+.image-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    background-color: rgba(241, 228, 169, 0.5);
+    border: 2px solid #f1e4a9;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.image-dot.active {
+    background-color: #f1e4a9;
+    transform: scale(1.2);
+}
+
+.image-dot:hover {
+    background-color: #f1e4a9;
+}
+
         /* Footer */
         .footer {
             height: 80px;
@@ -546,6 +741,33 @@
             .video-control {
                 magin-bottom: 20px;
             }
+
+                .seal-title {
+        font-size: 24px;
+    }
+    
+    .seal-icon-left, .seal-icon-right {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .image-slide img {
+        max-height: 300px;
+    }
+    
+    .image-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .image-nav.prev {
+        left: -22px;
+    }
+    
+    .image-nav.next {
+        right: -22px;
+    }
                 
         }
 
@@ -643,6 +865,36 @@
                 padding: 3px 6px;
                 font-size: 9px;
                 border-radius: 4px;
+    }
+               .seal-title {
+        font-size: 20px;
+    }
+    
+    .seal-icon-left, .seal-icon-right {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .image-slide img {
+        max-height: 250px;
+    }
+    
+    .image-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .image-nav.prev {
+        left: 5px;
+    }
+    
+    .image-nav.next {
+        right: 5px;
+    }
+    
+    .image-carousel-container {
+        padding: 15px;
     }
         }
     </style>
@@ -778,6 +1030,71 @@
         <source src="far_away.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+    <!-- Frame 3: Seal Adoption Title Section -->
+<section class="frame-3">
+    <div class="seal-title-section">
+        <div class="seal-icon-left">
+            <img src="seal_icon_1.gif" alt="Left icon">
+        </div>
+        <h3 class="seal-title">Seal adoption</h3>
+        <div class="seal-icon-right">
+            <img src="seal_icon_1.gif" alt="Right icon">
+        </div>
+    </div>
+</section>
+
+<!-- Frame Image Carousel: Image Gallery -->
+<section class="frame-image-carousel">
+    <div class="image-carousel-container">
+        <!-- Message Section -->
+        <div class="image-carousel-msg">
+            <p class="japanese-text">
+                ベトナムのWishzenは、このウェブサイトを通じて、NCT WISHのメンバーであるリョウに私たちの願いを届けたいと思っています。私たちの願いを通じて、リョウがもっと高く、さらに強く、健康に成長し、NCT WISHと共に素晴らしいアイドルになるように。
+            </p>
+            <p class="english-text">
+                Chào mừng mọi người đã tới với website. Đây là nơi lưu trữ những lời nhắn sinh nhật em Ryo mà các bạn đã gửi về, những lời nhắn hiện tại vẫn đang được cập nhật lên website nhé :") ~ Mong các bạn có một khoảng thời gian vui vẻ khi tham quan một vòng ở đây 🍀
+            </p>
+        </div>
+
+        <!-- Image Slideshow -->
+        <div class="image-slideshow-container">
+            <!-- Image Navigation Buttons -->
+            <button class="image-nav prev" onclick="changeImage(-1)">‹</button>
+            <button class="image-nav next" onclick="changeImage(1)">›</button>
+            
+            <!-- Image Slides -->
+            <div class="image-slide active" data-link="https://example.com/seal1">
+                <img src="https://via.placeholder.com/600x400/2a9b65/f1e4a9?text=Seal+Image+1" alt="Seal Adoption 1" onclick="openImageLink(0)">
+                <div class="image-description">
+                    Click to visit the seal adoption page and help support marine conservation efforts.
+                </div>
+            </div>
+            
+            <div class="image-slide" data-link="https://example.com/seal2">
+                <img src="https://via.placeholder.com/600x400/2a9b65/f1e4a9?text=Seal+Image+2" alt="Seal Adoption 2" onclick="openImageLink(1)">
+                <div class="image-description">
+                    Learn more about our seal conservation program and how you can make a difference.
+                </div>
+            </div>
+            
+            <div class="image-slide" data-link="https://example.com/seal3">
+                <img src="https://via.placeholder.com/600x400/2a9b65/f1e4a9?text=Seal+Image+3" alt="Seal Adoption 3" onclick="openImageLink(2)">
+                <div class="image-description">
+                    Discover the amazing world of seals and join our adoption program today.
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Image Controls -->
+        <div class="image-controls">
+            <span class="image-dot active" onclick="goToImage(0)"></span>
+            <span class="image-dot" onclick="goToImage(1)"></span>
+            <span class="image-dot" onclick="goToImage(2)"></span>
+        </div>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -972,6 +1289,79 @@
                 }
             }
         }
+            // ===== IMAGE CAROUSEL FUNCTIONALITY =====
+let currentImage = 0;
+const imageSlides = document.querySelectorAll('.image-slide');
+const totalImages = imageSlides.length;
+
+function changeImage(direction) {
+    imageSlides[currentImage].classList.remove('active');
+    document.querySelectorAll('.image-dot')[currentImage].classList.remove('active');
+
+    currentImage += direction;
+
+    if (currentImage >= totalImages) {
+        currentImage = 0;
+    } else if (currentImage < 0) {
+        currentImage = totalImages - 1;
+    }
+
+    imageSlides[currentImage].classList.add('active');
+    document.querySelectorAll('.image-dot')[currentImage].classList.add('active');
+}
+
+function goToImage(index) {
+    imageSlides[currentImage].classList.remove('active');
+    document.querySelectorAll('.image-dot')[currentImage].classList.remove('active');
+
+    currentImage = index;
+
+    imageSlides[currentImage].classList.add('active');
+    document.querySelectorAll('.image-dot')[currentImage].classList.add('active');
+}
+
+function openImageLink(index) {
+    const slide = imageSlides[index];
+    const link = slide.getAttribute('data-link');
+    if (link) {
+        window.open(link, '_blank');
+    }
+}
+
+// Add keyboard navigation for image carousel
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') {
+        changeImage(-1);
+    } else if (e.key === 'ArrowDown') {
+        changeImage(1);
+    }
+});
+
+// Add touch swipe support for image carousel
+let imageTouchStartY = 0;
+let imageTouchEndY = 0;
+
+document.querySelector('.image-slideshow-container').addEventListener('touchstart', (e) => {
+    imageTouchStartY = e.changedTouches[0].screenY;
+});
+
+document.querySelector('.image-slideshow-container').addEventListener('touchend', (e) => {
+    imageTouchEndY = e.changedTouches[0].screenY;
+    handleImageSwipe();
+});
+
+function handleImageSwipe() {
+    const swipeThreshold = 50;
+    const diff = imageTouchStartY - imageTouchEndY;
+
+    if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+            changeImage(1);
+        } else {
+            changeImage(-1);
+        }
+    }
+}
     </script>
 </body>
 </html>
