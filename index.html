@@ -896,6 +896,10 @@
     .image-carousel-container {
         padding: 15px;
     }
+            .image-description a {
+  text-decoration: underline;
+  color: inherit; /* inherits the parent text color */
+}
         }
     </style>
 </head>
@@ -1362,6 +1366,28 @@ function handleImageSwipe() {
         }
     }
 }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const slides = document.querySelectorAll('.image-slide');
+
+    slides.forEach((slide) => {
+      const link = slide.getAttribute('data-link');
+      const descDiv = slide.querySelector('.image-description');
+
+      // Wrap description text in an anchor tag
+      if (link && descDiv) {
+        const anchor = document.createElement('a');
+        anchor.href = link;
+        anchor.textContent = descDiv.textContent;
+        anchor.className = 'image-description-link'; // for styling if needed
+        anchor.target = '_blank'; // optional: open in new tab
+
+        descDiv.textContent = ''; // clear existing text
+        descDiv.appendChild(anchor); // insert the link
+      }
+    });
+  });
+
     </script>
 </body>
 </html>
