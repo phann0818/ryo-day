@@ -216,22 +216,257 @@
             padding: 0 20px;
         }
 
-/* ===== Reusable Frame Wrapper ===== */
-.frame-wrapper {
+        /* Icons */
+        .moment-icon-left,
+        .moment-icon-right {
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
+        .moment-icon-left img,
+        .moment-icon-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ABSOLUTE TEXT CENTER */
+        .moment-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
+            color: #f1e4a9;
+            margin: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Frame 1: Video Gallery */
+        .frame-1 {
+            background-color: #2a9b65;
+            padding: 20px;
+            margin: 0 auto 20px;
+            max-width: 1200px;
+            border: 2px solid #f1e4a9;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            background-color: rgba(241, 228, 169, 0.1);
+            border: 2px dashed #f1e4a9;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Video Navigation Buttons */
+        .video-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(241, 228, 169, 0.9);
+            border: 2px solid #f1e4a9;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #174619;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .video-nav:hover {
+            background-color: #f1e4a9;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .video-nav.prev {
+            left: -25px;
+        }
+
+        .video-nav.next {
+            right: -25px;
+        }
+
+        /* Video Info */
+        .video-info {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: rgba(241, 228, 169, 0.1);
+            border-radius: 4px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            color: #f1e4a9;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .video-description {
+            font-size: 14px;
+            color: rgba(241, 228, 169, 0.8);
+            line-height: 1.4;
+        }
+
+        /* Video Controls */
+        .video-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .video-dot {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin: 0 5px;
+            background-color: rgba(241, 228, 169, 0.5);
+            border: 2px solid #f1e4a9;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-dot.active {
+            background-color: #f1e4a9;
+            transform: scale(1.2);
+        }
+
+        .video-dot:hover {
+            background-color: #f1e4a9;
+        }
+
+        /* Preview thumbnails */
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .preview-item {
+            width: 120px;
+            height: 70px;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .preview-item:hover {
+            border-color: #f1e4a9;
+            transform: scale(1.05);
+        }
+
+        .preview-item.active {
+            border-color: #f1e4a9;
+            box-shadow: 0 0 10px rgba(241, 228, 169, 0.5);
+        }
+
+        .preview-item iframe {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            transition: opacity 0.3s ease;
+        }
+
+        .preview-item:hover .preview-overlay {
+            opacity: 0.8;
+        }
+
+        .preview-item.active .preview-overlay {
+            opacity: 0;
+        }
+
+        <!-- Additional CSS to add to your existing <style> section -->
+<style>
+/* Image Carousel Section */
+.frame-3 {
     background-color: #2a9b65;
-    max-width: 1200px;
-    margin: 5px auto 20px;
     padding: 10px 20px;
+    margin: 5px auto;
+    max-width: 1200px;
     position: relative;
     z-index: 1;
-    opacity: 0.9;
-    border-radius: 8px;
-    border: 2px solid #f1e4a9;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    opacity: 0.8;
 }
 
-/* ===== Reusable Title Section ===== */
-.frame-title-section {
+
+        .seal-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
+            color: #f1e4a9;
+            margin: 0;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 2;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+.seal-title-section {
     position: relative;
     height: 80px;
     display: flex;
@@ -240,35 +475,36 @@
     padding: 0 20px;
 }
 
-.frame-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 32px;
-    font-weight: bold;
-    color: #f1e4a9;
-    margin: 0;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 2;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.frame-icon {
+.seal-icon-left,
+.seal-icon-right {
     width: 60px;
     height: 60px;
     flex-shrink: 0;
 }
 
-.frame-icon img {
+.seal-icon-left img,
+.seal-icon-right img {
     width: 100%;
     height: auto;
     display: block;
 }
 
-/* ===== Reusable Carousel Container ===== */
-.carousel-container {
+
+/* Image Carousel Frame */
+.frame-image-carousel {
+    background-color: #2a9b65;
+    padding: 20px;
+    margin: 0 auto 20px;
+    max-width: 1200px;
+    border: 2px solid #f1e4a9;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+    opacity: 0.95;
+}
+
+.image-carousel-container {
     position: relative;
     width: 100%;
     background-color: rgba(241, 228, 169, 0.1);
@@ -277,38 +513,91 @@
     padding: 20px;
 }
 
-/* ===== Reusable Slide Styles ===== */
-.carousel-slide {
+.image-carousel-msg {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-carousel-msg .japanese-text {
+    font-size: 16px;
+    color: #f1e4a9;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.image-carousel-msg .english-text {
+    font-family: Montserrat;
+    font-size: 16px;
+    color: rgba(241, 228, 169, 0.8);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.image-slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.thumbnail-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: border 0.3s;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: #007bff; /* or any color you like */
+}        
+
+.image-slide {
     display: none;
     width: 100%;
     position: relative;
     text-align: center;
 }
 
-.carousel-slide.active {
+.image-slide.active {
     display: block;
 }
 
-.carousel-slide iframe,
-.carousel-slide img {
+.image-slide img {
     width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.carousel-slide img {
     max-height: 400px;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.carousel-slide img:hover {
+.image-slide img:hover {
     transform: scale(1.02);
 }
 
-/* ===== Navigation Buttons (Shared) ===== */
-.carousel-nav {
+.image-description {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: rgba(241, 228, 169, 0.1);
+    border-radius: 4px;
+    color: #f1e4a9;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.image-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -327,22 +616,26 @@
     z-index: 10;
 }
 
-.carousel-nav:hover {
+.image-nav:hover {
     background-color: #f1e4a9;
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.carousel-nav.prev { left: -25px; }
-.carousel-nav.next { right: -25px; }
+.image-nav.prev {
+    left: -25px;
+}
 
-/* ===== Dot Controls ===== */
-.carousel-dots {
+.image-nav.next {
+    right: -25px;
+}
+
+.image-controls {
     text-align: center;
     margin-top: 20px;
 }
 
-.carousel-dot {
+.image-dot {
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -354,115 +647,15 @@
     transition: all 0.3s ease;
 }
 
-.carousel-dot.active {
+.image-dot.active {
     background-color: #f1e4a9;
     transform: scale(1.2);
 }
 
-.carousel-dot:hover {
+.image-dot:hover {
     background-color: #f1e4a9;
 }
 
-/* ===== Thumbnail Styles ===== */
-.thumbnail-container,
-.preview-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.thumbnail,
-.preview-item {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.preview-item {
-    width: 120px;
-    height: 70px;
-}
-
-.thumbnail:hover,
-.thumbnail.active,
-.preview-item:hover,
-.preview-item.active {
-    border-color: #f1e4a9;
-    box-shadow: 0 0 10px rgba(241, 228, 169, 0.5);
-    transform: scale(1.05);
-}
-
-.preview-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    transition: opacity 0.3s ease;
-}
-
-.preview-item:hover .preview-overlay {
-    opacity: 0.8;
-}
-
-.preview-item.active .preview-overlay {
-    opacity: 0;
-}
-
-/* ===== Info Boxes (Descriptions under slides) ===== */
-.video-info,
-.image-description {
-    text-align: center;
-    margin-top: 15px;
-    padding: 10px 15px;
-    background-color: rgba(241, 228, 169, 0.1);
-    border-radius: 4px;
-    color: #f1e4a9;
-    font-size: 14px;
-    line-height: 1.4;
-    font-style: normal;
-}
-
-.video-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.video-description {
-    color: rgba(241, 228, 169, 0.8);
-}
-
-/* ===== Message Section for Carousel ===== */
-.image-carousel-msg {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.image-carousel-msg .japanese-text {
-    font-size: 16px;
-    color: #f1e4a9;
-    line-height: 1.8;
-    margin-bottom: 10px;
-}
-
-.image-carousel-msg .english-text {
-    font-family: Montserrat, sans-serif;
-    font-size: 16px;
-    color: rgba(241, 228, 169, 0.8);
-    line-height: 1.6;
-    font-style: italic;
-}
         /* Footer */
         .footer {
             height: 80px;
@@ -778,134 +971,167 @@
     <!-- Frame 2: Ryo's Moment Section -->
     <section class="frame-2">
         <div class="main-title-2">
-            <div class="frame-icon">
+            <div class="moment-icon-left">
                 <img src="seal_icon_1.gif" alt="Left icon">
             </div>
-            <h3 class="frame-title">Ryo's moment</h3>
-            <div class="frame-icon">
+            <h3 class="moment-title">Ryo's moment</h3>
+            <div class="moment-icon-right">
                 <img src="seal_icon_1.gif" alt="Right icon">
             </div>
         </div>
     </section>
 
-   <!-- Frame 1: Video Gallery -->
+<!-- Frame 1: Video Gallery -->
 <section class="frame-1">
-  <div class="gallery-container">
+    <div class="gallery-container">
+        <!-- Slide area -->
+        <div class="slideshow-container">
+            <!-- Video Navigation Buttons -->
+            <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
+            <button class="video-nav next" onclick="changeVideo(1)">›</button>
 
-    <!-- Slideshow -->
-    <div class="slideshow-container">
-      <!-- Navigation Buttons -->
-      <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
-      <button class="video-nav next" onclick="changeVideo(1)">›</button>
+            <!-- Video Slides -->
+            <div class="slide active" data-title="240716 - ngoan xinh iu" data-description="ngoan xinh iu của các chị đây òiiiii">
+                <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="240716 - ngoan xinh iu"></iframe>
+            </div>
 
-      <!-- Video Slides -->
-      <div class="slide active" data-title="240716 - ngoan xinh iu" data-description="ngoan xinh iu của các chị đây òiiiii">
-        <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0?enablejsapi=1" allowfullscreen title="240716 - ngoan xinh iu"></iframe>
-      </div>
-      <div class="slide" data-title="250606 BKK Public Fansign" data-description="supercute >o<">
-        <iframe src="https://www.youtube.com/embed/2GyJQzkKjis?enablejsapi=1" allowfullscreen title="250606 BKK Public Fansign"></iframe>
-      </div>
-      <div class="slide" data-title="Our Adventures - Vietsub" data-description="Our Adventures - Vietsub">
-        <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y?enablejsapi=1" allowfullscreen title="Our Adventures"></iframe>
-      </div>
-      <div class="slide" data-title="Memory" data-description="Memory">
-        <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00?enablejsapi=1" allowfullscreen title="Memory"></iframe>
-      </div>
-      <div class="slide" data-title="NCT Wish - 君がくれたもの FMV" data-description="君がくれたもの">
-        <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8?enablejsapi=1" allowfullscreen title="NCT Wish - 君がくれたもの"></iframe>
-      </div>
+            <div class="slide" data-title="250606 BKK Public Fansign" data-description="supercute >o<">
+                <iframe src="https://www.youtube.com/embed/2GyJQzkKjis?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="250606 BKK Public Fansign"></iframe>
+            </div>
+
+            <div class="slide" data-title="Our Adventures - Vietsub" data-description="Our Adventures - Vietsub">
+                <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="Our Adventures - Vietsub"></iframe>
+            </div>
+
+            <div class="slide" data-title="Memory" data-description="Memory">
+                <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="Memory"></iframe>
+            </div>
+
+            <div class="slide" data-title="NCT Wish - 君がくれたもの FMV" data-description="君がくれたもの">
+                <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="NCT Wish - 君がくれたもの FMV"></iframe>
+            </div>
+        </div>
+
+        <!-- Video Info -->
+        <div class="video-info">
+            <div class="video-title" id="videoTitle">240716 - ngoan xinh iu</div>
+            <div class="video-description" id="videoDescription">ngoan xinh iu của các chị đây òiiiii</div>
+        </div>
+
+        <!-- Video Controls -->
+        <div class="video-controls">
+            <span class="video-dot active" onclick="goToVideo(0)"></span>
+            <span class="video-dot" onclick="goToVideo(1)"></span>
+            <span class="video-dot" onclick="goToVideo(2)"></span>
+            <span class="video-dot" onclick="goToVideo(3)"></span>
+            <span class="video-dot" onclick="goToVideo(4)"></span>
+        </div>
+
+        <!-- Preview Thumbnails -->
+        <div class="preview-container">
+            <div class="preview-item active" onclick="goToVideo(0)">
+                <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0" allowfullscreen loading="lazy" title="Preview 1"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(1)">
+                <iframe src="https://www.youtube.com/embed/2GyJQzkKjis" allowfullscreen loading="lazy" title="Preview 2"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(2)">
+                <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y" allowfullscreen loading="lazy" title="Preview 3"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(3)">
+                <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00" allowfullscreen loading="lazy" title="Preview 4"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(4)">
+                <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8" allowfullscreen loading="lazy" title="Preview 5"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+        </div>
     </div>
-
-    <!-- Video Info -->
-    <div class="video-info">
-      <div class="video-title" id="videoTitle">240716 - ngoan xinh iu</div>
-      <div class="video-description" id="videoDescription">ngoan xinh iu của các chị đây òiiiii</div>
-    </div>
-
-    <!-- Dot Controls -->
-    <div class="video-controls">
-      <span class="video-dot active" onclick="goToVideo(0)"></span>
-      <span class="video-dot" onclick="goToVideo(1)"></span>
-      <span class="video-dot" onclick="goToVideo(2)"></span>
-      <span class="video-dot" onclick="goToVideo(3)"></span>
-      <span class="video-dot" onclick="goToVideo(4)"></span>
-    </div>
-
-    <!-- Thumbnails -->
-    <div class="preview-container">
-      <div class="preview-item active" onclick="goToVideo(0)">
-        <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0" allowfullscreen title="Thumbnail 1"></iframe>
-        <div class="preview-overlay">▶</div>
-      </div>
-      <div class="preview-item" onclick="goToVideo(1)">
-        <iframe src="https://www.youtube.com/embed/2GyJQzkKjis" allowfullscreen title="Thumbnail 2"></iframe>
-        <div class="preview-overlay">▶</div>
-      </div>
-      <div class="preview-item" onclick="goToVideo(2)">
-        <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y" allowfullscreen title="Thumbnail 3"></iframe>
-        <div class="preview-overlay">▶</div>
-      </div>
-      <div class="preview-item" onclick="goToVideo(3)">
-        <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00" allowfullscreen title="Thumbnail 4"></iframe>
-        <div class="preview-overlay">▶</div>
-      </div>
-      <div class="preview-item" onclick="goToVideo(4)">
-        <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8" allowfullscreen title="Thumbnail 5"></iframe>
-        <div class="preview-overlay">▶</div>
-      </div>
-    </div>
-  </div>
 </section>
 
-<!-- Frame: Image Carousel -->
+    <!-- Audio element for background music -->
+    <audio id="backgroundMusic" loop>
+        <source src="far_away.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Frame 3: Seal Adoption Title Section -->
+<section class="frame-3">
+    <div class="seal-title-section">
+        <div class="seal-icon-left">
+            <img src="seal_icon_1.gif" alt="Left icon">
+        </div>
+        <h3 class="seal-title">Seal adoption</h3>
+        <div class="seal-icon-right">
+            <img src="seal_icon_1.gif" alt="Right icon">
+        </div>
+    </div>
+</section>
+
+<!-- Frame Image Carousel: Image Gallery -->
 <section class="frame-image-carousel">
-  <div class="image-carousel-container">
+    <div class="image-carousel-container">
+        <!-- Message Section -->
+        <div class="image-carousel-msg">
+            <p class="japanese-text">
+                ベトナムのWishzenは、このウェブサイトを通じて、NCT WISHのメンバーであるリョウに私たちの願いを届けたいと思っています。私たちの願いを通じて、リョウがもっと高く、さらに強く、健康に成長し、NCT WISHと共に素晴らしいアイドルになるように。
+            </p>
+            <p class="english-text">
+                Chào mừng mọi người đã tới với website. Đây là nơi lưu trữ những lời nhắn sinh nhật em Ryo mà các bạn đã gửi về, những lời nhắn hiện tại vẫn đang được cập nhật lên website nhé :") ~ Mong các bạn có một khoảng thời gian vui vẻ khi tham quan một vòng ở đây 🍀
+            </p>
+        </div>
 
-    <!-- Messages -->
-    <div class="image-carousel-msg">
-      <p class="japanese-text">
-        ベトナムのWishzenは、このウェブサイトを通じて、NCT WISHのメンバーであるリョウに私たちの願いを届けたいと思っています。私たちの願いを通じて、リョウがもっと高く、さらに強く、健康に成長し、NCT WISHと共に素晴らしいアイドルになるように。
-      </p>
-      <p class="english-text">
-        Chào mừng mọi người đã tới với website. Đây là nơi lưu trữ những lời nhắn sinh nhật em Ryo mà các bạn đã gửi về, những lời nhắn hiện tại vẫn đang được cập nhật lên website nhé :") ~ Mong các bạn có một khoảng thời gian vui vẻ khi tham quan một vòng ở đây 🍀
-      </p>
+        <!-- Image Slideshow -->
+        <div class="image-slideshow-container">
+            <!-- Image Navigation Buttons -->
+            <button class="image-nav prev" onclick="changeImage(-1)">‹</button>
+            <button class="image-nav next" onclick="changeImage(1)">›</button>
+            
+            <!-- Image Slides -->
+            <div class="image-slide active" data-link="https://mmrpatients.org/patient/pv2503-pierogi/">
+                <img src="assets/pierogi.png" alt="Pierogi" onclick="openImageLink(0)">
+                <div class="image-description">
+                    Get to know Pierogi here/Pierogiについて
+                </div>
+            </div>
+            
+            <div class="image-slide" data-link="https://mmrpatients.org/patient/pv2504-finley/">
+                <img src="assets/finley.png" alt="Finley" onclick="openImageLink(1)">
+                <div class="image-description">
+                    Get to know Finley here/Finleyについて
+                </div>
+            </div>
+            
+            <div class="image-slide" data-link="https://mmrpatients.org/patient/pv2502-zeus/">
+                <img src="assets/zeus.png" alt="Zeus" onclick="openImageLink(2)">
+                <div class="image-description">
+                    Get to know Zeus here/Zeusについて
+                </div>
+            </div>
+            <div class="thumbnail-container">
+    <img src="assets/pierogi_thumbnail.jpg" alt="Pierogi" class="thumbnail" onclick="showImage(0)">
+    <img src="assets/finley_thumbnail.jpg" alt="Finley" class="thumbnail" onclick="showImage(1)">
+    <img src="assets/zeus_thumbnail.jpg" alt="Zeus" class="thumbnail" onclick="showImage(2)">
+</div>
+            
+        </div>
+
+        <!-- Image Controls -->
+        <div class="image-controls">
+            <span class="image-dot active" onclick="goToImage(0)"></span>
+            <span class="image-dot" onclick="goToImage(1)"></span>
+            <span class="image-dot" onclick="goToImage(2)"></span>
+        </div>
     </div>
-
-    <!-- Image Slides -->
-    <div class="image-slideshow-container">
-      <button class="image-nav prev" onclick="changeImage(-1)">‹</button>
-      <button class="image-nav next" onclick="changeImage(1)">›</button>
-
-      <div class="image-slide active" data-link="https://mmrpatients.org/patient/pv2503-pierogi/">
-        <img src="assets/pierogi.png" alt="Pierogi" onclick="openImageLink(0)">
-        <div class="image-description">Get to know Pierogi here / Pierogiについて</div>
-      </div>
-
-      <div class="image-slide" data-link="https://mmrpatients.org/patient/pv2504-finley/">
-        <img src="assets/finley.png" alt="Finley" onclick="openImageLink(1)">
-        <div class="image-description">Get to know Finley here / Finleyについて</div>
-      </div>
-
-      <div class="image-slide" data-link="https://mmrpatients.org/patient/pv2502-zeus/">
-        <img src="assets/zeus.png" alt="Zeus" onclick="openImageLink(2)">
-        <div class="image-description">Get to know Zeus here / Zeusについて</div>
-      </div>
-    </div>
-
-    <!-- Dot Controls -->
-    <div class="image-controls">
-      <span class="image-dot active" onclick="goToImage(0)"></span>
-      <span class="image-dot" onclick="goToImage(1)"></span>
-      <span class="image-dot" onclick="goToImage(2)"></span>
-    </div>
-
-    <!-- Thumbnails -->
-    <div class="thumbnail-container">
-      <img src="assets/pierogi_thumbnail.jpg" alt="Pierogi" class="thumbnail" onclick="showImage(0)">
-      <img src="assets/finley_thumbnail.jpg" alt="Finley" class="thumbnail" onclick="showImage(1)">
-      <img src="assets/zeus_thumbnail.jpg" alt="Zeus" class="thumbnail" onclick="showImage(2)">
-    </div>
-  </div>
 </section>
 
     <!-- Footer -->
