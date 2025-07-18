@@ -981,77 +981,82 @@
         </div>
     </section>
 
-    <!-- Frame 1: Video Gallery -->
-    <section class="frame-1">
-        <div class="gallery-container">
-            <!-- Slide area -->
-            <div class="slideshow-container">
-                <!-- Video Navigation Buttons -->
-                <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
-                <button class="video-nav next" onclick="changeVideo(1)">›</button>
-                
-                <!-- Video Slides -->
-                <div class="slide active" data-title="240716 - ngoan xinh iu" data-description="ngoan xinh iu của các chị đây òiiiii">
-                    <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0?enablejsapi=1" allowfullscreen></iframe>
-                </div>
-                
-                <div class="slide" data-title="250606 BKK Public Fansign'" data-description="supercute >o<">
-                    <iframe src="https://www.youtube.com/embed/2GyJQzkKjis?si=w2w74VWZhnfAWgWi?enablejsapi=1" allowfullscreen></iframe>
-                </div>
+<!-- Frame 1: Video Gallery -->
+<section class="frame-1">
+    <div class="gallery-container">
+        <!-- Slide area -->
+        <div class="slideshow-container">
+            <!-- Video Navigation Buttons -->
+            <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
+            <button class="video-nav next" onclick="changeVideo(1)">›</button>
 
-                <div class="slide" data-title="Our Adventures - Vietsub" data-description="Our Adventures - Vietsub">
-                    <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y?enablejsapi=1" allowfullscreen></iframe>
-                </div>
-                
-                <div class="slide" data-title="Memory" data-description="Memory">
-                    <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00?enablejsapi=1" allowfullscreen></iframe>
-                </div>
-                
-                <div class="slide" data-title="NCT Wish - 君がくれたもの FMV" data-description="君がくれたもの">
-                    <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8?enablejsapi=1" allowfullscreen></iframe>
-                </div>
+            <!-- Video Slides -->
+            <div class="slide active" data-title="240716 - ngoan xinh iu" data-description="ngoan xinh iu của các chị đây òiiiii">
+                <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="240716 - ngoan xinh iu"></iframe>
             </div>
 
-            <!-- Video Info -->
-            <div class="video-info">
-                <div class="video-title" id="videoTitle">240716 - ngoan xinh iu</div>
-                <div class="video-description" id="videoDescription">ngoan xinh iu của các chị đây òiiiii</div>
+            <div class="slide" data-title="250606 BKK Public Fansign" data-description="supercute >o<">
+                <iframe src="https://www.youtube.com/embed/2GyJQzkKjis?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="250606 BKK Public Fansign"></iframe>
             </div>
 
-            <!-- Video Controls -->
-            <div class="video-controls">
-                <span class="video-dot active" onclick="goToVideo(0)"></span>
-                <span class="video-dot" onclick="goToVideo(1)"></span>
-                <span class="video-dot" onclick="goToVideo(2)"></span>
-                <span class="video-dot" onclick="goToVideo(3)"></span>
-                <span class="video-dot" onclick="goToVideo(4)"></span>
+            <div class="slide" data-title="Our Adventures - Vietsub" data-description="Our Adventures - Vietsub">
+                <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="Our Adventures - Vietsub"></iframe>
             </div>
 
-            <!-- Preview Thumbnails -->
-            <div class="preview-container">
-                <div class="preview-item active" onclick="goToVideo(0)">
-                    <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0" allowfullscreen></iframe>
-                    <div class="preview-overlay">▶</div>
-                </div>
-                <div class="preview-item" onclick="goToVideo(1)">
-                    <iframe src="https://www.youtube.com/embed/2GyJQzkKjis?si=w2w74VWZhnfAWgWi" allowfullscreen></iframe>
-                    <div class="preview-overlay">▶</div>
-                </div>
-                <div class="preview-item" onclick="goToVideo(2)">
-                    <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y" allowfullscreen></iframe>
-                    <div class="preview-overlay">▶</div>
-                </div>
-                <div class="preview-item" onclick="goToVideo(3)">
-                    <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00" allowfullscreen></iframe>
-                    <div class="preview-overlay">▶</div>
-                </div>
-                <div class="preview-item" onclick="goToVideo(4)">
-                    <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8" allowfullscreen></iframe>
-                    <div class="preview-overlay">▶</div>
-                </div>
+            <div class="slide" data-title="Memory" data-description="Memory">
+                <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="Memory"></iframe>
+            </div>
+
+            <div class="slide" data-title="NCT Wish - 君がくれたもの FMV" data-description="君がくれたもの">
+                <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8?enablejsapi=1"
+                        allowfullscreen loading="lazy" title="NCT Wish - 君がくれたもの FMV"></iframe>
             </div>
         </div>
-    </section>
+
+        <!-- Video Info -->
+        <div class="video-info">
+            <div class="video-title" id="videoTitle">240716 - ngoan xinh iu</div>
+            <div class="video-description" id="videoDescription">ngoan xinh iu của các chị đây òiiiii</div>
+        </div>
+
+        <!-- Video Controls -->
+        <div class="video-controls">
+            <span class="video-dot active" onclick="goToVideo(0)"></span>
+            <span class="video-dot" onclick="goToVideo(1)"></span>
+            <span class="video-dot" onclick="goToVideo(2)"></span>
+            <span class="video-dot" onclick="goToVideo(3)"></span>
+            <span class="video-dot" onclick="goToVideo(4)"></span>
+        </div>
+
+        <!-- Preview Thumbnails -->
+        <div class="preview-container">
+            <div class="preview-item active" onclick="goToVideo(0)">
+                <iframe src="https://www.youtube.com/embed/XgfxCrPUjh0" allowfullscreen loading="lazy" title="Preview 1"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(1)">
+                <iframe src="https://www.youtube.com/embed/2GyJQzkKjis" allowfullscreen loading="lazy" title="Preview 2"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(2)">
+                <iframe src="https://www.youtube.com/embed/qlHv62ooO5Y" allowfullscreen loading="lazy" title="Preview 3"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(3)">
+                <iframe src="https://www.youtube.com/embed/HzIL3Vcwg00" allowfullscreen loading="lazy" title="Preview 4"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+            <div class="preview-item" onclick="goToVideo(4)">
+                <iframe src="https://www.youtube.com/embed/-1ztMs7QVf8" allowfullscreen loading="lazy" title="Preview 5"></iframe>
+                <div class="preview-overlay">▶</div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Audio element for background music -->
     <audio id="backgroundMusic" loop>
