@@ -1136,6 +1136,7 @@
     <footer class="footer">
         <div class="footer-content">
             <p>from Vietnamese fans</p>
+            <p id="viewCounter">Loading views...</p>
         </div>
     </footer>
 
@@ -1447,7 +1448,28 @@ function openImageLink(index) {
 
     showImage(0);
   });
-            
+  // View Counter Functionality
+async function updateViewCounter() {
+    try {
+        // Replace 'ryo-letters-vn' with your preferred site identifier
+        const response = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage');
+        const data = await response.json();
+        
+        if (data.value) {
+            document.getElementById('viewCounter').innerHTML = 
+                `👁️ Views: ${data.value.toLocaleString()}`;
+        } else {
+            throw new Error('Invalid response');
+        }
+    } catch (error) {
+        console.error('Error updating view counter:', error);
+        document.getElementById('viewCounter').innerHTML = 
+            '👁️ Views: Unable to load';
+    }
+}
+
+// Option 1: Just add this line at the end of your existing script
+updateViewCounter();          
 
     </script>
 </body>
