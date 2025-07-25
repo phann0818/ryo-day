@@ -1448,40 +1448,33 @@ function openImageLink(index) {
 
     showImage(0);
   });
-<!-- Load CounterAPI SDK -->
-<script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
 
-<script>
-  async function updateViewCounter() {
+  document.addEventListener("DOMContentLoaded", async () => {
+    const el = document.getElementById('viewCounter');
+
     try {
-      const counter = new Counter({
-        workspace: 'pageview' // your public workspace slug
+      const res = await fetch('https://api.counterapi.dev/v2/pageview/pvws/up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
-      // Increment the view count
-      const response = await counter.up('pvws');
-      console.log('CounterAPI response:', response);
+      const json = await res.json();
+      const views = json?.data?.up_count;
 
-      if (response && typeof response.value === 'number') {
-        const viewElement = document.getElementById('viewCounter');
-        if (viewElement) {
-          viewElement.innerHTML = `👁️ Views: ${response.value.toLocaleString()}`;
-        }
+      if (res.ok && typeof views === 'number') {
+        el.textContent = `👁️ Views: ${views.toLocaleString()}`;
       } else {
-        throw new Error('Unexpected response format from CounterAPI');
+        el.textContent = '👁️ Views: Failed to fetch';
+        console.error('Unexpected response:', json);
       }
-
-    } catch (error) {
-      console.error('Failed to fetch view count:', error);
-      const viewElement = document.getElementById('viewCounter');
-      if (viewElement) {
-        viewElement.innerHTML = '👁️ Views: Error connecting to CounterAPI';
-      }
+    } catch (err) {
+      console.error('Error calling CounterAPI:', err);
+      el.textContent = '👁️ Views: Error connecting to CounterAPI';
     }
-  }
-
-  // Run when DOM is ready
-  document.addEventListener("DOMContentLoaded", updateViewCounter);
+  });
+</script>
 
     </script>
 </body>
