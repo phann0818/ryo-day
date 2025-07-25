@@ -1450,6 +1450,9 @@ function openImageLink(index) {
 
 /* view counter */
   document.addEventListener("DOMContentLoaded", () => {
+    const isBot = /bot|crawl|spider|preview|facebookexternalhit/i.test(navigator.userAgent);
+    if (isBot) return;
+
     fetch("https://api.counterapi.dev/v2/pageview/pvws/up", {
       method: "POST",
       headers: {
