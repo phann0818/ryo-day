@@ -1448,74 +1448,61 @@ function openImageLink(index) {
 
     showImage(0);
   });
-// Enhanced View Counter with Better Error Handling and Debugging
+// Enhanced View Counter using CounterAPI with Error Handling and Debugging
 async function updateViewCounter() {
     const viewCounterElement = document.getElementById('viewCounter');
-    
+    const counterId = 'pvws'; // <-- Replace this with your real CounterAPI ID
+    const apiUrl = `https://counterapi.com/api/${counterId}/hit`;
+
     try {
-        console.log('Attempting to fetch view count...');
-        
-        // Test if we can reach the API first
-        const response = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage', {
+        console.log('Attempting to fetch view count from CounterAPI...');
+
+        const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
             }
         });
-        
+
         console.log('Response status:', response.status);
         console.log('Response ok:', response.ok);
-        
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log('API response data:', data);
-        
-        if (data && typeof data.value === 'number') {
-            viewCounterElement.innerHTML = `👁️ Views: ${data.value.toLocaleString()}`;
-            console.log('View counter updated successfully:', data.value);
+
+        if (data && typeof data.count === 'number') {
+            viewCounterElement.innerHTML = `👁️ Views: ${data.count.toLocaleString()}`;
+            console.log('View counter updated successfully:', data.count);
         } else {
             throw new Error('Invalid data format received');
         }
-        
+
     } catch (error) {
         console.error('Detailed error:', error);
         console.error('Error name:', error.name);
         console.error('Error message:', error.message);
-        
-        // Try a fallback approach
-        try {
-            console.log('Trying fallback method...');
-            const fallbackResponse = await fetch('https://api.countapi.xyz/get/ryo-letters-vn/homepage');
-            const fallbackData = await fallbackResponse.json();
-            console.log('Fallback response:', fallbackData);
-            
-            if (fallbackData && typeof fallbackData.value === 'number') {
-                // If get works but hit doesn't, manually increment
-                const incrementResponse = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage');
-                const incrementData = await incrementResponse.json();
-                viewCounterElement.innerHTML = `👁️ Views: ${incrementData.value.toLocaleString()}`;
-            } else {
-                throw new Error('Fallback also failed');
-            }
-        } catch (fallbackError) {
-            console.error('Fallback error:', fallbackError);
-            viewCounterElement.innerHTML = '👁️ Views: Cannot connect to counter service';
-        }
+
+        // Fallback display
+        viewCounterElement.innerHTML = '👁️ Views: Unable to connect to CounterAPI';
     }
 }
 
-// Test function to check if the API is reachable
+// Test function to check if CounterAPI is reachable (optional)
 async function testAPI() {
     try {
-        const response = await fetch('https://api.countapi.xyz/info');
+        const testId = 'counterapi'; // Using a known valid counter
+        const testUrl = `https://counterapi.com/api/${testId}/info`;
+
+        const response = await fetch(testUrl);
         const data = await response.json();
-        console.log('CountAPI is working. Service info:', data);
+        console.log('CounterAPI is working. Service info:', data);
         return true;
     } catch (error) {
-        console.error('CountAPI is not reachable:', error);
+        console.error('CounterAPI is not reachable:', error);
         return false;
     }
 }
