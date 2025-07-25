@@ -1448,29 +1448,87 @@ function openImageLink(index) {
 
     showImage(0);
   });
-  // View Counter Functionality
+// Enhanced View Counter with Better Error Handling and Debugging
 async function updateViewCounter() {
+    const viewCounterElement = document.getElementById('viewCounter');
+    
     try {
-        // Replace 'ryo-letters-vn' with your preferred site identifier
-        const response = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage');
-        const data = await response.json();
+        console.log('Attempting to fetch view count...');
         
-        if (data.value) {
-            document.getElementById('viewCounter').innerHTML = 
-                `👁️ Views: ${data.value.toLocaleString()}`;
-        } else {
-            throw new Error('Invalid response');
+        // Test if we can reach the API first
+        const response = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const data = await response.json();
+        console.log('API response data:', data);
+        
+        if (data && typeof data.value === 'number') {
+            viewCounterElement.innerHTML = `👁️ Views: ${data.value.toLocaleString()}`;
+            console.log('View counter updated successfully:', data.value);
+        } else {
+            throw new Error('Invalid data format received');
+        }
+        
     } catch (error) {
-        console.error('Error updating view counter:', error);
-        document.getElementById('viewCounter').innerHTML = 
-            '👁️ Views: Unable to load';
+        console.error('Detailed error:', error);
+        console.error('Error name:', error.name);
+        console.error('Error message:', error.message);
+        
+        // Try a fallback approach
+        try {
+            console.log('Trying fallback method...');
+            const fallbackResponse = await fetch('https://api.countapi.xyz/get/ryo-letters-vn/homepage');
+            const fallbackData = await fallbackResponse.json();
+            console.log('Fallback response:', fallbackData);
+            
+            if (fallbackData && typeof fallbackData.value === 'number') {
+                // If get works but hit doesn't, manually increment
+                const incrementResponse = await fetch('https://api.countapi.xyz/hit/ryo-letters-vn/homepage');
+                const incrementData = await incrementResponse.json();
+                viewCounterElement.innerHTML = `👁️ Views: ${incrementData.value.toLocaleString()}`;
+            } else {
+                throw new Error('Fallback also failed');
+            }
+        } catch (fallbackError) {
+            console.error('Fallback error:', fallbackError);
+            viewCounterElement.innerHTML = '👁️ Views: Cannot connect to counter service';
+        }
     }
 }
 
-// Option 1: Just add this line at the end of your existing script
-updateViewCounter();          
+// Test function to check if the API is reachable
+async function testAPI() {
+    try {
+        const response = await fetch('https://api.countapi.xyz/info');
+        const data = await response.json();
+        console.log('CountAPI is working. Service info:', data);
+        return true;
+    } catch (error) {
+        console.error('CountAPI is not reachable:', error);
+        return false;
+    }
+}
 
+// Run both functions
+document.addEventListener("DOMContentLoaded", async () => {
+    console.log('Page loaded, testing API...');
+    await testAPI();
+    updateViewCounter();
+});
+
+// Also try immediately (in case DOMContentLoaded already fired)
+updateViewCounter();
     </script>
 </body>
 </html>
