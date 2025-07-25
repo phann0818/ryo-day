@@ -1452,10 +1452,11 @@ function openImageLink(index) {
 /* view counter */
   document.addEventListener("DOMContentLoaded", async () => {
     const el = document.getElementById("viewCounter");
-    const endpoint = "https://corsproxy.io/?" + encodeURIComponent("https://api.counterapi.dev/v2/pageview/pvws/up");
+    const apiURL = "https://api.counterapi.dev/v2/pageview/pvws/up";
+    const proxy = "https://cors-anywhere.herokuapp.com/";
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(proxy + apiURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
