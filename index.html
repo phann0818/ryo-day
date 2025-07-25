@@ -1451,7 +1451,7 @@ function openImageLink(index) {
 // Enhanced View Counter using CounterAPI with Error Handling and Debugging
 async function updateViewCounter() {
     const viewCounterElement = document.getElementById('viewCounter');
-    const counterId = 'pvws'; // <-- Replace this with your real CounterAPI ID
+    const counterId = 'pvws'; // Your CounterAPI slug
     const apiUrl = `https://counterapi.com/api/${counterId}/hit`;
 
     try {
@@ -1478,43 +1478,23 @@ async function updateViewCounter() {
             viewCounterElement.innerHTML = `👁️ Views: ${data.count.toLocaleString()}`;
             console.log('View counter updated successfully:', data.count);
         } else {
-            throw new Error('Invalid data format received');
+            throw new Error('Invalid data format received from CounterAPI');
         }
 
     } catch (error) {
         console.error('Detailed error:', error);
-        console.error('Error name:', error.name);
-        console.error('Error message:', error.message);
-
-        // Fallback display
-        viewCounterElement.innerHTML = '👁️ Views: Unable to connect to CounterAPI';
+        viewCounterElement.innerHTML = '👁️ Views: Cannot connect to CounterAPI';
     }
 }
 
-// Test function to check if CounterAPI is reachable (optional)
-async function testAPI() {
-    try {
-        const testId = 'counterapi'; // Using a known valid counter
-        const testUrl = `https://counterapi.com/api/${testId}/info`;
-
-        const response = await fetch(testUrl);
-        const data = await response.json();
-        console.log('CounterAPI is working. Service info:', data);
-        return true;
-    } catch (error) {
-        console.error('CounterAPI is not reachable:', error);
-        return false;
-    }
-}
-
-// Run both functions
+// Run on DOMContentLoaded
 document.addEventListener("DOMContentLoaded", async () => {
     console.log('Page loaded, testing API...');
     await testAPI();
     updateViewCounter();
 });
 
-// Also try immediately (in case DOMContentLoaded already fired)
+// Run immediately in case DOMContentLoaded already fired
 updateViewCounter();
     </script>
 </body>
