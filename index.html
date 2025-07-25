@@ -1451,29 +1451,32 @@ function openImageLink(index) {
 
 /* view counter */
   document.addEventListener("DOMContentLoaded", async () => {
-    const el = document.getElementById('viewCounter');
-    const endpoint = 'https://api.counterapi.dev/v2/pageview/pvws/up';
+    const el = document.getElementById("viewCounter");
+    const endpoint = "https://corsproxy.io/?" + encodeURIComponent("https://api.counterapi.dev/v2/pageview/pvws/up");
 
     try {
-      const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(endpoint)}`, {
-        method: 'POST'
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
-      const json = await res.json();
-      const count = json?.data?.down_count;
 
-      if (res.ok && typeof count === 'number') {
+      const json = await res.json();
+      const count = json?.data?.up_count;
+
+      if (res.ok && typeof count === "number") {
         el.textContent = `👁️ Views: ${count.toLocaleString()}`;
       } else {
-        el.textContent = '👁️ Views: Failed to fetch';
-        console.error('Unexpected response:', json);
+        el.textContent = "👁️ Views: Failed to fetch";
+        console.error("Unexpected response:", json);
       }
     } catch (err) {
-      console.error('Error:', err);
-      el.textContent = '👁️ Views: Error connecting to CounterAPI';
+      console.error("Fetch Error:", err);
+      el.textContent = "👁️ Views: Error connecting to CounterAPI";
     }
   });
-</script>
-</script>
+
 
     </script>
 </body>
