@@ -452,6 +452,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 loadMessages();
+
+/* view counter */
+  document.addEventListener("DOMContentLoaded", () => {
+    const isBot = /bot|crawl|spider|preview|facebookexternalhit/i.test(navigator.userAgent);
+    if (isBot) return;
+
+    fetch("https://api.counterapi.dev/v2/2025/pv2025/up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).catch((err) => {
+      console.error("View count error:", err);
+    });
+  });
   </script>
 </body>
 </html>
