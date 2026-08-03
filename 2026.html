@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wishes - Letters to Ryo</title>
+  <style>
+
+    @font-face {
+      font-family: 'Zpix';
+      src: url('https://raw.githubusercontent.com/phann0818/ryo-day/main/zpix.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Zpix', monospace, sans-serif;
+      background-color: #2a9b65;
+      color: #174619;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+        /* Background grid pattern  */
+        .background {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url('roro.png');
+          background-position: center;   /* center the image */
+          background-repeat: repeat;
+          z-index: -1;
+        }
+
+    .header {
+      height: 80px;
+      background-image: url('header.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .header-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #174619;
+      text-decoration: none;
+    }
+
+    .header-title:hover {
+      text-decoration: underline;
+    }
+
+    .music-button {
+      padding: 9px 18px;
+      font-size: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .music-button:hover {
+      background-color: #45a049;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+    }
+    
+    .tab-btn {
+      font-family: 'Zpix', monospace; /* or any other */
+      padding: 10px 20px;
+      border: none;
+      background-image: url('button_2.png');
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .tab-btn.active {
+      background: #fff;
+      color: #174619;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .messages-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 100%;
+    }
+
+    @keyframes glow-pulse {
+      from {
+        box-shadow: 0 0 4px #fff66c;
+      }
+      to {
+        box-shadow: 0 0 12px 4px #4cffc3;
+      }
+    }
+    .message-card {
+      background-color: #fef6d7;
+      border: 4px solid #174619;
+      border-radius: 8px;
+      aspect-ratio: 4 / 3;
+      box-shadow: 2px 2px 0 #2a9b65;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+      padding: 15px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 10px #fff66c;
+      min-height: 180px;
+      max-width: 100%;
+/*       animation: glow-pulse 1.5s ease-in-out infinite alternate; */
+    }
+    .message-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 4px 4px 0 #174619;
+      animation: glow-pulse 1.5s ease-in-out infinite alternate;
+      
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #2a9b65;
+      padding-bottom: 4px;
+    }
+    .message-avatar {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+    .message-author {
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .message-preview {
+      font-size: 12px;
+      margin-top: 10px;
+      flex: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+    .read-more {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #2a9b65;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .popup-content-pixel {
+      background-color: #f6f0d0;
+      border: 8px solid #174619;
+      padding: 0;
+      width: 90vw;
+      max-width: 800px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 6px 6px 0 #f1c40f, 12px 12px 0 #174619;
+    }
+    .popup-topbar {
+      background: #0b491c;
+      height: 40px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 10px;
+      margin: -8px -8px 0 -8px; /* aligns with the border width */
+    }
+    .popup-close {
+      width: 30px;
+      height: 30px;
+      background-image: url('x_button.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .popup-icon-left {
+      height: 30px;
+      width: 30px;
+      background-image: url('clover_icon_1.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      border: none;
+      margin-right: auto;
+      margin-left: 1px;
+      object-fit: contain;
+    }
+    .popup-headerbar {
+      background: white;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-weight: bold;
+    }
+    .popup-message-box {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+    .popup-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 1200px) {
+      .messages-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .messages-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .messages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      
+      .message-card {
+        padding: 12px;
+        min-height: 160px;
+      }
+      
+      .message-avatar {
+        font-size: 16px;
+      }
+      
+      .message-author {
+        font-size: 12px;
+      }
+      
+      .message-preview {
+        font-size: 11px;
+        -webkit-line-clamp: 3;
+      }
+      
+      .popup-content-pixel {
+        width: 95vw;
+        aspect-ratio: 3 / 4;
+      }
+
+      .music-button {
+        padding: 3px 6px;
+        font-size: 9px;
+        border-radius: 4px;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .messages-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-container {
+        padding: 15px;
+      }
+    }
+    /* ===== SUB-NAVIGATION (Messages | Project) ===== */
+    .sub-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0 0;
+    }
+    .sub-nav-btn {
+      font-family: 'Zpix', monospace;
+      padding: 10px 24px;
+      border: 3px solid #174619;
+      background-color: #f1e4a9;
+      color: #174619;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: filter 0.2s, background-color 0.2s, color 0.2s;
+    }
+    .sub-nav-btn:hover {
+      filter: brightness(1.05);
+    }
+    .sub-nav-btn.active {
+      background-color: #4CAF50;
+      color: #fff;
+    }
+
+    /* ===== PROJECT VIEW: Title (copied from index.html Ryo's moment) ===== */
+    .frame-2 {
+      background-color: #2a9b65;
+      padding: 10px 20px;
+      margin: 5px auto;
+      max-width: 1200px;
+      position: relative;
+      z-index: 1;
+      opacity: 0.8;
+    }
+    .main-title-2 {
+      position: relative;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .moment-icon-left,
+    .moment-icon-right {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+    }
+    .moment-icon-left img,
+    .moment-icon-right img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .moment-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      font-weight: bold;
+      color: #f1e4a9;
+      margin: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 2;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== PROJECT VIEW: Video Gallery (copied from index.html) ===== */
+    .frame-1 {
+      background-color: #2a9b65;
+      padding: 20px;
+      margin: 0 auto 20px;
+      max-width: 1200px;
+      border: 2px solid #f1e4a9;
+      border-radius: 8px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 1;
+      opacity: 0.95;
+    }
+    .gallery-container {
+      position: relative;
+      width: 100%;
+      background-color: rgba(241, 228, 169, 0.1);
+      border: 2px dashed #f1e4a9;
+      border-radius: 4px;
+      padding: 20px;
+    }
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      position: relative;
+    }
+    .slide.active {
+      display: block;
+    }
+    .slide iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .video-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(241, 228, 169, 0.9);
+      border: 2px solid #f1e4a9;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 24px;
+      color: #174619;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    .video-nav:hover {
+      background-color: #f1e4a9;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .video-nav.prev { left: -25px; }
+    .video-nav.next { right: -25px; }
+    .video-info {
+      text-align: center;
+      margin-top: 15px;
+      padding: 10px;
+      background-color: rgba(241, 228, 169, 0.1);
+      border-radius: 4px;
+    }
+    .video-title {
+      font-size: 18px;
+      color: #f1e4a9;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .video-description {
+      font-size: 14px;
+      color: rgba(241, 228, 169, 0.8);
+      line-height: 1.4;
+    }
+    .video-controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .video-dot {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin: 0 5px;
+      background-color: rgba(241, 228, 169, 0.5);
+      border: 2px solid #f1e4a9;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .video-dot.active {
+      background-color: #f1e4a9;
+      transform: scale(1.2);
+    }
+    .video-dot:hover { background-color: #f1e4a9; }
+    .preview-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .preview-item {
+      width: 120px;
+      height: 70px;
+      position: relative;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .preview-item:hover {
+      border-color: #f1e4a9;
+      transform: scale(1.05);
+    }
+    .preview-item.active {
+      border-color: #f1e4a9;
+      box-shadow: 0 0 10px rgba(241, 228, 169, 0.5);
+    }
+    .preview-item iframe {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .preview-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      transition: opacity 0.3s ease;
+    }
+    .preview-item:hover .preview-overlay { opacity: 0.8; }
+    .preview-item.active .preview-overlay { opacity: 0; }
+
+    /* ===== PROJECT VIEW: Responsive ===== */
+    @media (max-width: 1024px) {
+      .moment-title { font-size: 28px; }
+      .frame-2, .frame-1 { margin: 20px; }
+      .slide iframe { height: 400px; }
+      .preview-item { width: 100px; height: 60px; }
+    }
+    @media (max-width: 768px) {
+      .moment-title { font-size: 24px; }
+      .moment-icon-left, .moment-icon-right { width: 40px; height: 40px; }
+      .slide iframe { height: 300px; }
+      .video-nav { width: 45px; height: 45px; font-size: 20px; }
+      .video-nav.prev { left: -22px; }
+      .video-nav.next { right: -22px; }
+      .preview-item { width: 80px; height: 50px; }
+      .preview-container { display: none; }
+    }
+    @media (max-width: 480px) {
+      .main-title-2 { height: 60px; padding: 0 10px; }
+      .moment-icon-left, .moment-icon-right { width: 45px; height: 45px; }
+      .moment-title { font-size: 26px; }
+      .slide iframe { height: 280px; }
+      .video-nav { width: 40px; height: 40px; font-size: 18px; }
+      .video-nav.prev { left: 5px; }
+      .video-nav.next { right: 5px; }
+      .gallery-container { padding: 15px; }
+      .preview-item { width: 60px; height: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background -->
+  <div class="background"></div>
+  <header class="header">
+    <a href="index.html" class="header-title">← back to home</a>
+    <button id="toggleMusic" class="music-button">🔊 Music</button>
+  </header>
+  <!-- Sub-navigation: Messages | Seal Adoption -->
+  <div class="sub-nav">
+    <button class="sub-nav-btn active" onclick="switchSection('messages')">Messages</button>
+    <button class="sub-nav-btn" onclick="switchSection('project')">Advertising Project</button>
+  </div>
+
+  <!-- ===== MESSAGES VIEW ===== -->
+  <div id="messagesView">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchLang('jp')">日本語</button>
+      <button class="tab-btn" onclick="switchLang('vi')">Tiếng Việt</button>
+    </div>
+    <div class="main-container">
+      <div class="messages-grid" id="messageGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== PROJECT VIEW (hidden by default) ===== -->
+  <div id="projectView" style="display:none">
+    <!-- Title -->
+    <section class="frame-2">
+      <div class="main-title-2">
+        <div class="moment-icon-left">
+          <img src="seal_icon_1.gif" alt="Left icon">
+        </div>
+        <h3 class="moment-title">Advertising project</h3>
+        <div class="moment-icon-right">
+          <img src="seal_icon_1.gif" alt="Right icon">
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Gallery -->
+    <section class="frame-1">
+      <div class="gallery-container">
+        <div class="slideshow-container">
+          <button class="video-nav prev" onclick="changeVideo(-1)">‹</button>
+          <button class="video-nav next" onclick="changeVideo(1)">›</button>
+
+          <!-- === Replace VIDEO_ID_x / titles / descriptions below === -->
+          <div class="slide active" data-title="Title 1" data-description="Description 1">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1?enablejsapi=1" allowfullscreen loading="lazy" title="Title 1"></iframe>
+          </div>
+          <div class="slide" data-title="Title 2" data-description="Description 2">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2?enablejsapi=1" allowfullscreen loading="lazy" title="Title 2"></iframe>
+          </div>
+          <div class="slide" data-title="Title 3" data-description="Description 3">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3?enablejsapi=1" allowfullscreen loading="lazy" title="Title 3"></iframe>
+          </div>
+        </div>
+
+        <div class="video-info">
+          <div class="video-title" id="videoTitle">Title 1</div>
+          <div class="video-description" id="videoDescription">Description 1</div>
+        </div>
+
+        <div class="video-controls">
+          <span class="video-dot active" onclick="goToVideo(0)"></span>
+          <span class="video-dot" onclick="goToVideo(1)"></span>
+          <span class="video-dot" onclick="goToVideo(2)"></span>
+        </div>
+
+        <div class="preview-container">
+          <div class="preview-item active" onclick="goToVideo(0)">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen loading="lazy" title="Preview 1"></iframe>
+            <div class="preview-overlay">▶</div>
+          </div>
+          <div class="preview-item" onclick="goToVideo(1)">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen loading="lazy" title="Preview 2"></iframe>
+            <div class="preview-overlay">▶</div>
+          </div>
+          <div class="preview-item" onclick="goToVideo(2)">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen loading="lazy" title="Preview 3"></iframe>
+            <div class="preview-overlay">▶</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content-pixel">
+      <div class="popup-topbar">
+        <div class="popup-icon-left"></div>
+        <button class="popup-close" onclick="closePopup()"></button>
+      </div>
+      <div class="popup-headerbar" id="popupHeader"></div>
+      <div class="popup-message-box" id="popupMessage"></div>
+      <img src="seal_icon_1.png" alt="seal icon" class="popup-icon" />
+    </div>
+  </div>
+
+  <!-- Audio element for background music -->
+  <audio id="backgroundMusic" loop>
+    <source src="far_away.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+let messages = {};
+let currentLang = 'jp';
+
+async function loadMessages() {
+  const res = await fetch('2026.json');
+  const flatData = await res.json();
+  
+  // Transform flat data to original structure
+  messages = {
+    jp: flatData.map(item => ({
+      author: item.author,
+      avatar: item.avatar,
+      preview: item.preview_jp,
+      full: item.full_jp
+    })),
+    vi: flatData.map(item => ({
+      author: item.author,
+      avatar: item.avatar,
+      preview: item.preview_vi,
+      full: item.full_vi
+    }))
+  };
+  
+  renderMessages();
+}
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-btn')[lang === 'jp' ? 0 : 1].classList.add('active');
+  renderMessages();
+}
+
+function renderMessages() {
+  const grid = document.getElementById('messageGrid');
+  grid.innerHTML = '';
+  messages[currentLang].forEach(msg => {
+    const card = document.createElement('div');
+    card.className = 'message-card';
+    card.onclick = () => openPopup(msg);
+    card.innerHTML = `
+      <div class="message-header">
+        <div class="message-avatar">${msg.avatar}</div>
+        <div class="message-author">${msg.author}</div>
+      </div>
+      <div class="message-preview">${msg.preview}</div>
+      <div class="read-more">続きを読む...</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function openPopup(msg) {
+  document.getElementById('popupHeader').textContent = `${msg.avatar} ${msg.author}`;
+  // Use innerHTML instead of textContent to preserve formatting
+  const messageBox = document.getElementById('popupMessage');
+  // Replace \n with <br> tags and \n\n with paragraph breaks
+  const formattedMessage = msg.full
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  messageBox.innerHTML = `<p>${formattedMessage}</p>`;
+  document.getElementById('popupOverlay').classList.add('active');
+}
+
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('active');
+}
+
+function initializeMusic() {
+  const audio = document.getElementById("backgroundMusic");
+  const button = document.getElementById("toggleMusic");
+  let isPlaying = false;
+
+  button.addEventListener("click", () => {
+    if (!isPlaying) {
+      audio.play()
+        .then(() => {
+          button.textContent = "🔇 Pause Music";
+          isPlaying = true;
+        })
+        .catch(() => {
+          alert("Click to enable music.");
+        });
+    } else {
+      audio.pause();
+      button.textContent = "🔊 Play Music";
+      isPlaying = false;
+    }
+  });
+}
+
+// Initialize everything when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  initializeMusic();
+});
+
+loadMessages();
+
+/* ===== SUB-NAV: switch between Messages and Project ===== */
+function switchSection(section) {
+  document.getElementById('messagesView').style.display = section === 'messages' ? 'block' : 'none';
+  document.getElementById('projectView').style.display = section === 'project' ? 'block' : 'none';
+  document.querySelectorAll('.sub-nav-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.sub-nav-btn')[section === 'messages' ? 0 : 1].classList.add('active');
+}
+
+/* ===== VIDEO CAROUSEL (copied from index.html) ===== */
+let currentVideo = 0;
+const slides = document.querySelectorAll('.slide');
+const totalVideos = slides.length;
+
+function stopIframeVideo(slide) {
+  const iframe = slide.querySelector('iframe');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+  }
+}
+
+function changeVideo(direction) {
+  if (!totalVideos) return;
+  stopIframeVideo(slides[currentVideo]);
+  slides[currentVideo].classList.remove('active');
+  document.querySelectorAll('.video-dot')[currentVideo].classList.remove('active');
+  document.querySelectorAll('.preview-item')[currentVideo].classList.remove('active');
+  currentVideo += direction;
+  if (currentVideo >= totalVideos) currentVideo = 0;
+  else if (currentVideo < 0) currentVideo = totalVideos - 1;
+  slides[currentVideo].classList.add('active');
+  document.querySelectorAll('.video-dot')[currentVideo].classList.add('active');
+  document.querySelectorAll('.preview-item')[currentVideo].classList.add('active');
+  updateVideoInfo();
+}
+
+function goToVideo(index) {
+  if (!totalVideos) return;
+  stopIframeVideo(slides[currentVideo]);
+  slides[currentVideo].classList.remove('active');
+  document.querySelectorAll('.video-dot')[currentVideo].classList.remove('active');
+  document.querySelectorAll('.preview-item')[currentVideo].classList.remove('active');
+  currentVideo = index;
+  slides[currentVideo].classList.add('active');
+  document.querySelectorAll('.video-dot')[currentVideo].classList.add('active');
+  document.querySelectorAll('.preview-item')[currentVideo].classList.add('active');
+  updateVideoInfo();
+}
+
+function updateVideoInfo() {
+  if (!totalVideos) return;
+  const activeSlide = slides[currentVideo];
+  document.getElementById('videoTitle').textContent = activeSlide.getAttribute('data-title');
+  document.getElementById('videoDescription').textContent = activeSlide.getAttribute('data-description');
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') changeVideo(-1);
+  else if (e.key === 'ArrowRight') changeVideo(1);
+});
+
+let touchStartX = 0, touchEndX = 0;
+document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+document.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  const diff = touchStartX - touchEndX;
+  if (Math.abs(diff) > 50) { diff > 0 ? changeVideo(1) : changeVideo(-1); }
+});
+
+document.addEventListener('DOMContentLoaded', updateVideoInfo);
+
+/* view counter */
+  document.addEventListener("DOMContentLoaded", () => {
+    const isBot = /bot|crawl|spider|preview|facebookexternalhit/i.test(navigator.userAgent);
+    if (isBot) return;
+
+    fetch("https://api.counterapi.dev/v2/2026/pv2026/up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).catch((err) => {
+      console.error("View count error:", err);
+    });
+  });
+  </script>
+</body>
+</html>
