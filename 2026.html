@@ -75,19 +75,13 @@
       background-color: #45a049;
     }
 
-    .ptb-button {
-      padding: 9px 18px;
-      font-size: 12px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-
-    .ptb-button:hover {
-      background-color: #45a049;
+    .ptb-button {
+      text-decoration: none;   /* it's a link styled as a button */
     }
 
     .tabs {
@@ -594,8 +588,10 @@
   <div class="background"></div>
   <header class="header">
     <a href="index.html" class="header-title">← back to home</a>
-    <button id="toggleMusic" class="music-button">🔊 Music</button>
-    <a href="photobooth.html" class="ptb-button">Photobooth</button>
+    <div class="header-actions">
+      <button id="toggleMusic" class="music-button">🔊 Music</button>
+      <a href="photobooth.html" class="ptb-button">Photobooth</a>
+    </div>
   </header>
   <!-- Sub-navigation: Messages | Seal Adoption -->
   <div class="sub-nav">
