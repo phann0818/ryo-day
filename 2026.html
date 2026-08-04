@@ -60,6 +60,13 @@
       text-decoration: underline;
     }
 
+    /* keeps the music + photobooth buttons stuck together on the right */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .music-button {
       padding: 9px 18px;
       font-size: 12px;
@@ -75,13 +82,55 @@
       background-color: #45a049;
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
     .ptb-button {
+      padding: 9px 18px;
+      font-size: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
       text-decoration: none;   /* it's a link styled as a button */
+    }
+
+    .ptb-button:hover {
+      background-color: #45a049;
+    }
+
+    /* ===== YEAR NAVIGATION (prev | current | next) ===== */
+    .year-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 16px 0 0;
+    }
+    .year-nav a,
+    .year-nav span {
+      font-family: 'Zpix', monospace;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;      /* nothing underlined */
+      padding: 6px 14px;
+      border-radius: 6px;
+      color: #174619;
+    }
+    .year-nav a {                 /* other year that exists -> clickable */
+      background-color: #f1e4a9;
+      border: 2px solid #174619;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+    .year-nav a:hover { filter: brightness(1.05); }
+    .year-nav .current {          /* the year you're on */
+      background-color: #4CAF50;
+      color: #fff;
+      border: 2px solid #174619;
+    }
+    .year-nav .disabled {         /* year with no page yet -> plain muted text */
+      opacity: 0.4;
+      cursor: default;
     }
 
     .tabs {
@@ -313,6 +362,12 @@
       }
 
       .music-button {
+        padding: 3px 6px;
+        font-size: 9px;
+        border-radius: 4px;
+      }
+
+      .ptb-button {
         padding: 3px 6px;
         font-size: 9px;
         border-radius: 4px;
