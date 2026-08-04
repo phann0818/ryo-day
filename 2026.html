@@ -75,6 +75,21 @@
       background-color: #45a049;
     }
 
+    .ptb-button {
+      padding: 9px 18px;
+      font-size: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .ptb-button:hover {
+      background-color: #45a049;
+    }
+
     .tabs {
       display: flex;
       justify-content: center;
@@ -580,11 +595,19 @@
   <header class="header">
     <a href="index.html" class="header-title">← back to home</a>
     <button id="toggleMusic" class="music-button">🔊 Music</button>
+    <a href="photobooth.html" class="ptb-button">Photobooth</button>
   </header>
   <!-- Sub-navigation: Messages | Seal Adoption -->
   <div class="sub-nav">
     <button class="sub-nav-btn active" onclick="switchSection('messages')">Messages</button>
     <button class="sub-nav-btn" onclick="switchSection('project')">Advertising Project</button>
+  </div>
+
+  <!-- Year navigation: prev | current | next -->
+  <div class="year-nav">
+    <a href="2025.html">2025</a>
+    <span class="current">2026</span>
+    <span class="disabled">2027</span>
   </div>
 
   <!-- ===== MESSAGES VIEW ===== -->
