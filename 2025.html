@@ -303,7 +303,8 @@
         aspect-ratio: 3 / 4;
       }
 
-      .music-button {
+      .music-button,
+      .ptb-button {
         padding: 3px 6px;
         font-size: 9px;
         border-radius: 4px;
@@ -315,7 +316,17 @@
       align-items: center;
       gap: 10px;
     }
-    .ptb-button { text-decoration: none; }   /* link styled as a button */
+    .ptb-button {
+      padding: 9px 18px;
+      font-size: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;            /* so padding applies to the <a> */
+      transition: background-color 0.3s;
+    }
+    .ptb-button:hover { background-color: #45a049; }
 
     /* ===== YEAR NAVIGATION (prev | current | next) ===== */
     .year-nav {
@@ -368,6 +379,7 @@
 
 <body>
   <!-- Background -->
+  <div class="background"></div>
 <header class="header">
     <a href="index.html" class="header-title">← back to home</a>
     <div class="header-actions">
