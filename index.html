@@ -78,6 +78,24 @@
             background-color: #45a049;
         }
 
+        .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ptb-button {
+      padding: 9px 18px;
+      font-size: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+    .ptb-button:hover { background-color: #45a049; }
+
         /* Main Frame */
         .main-frame {
             max-width: 1200px;
@@ -931,9 +949,12 @@
     
     <!-- Header -->
     <header class="header">
-        <h1 class="header-title"><br>リョウへ</br><br>⸜(｡˃ ᵕ ˂ )⸝♡</br></h1>
-        <button id="toggleMusic" class="music-button">🔊 Music</button>
-    </header>
+    <!-- keep your existing left-side title exactly as it is -->
+    <div class="header-actions">
+      <button id="toggleMusic" class="music-button">🔊 Music</button>
+      <a href="photobooth.html" class="ptb-button">Photobooth</a>
+    </div>
+  </header>
 
     <!-- Main Content Frame -->
     <main class="main-frame">
