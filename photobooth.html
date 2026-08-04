@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Photobooth - Letters to Ryo</title>
+<style>
+  @font-face {
+    font-family: 'Zpix';
+    src: url('https://raw.githubusercontent.com/phann0818/ryo-day/main/zpix.ttf') format('truetype');
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Zpix', monospace, sans-serif;
+    background-color: #2a9b65;
+    color: #174619;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .background {
+    position: fixed; inset: 0;
+    background-image: url('roro.png');
+    background-repeat: repeat;
+    z-index: -1;
+  }
+  .header {
+    height: 80px;
+    background-image: url('header.gif');
+    background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+  }
+  .header-title { font-size: 20px; font-weight: bold; color: #174619; text-decoration: none; }
+  .header-title:hover { text-decoration: underline; }
+
+  .booth {
+    max-width: 640px;
+    margin: 20px auto 40px;
+    padding: 24px;
+    background-color: #f1e4a9;
+    border: 4px solid #174619;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  h2 { font-size: 24px; margin-bottom: 12px; }
+  p.lead { font-size: 14px; margin-bottom: 8px; }
+  .steps { text-align: left; max-width: 420px; margin: 16px auto; font-size: 13px; }
+  .steps li { margin: 6px 0; }
+
+  .btn {
+    font-family: 'Zpix', monospace;
+    padding: 12px 26px;
+    font-size: 15px; font-weight: bold;
+    background-color: #4CAF50; color: #fff;
+    border: none; border-radius: 8px; cursor: pointer;
+    transition: background-color .2s, transform .1s;
+    margin: 6px;
+  }
+  .btn:hover { background-color: #45a049; }
+  .btn:active { transform: scale(.97); }
+  .btn:disabled { background-color: #9db99f; cursor: not-allowed; }
+  .btn.secondary { background-color: #f1e4a9; color: #174619; border: 3px solid #174619; }
+  .btn.secondary:hover { filter: brightness(1.05); }
+
+  .toggle-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 14px 0; font-size: 13px; }
+  .switch { position: relative; width: 52px; height: 28px; }
+  .switch input { display: none; }
+  .slider {
+    position: absolute; inset: 0; background: #9db99f; border-radius: 999px;
+    border: 2px solid #174619; transition: .2s; cursor: pointer;
+  }
+  .slider::before {
+    content: ""; position: absolute; width: 20px; height: 20px; left: 2px; top: 2px;
+    background: #fff; border-radius: 50%; transition: .2s;
+  }
+  .switch input:checked + .slider { background: #4CAF50; }
+  .switch input:checked + .slider::before { transform: translateX(24px); }
+
+  /* Camera */
+  .stage { position: relative; width: 100%; max-width: 480px; margin: 12px auto; }
+  #video, #uploadPreview {
+    width: 100%; border-radius: 8px; background: #174619; display: block;
+    aspect-ratio: 520 / 375; object-fit: cover;
+  }
+  #video.mirrored { transform: scaleX(-1); }
+  .countdown {
+    position: absolute; inset: 0; display: none;
+    align-items: center; justify-content: center;
+    font-size: 120px; color: #fff; text-shadow: 0 0 20px rgba(0,0,0,.6);
+    pointer-events: none;
+  }
+  .countdown.show { display: flex; }
+  .flash {
+    position: absolute; inset: 0; background: #fff; opacity: 0;
+    pointer-events: none; border-radius: 8px;
+  }
+  .flash.fire { animation: flash .4s ease-out; }
+  @keyframes flash { 0% { opacity: .9; } 100% { opacity: 0; } }
+
+  .round-label { font-size: 16px; font-weight: bold; margin: 8px 0; }
+  .instruction { font-size: 13px; min-height: 20px; margin-bottom: 8px; }
+
+  .thumbs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0; }
+  .thumb { position: relative; width: 120px; aspect-ratio: 520/375; border-radius: 6px; overflow: hidden;
+           border: 3px solid transparent; cursor: pointer; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb.selected { border-color: #4CAF50; }
+  .thumb .badge {
+    position: absolute; top: 4px; left: 4px; width: 24px; height: 24px;
+    background: #4CAF50; color: #fff; border-radius: 50%;
+    display: none; align-items: center; justify-content: center; font-size: 13px; font-weight: bold;
+  }
+  .thumb.selected .badge { display: flex; }
+
+  #resultCanvas { max-width: 300px; width: 100%; height: auto; border-radius: 6px;
+                  box-shadow: 0 6px 14px rgba(0,0,0,.3); margin: 10px auto; display: block; }
+  .warning { color: #b23b3b; font-weight: bold; font-size: 14px; margin: 14px auto; max-width: 440px; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    .booth { margin: 12px; padding: 16px; }
+    .countdown { font-size: 90px; }
+    .thumb { width: 100px; }
+    .header-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+  <div class="background"></div>
+  <header class="header">
+    <a href="index.html" class="header-title">← back to home</a>
+  </header>
+
+  <div class="booth">
+
+    <!-- ===== SCREEN 1: INTRO ===== -->
+    <section id="introScreen">
+      <h2 id="t_title"></h2>
+      <p class="lead" id="t_intro"></p>
+      <ol class="steps" id="t_steps"></ol>
+
+      <div class="toggle-row">
+        <span id="t_mirror"></span>
+        <label class="switch"><input type="checkbox" id="mirrorToggle" checked><span class="slider"></span></label>
+      </div>
+
+      <button class="btn" id="startBtn"></button>
+      <p class="lead" id="t_httpsNote" style="margin-top:14px;font-size:11px;opacity:.8"></p>
+    </section>
+
+    <!-- ===== SCREEN 2: CAPTURE ===== -->
+    <section id="captureScreen" class="hidden">
+      <div class="round-label" id="roundLabel"></div>
+      <div class="instruction" id="instruction"></div>
+      <div class="stage">
+        <video id="video" playsinline autoplay muted></video>
+        <div class="countdown" id="countdown"></div>
+        <div class="flash" id="flash"></div>
+      </div>
+      <div class="thumbs" id="captureThumbs"></div>
+      <button class="btn" id="beginBtn"></button>
+      <button class="btn secondary" id="switchCamBtn"></button>
+    </section>
+
+    <!-- ===== SCREEN 3: FALLBACK UPLOAD ===== -->
+    <section id="uploadScreen" class="hidden">
+      <h2 id="t_uploadTitle"></h2>
+      <p class="lead" id="t_uploadHint"></p>
+      <input type="file" id="fileInput" accept="image/*" multiple style="margin:14px 0;">
+      <div class="thumbs" id="uploadThumbs"></div>
+      <button class="btn" id="uploadContinueBtn" disabled></button>
+    </section>
+
+    <!-- ===== SCREEN 4: SELECT ===== -->
+    <section id="selectScreen" class="hidden">
+      <h2 id="t_selectTitle"></h2>
+      <p class="lead" id="t_selectHint"></p>
+      <div class="thumbs" id="selectThumbs"></div>
+      <button class="btn" id="composeBtn" disabled></button>
+      <button class="btn secondary" id="retakeFromSelect"></button>
+    </section>
+
+    <!-- ===== SCREEN 5: RESULT ===== -->
+    <section id="resultScreen" class="hidden">
+      <h2 id="t_resultTitle"></h2>
+      <canvas id="resultCanvas"></canvas>
+      <div class="toggle-row">
+        <span id="t_mirror2"></span>
+        <label class="switch"><input type="checkbox" id="mirrorToggle2"><span class="slider"></span></label>
+      </div>
+      <p class="warning" id="t_warning"></p>
+      <button class="btn" id="downloadBtn"></button>
+      <button class="btn secondary" id="restartBtn"></button>
+    </section>
+
+  </div>
+
+<script>
+/* ============================================================
+   LANGUAGE / TEXT  — edit these strings to translate the booth
+   ============================================================ */
+const TEXT = {
+  title: "🦭 Ryo Photobooth",
+  intro: "Take a 4-cut photo strip with Ryo's birthday frame!",
+  steps: [
+    "Tap Start — the camera takes 8 photos automatically.",
+    "Each photo has a 5-second countdown, so get ready to pose!",
+    "Pick your 4 favourites out of the 8.",
+    "Download your photo strip.",
+  ],
+  mirror: "Mirror my photo (selfie style)",
+  start: "Start 📸",
+  httpsNote: "Camera works on the live site (https). If it's blocked, you can upload photos instead.",
+  round: (n, total) => `Round ${n} of ${total}`,
+  getReady: "Get ready! Say cheese 🧀",
+  smile: "Smile! 📸",
+  begin: "I'm ready — start!",
+  switchCam: "Flip camera 🔄",
+  uploadTitle: "Upload your photos",
+  uploadHint: "Pick at least 4 photos to build your strip.",
+  uploadContinue: "Continue →",
+  selectTitle: "Choose your 4",
+  selectHint: "Tap 4 photos in the order you want them (top to bottom).",
+  compose: "Make my strip →",
+  retake: "Retake all",
+  resultTitle: "Your photo strip 🎉",
+  warning: "⚠️ Save it now! This photo will disappear if you don't download it.",
+  download: "Download 💾",
+  restart: "Start over",
+};
+
+/* ============================================================
+   FRAME CONFIG — swap in your real frame here.
+   'src' = transparent-window PNG.  'slots' = where each photo sits.
+   width/height = the PNG's native pixel size.
+   ============================================================ */
+const FRAME = {
+  src: "assets/photobooth/frame_ryo.png",
+  width: 600,
+  height: 1800,
+  slots: [
+    { x: 40, y: 40,   w: 520, h: 375 },
+    { x: 40, y: 437,  w: 520, h: 375 },
+    { x: 40, y: 834,  w: 520, h: 375 },
+    { x: 40, y: 1231, w: 520, h: 375 },
+  ],
+};
+
+const ROUNDS = 8;      // photos taken
+const PICK = 4;        // photos chosen for the strip
+const COUNTDOWN = 5;   // seconds per photo
+
+/* ---------- state ---------- */
+let stream = null;
+let facingMode = "user";
+let captured = [];     // dataURLs of all taken/uploaded photos
+let chosen = [];       // indices into captured, in order (length up to PICK)
+let mirror = true;
+
+/* ---------- element helpers ---------- */
+const $ = id => document.getElementById(id);
+const show = id => $(id).classList.remove("hidden");
+const hide = id => $(id).classList.add("hidden");
+const screens = ["introScreen","captureScreen","uploadScreen","selectScreen","resultScreen"];
+function goto(screen){ screens.forEach(s => hide(s)); show(screen); }
+
+/* ---------- fill static text ---------- */
+function applyText(){
+  $("t_title").textContent = TEXT.title;
+  $("t_intro").textContent = TEXT.intro;
+  $("t_steps").innerHTML = TEXT.steps.map(s => `<li>${s}</li>`).join("");
+  $("t_mirror").textContent = TEXT.mirror;
+  $("t_mirror2").textContent = TEXT.mirror;
+  $("startBtn").textContent = TEXT.start;
+  $("t_httpsNote").textContent = TEXT.httpsNote;
+  $("beginBtn").textContent = TEXT.begin;
+  $("switchCamBtn").textContent = TEXT.switchCam;
+  $("t_uploadTitle").textContent = TEXT.uploadTitle;
+  $("t_uploadHint").textContent = TEXT.uploadHint;
+  $("uploadContinueBtn").textContent = TEXT.uploadContinue;
+  $("t_selectTitle").textContent = TEXT.selectTitle;
+  $("t_selectHint").textContent = TEXT.selectHint;
+  $("composeBtn").textContent = TEXT.compose;
+  $("retakeFromSelect").textContent = TEXT.retake;
+  $("t_resultTitle").textContent = TEXT.resultTitle;
+  $("t_warning").textContent = TEXT.warning;
+  $("downloadBtn").textContent = TEXT.download;
+  $("restartBtn").textContent = TEXT.restart;
+}
+
+/* ---------- camera ---------- */
+async function initCamera(){
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode }, audio: false });
+    $("video").srcObject = stream;
+    return true;
+  } catch (err) {
+    console.warn("Camera unavailable:", err);
+    return false;
+  }
+}
+
+function slotAspect(){ return FRAME.slots[0].w / FRAME.slots[0].h; }
+
+function captureFrame(){
+  const video = $("video");
+  const A = slotAspect();
+  const vw = video.videoWidth, vh = video.videoHeight;
+  let sw, sh;
+  if (vw / vh > A) { sh = vh; sw = vh * A; } else { sw = vw; sh = vw / A; }
+  const sx = (vw - sw) / 2, sy = (vh - sh) / 2;
+  const cnv = document.createElement("canvas");
+  cnv.width = FRAME.slots[0].w; cnv.height = FRAME.slots[0].h;
+  cnv.getContext("2d").drawImage(video, sx, sy, sw, sh, 0, 0, cnv.width, cnv.height);
+  return cnv.toDataURL("image/jpeg", 0.9);   // stored un-mirrored; mirror applied at compose
+}
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+async function runCountdown(){
+  const el = $("countdown");
+  el.classList.add("show");
+  for (let n = COUNTDOWN; n >= 1; n--){
+    el.textContent = n;
+    $("instruction").textContent = n <= 2 ? TEXT.smile : TEXT.getReady;
+    await wait(1000);
+  }
+  el.classList.remove("show");
+}
+
+async function captureSequence(){
+  $("beginBtn").classList.add("hidden");
+  $("switchCamBtn").classList.add("hidden");
+  for (let r = 1; r <= ROUNDS; r++){
+    $("roundLabel").textContent = TEXT.round(r, ROUNDS);
+    await runCountdown();
+    const data = captureFrame();
+    captured.push(data);
+    $("flash").classList.add("fire");
+    setTimeout(() => $("flash").classList.remove("fire"), 400);
+    addCaptureThumb(data);
+    await wait(800);
+  }
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  buildSelectScreen();
+  goto("selectScreen");
+}
+
+function addCaptureThumb(data){
+  const d = document.createElement("div");
+  d.className = "thumb";
+  d.innerHTML = `<img src="${data}">`;
+  $("captureThumbs").appendChild(d);
+}
+
+/* ---------- selection ---------- */
+function buildSelectScreen(){
+  const wrap = $("selectThumbs");
+  wrap.innerHTML = "";
+  chosen = [];
+  captured.forEach((data, i) => {
+    const d = document.createElement("div");
+    d.className = "thumb";
+    d.innerHTML = `<img src="${data}"><span class="badge"></span>`;
+    d.onclick = () => toggleChoice(i, d);
+    d.dataset.index = i;
+    wrap.appendChild(d);
+  });
+  updateComposeBtn();
+}
+
+function toggleChoice(i, el){
+  const pos = chosen.indexOf(i);
+  if (pos >= 0) chosen.splice(pos, 1);
+  else if (chosen.length < PICK) chosen.push(i);
+  // repaint badges
+  document.querySelectorAll("#selectThumbs .thumb").forEach(t => {
+    const idx = +t.dataset.index;
+    const order = chosen.indexOf(idx);
+    t.classList.toggle("selected", order >= 0);
+    t.querySelector(".badge").textContent = order >= 0 ? order + 1 : "";
+  });
+  updateComposeBtn();
+}
+function updateComposeBtn(){ $("composeBtn").disabled = chosen.length !== PICK; }
+
+/* ---------- compose result ---------- */
+function loadImg(src){
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => res(img);
+    img.onerror = rej;
+    img.src = src;
+  });
+}
+
+async function renderResult(){
+  const canvas = $("resultCanvas");
+  canvas.width = FRAME.width; canvas.height = FRAME.height;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, FRAME.width, FRAME.height);
+  for (let i = 0; i < PICK; i++){
+    const img = await loadImg(captured[chosen[i]]);
+    const s = FRAME.slots[i];
+    ctx.save();
+    if (mirror){ ctx.translate(s.x + s.w, s.y); ctx.scale(-1, 1); ctx.drawImage(img, 0, 0, s.w, s.h); }
+    else { ctx.drawImage(img, s.x, s.y, s.w, s.h); }
+    ctx.restore();
+  }
+  try { const f = await loadImg(FRAME.src); ctx.drawImage(f, 0, 0, FRAME.width, FRAME.height); }
+  catch(e){ console.warn("Frame image not found at", FRAME.src); }
+}
+
+/* ---------- upload fallback ---------- */
+function setupUpload(){
+  $("fileInput").addEventListener("change", async (e) => {
+    const files = [...e.target.files].slice(0, ROUNDS);
+    captured = [];
+    $("uploadThumbs").innerHTML = "";
+    for (const file of files){
+      const data = await cropFileToSlot(file);
+      captured.push(data);
+      const d = document.createElement("div");
+      d.className = "thumb"; d.innerHTML = `<img src="${data}">`;
+      $("uploadThumbs").appendChild(d);
+    }
+    $("uploadContinueBtn").disabled = captured.length < PICK;
+  });
+}
+function cropFileToSlot(file){
+  return new Promise((res) => {
+    const img = new Image();
+    img.onload = () => {
+      const A = slotAspect();
+      let sw, sh;
+      if (img.width/img.height > A){ sh = img.height; sw = sh*A; } else { sw = img.width; sh = sw/A; }
+      const sx = (img.width-sw)/2, sy = (img.height-sh)/2;
+      const cnv = document.createElement("canvas");
+      cnv.width = FRAME.slots[0].w; cnv.height = FRAME.slots[0].h;
+      cnv.getContext("2d").drawImage(img, sx, sy, sw, sh, 0, 0, cnv.width, cnv.height);
+      res(cnv.toDataURL("image/jpeg", 0.9));
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/* ---------- wire up ---------- */
+function resetAll(){
+  captured = []; chosen = [];
+  $("captureThumbs").innerHTML = "";
+  $("beginBtn").classList.remove("hidden");
+  $("switchCamBtn").classList.remove("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  applyText();
+  setupUpload();
+
+  $("mirrorToggle").addEventListener("change", e => {
+    mirror = e.target.checked;
+    $("mirrorToggle2").checked = mirror;
+    $("video").classList.toggle("mirrored", mirror);
+  });
+  $("mirrorToggle2").addEventListener("change", e => {
+    mirror = e.target.checked;
+    $("mirrorToggle").checked = mirror;
+    renderResult();
+  });
+
+  $("startBtn").addEventListener("click", async () => {
+    mirror = $("mirrorToggle").checked;
+    const ok = await initCamera();
+    if (!ok){ goto("uploadScreen"); return; }
+    $("video").classList.toggle("mirrored", mirror);
+    resetAll();
+    $("roundLabel").textContent = TEXT.round(1, ROUNDS);
+    $("instruction").textContent = TEXT.getReady;
+    goto("captureScreen");
+  });
+
+  $("beginBtn").addEventListener("click", captureSequence);
+
+  $("switchCamBtn").addEventListener("click", async () => {
+    facingMode = facingMode === "user" ? "environment" : "user";
+    await initCamera();
+    $("video").classList.toggle("mirrored", mirror && facingMode === "user");
+  });
+
+  $("uploadContinueBtn").addEventListener("click", () => {
+    buildSelectScreen(); goto("selectScreen");
+  });
+
+  $("composeBtn").addEventListener("click", async () => {
+    goto("resultScreen");
+    await renderResult();
+  });
+
+  $("retakeFromSelect").addEventListener("click", () => { resetAll(); location.reload(); });
+  $("restartBtn").addEventListener("click", () => { resetAll(); location.reload(); });
+
+  $("downloadBtn").addEventListener("click", () => {
+    $("resultCanvas").toBlob(b => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(b);
+      a.download = "ryo-photostrip.png";
+      a.click();
+    }, "image/png");
+  });
+});
+</script>
+</body>
+</html>
