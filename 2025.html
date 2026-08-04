@@ -319,6 +319,41 @@
         padding: 15px;
       }
     }
+
+    /* ===== YEAR NAVIGATION (prev | current | next) ===== */
+    .year-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 16px 0 0;
+    }
+    .year-nav a,
+    .year-nav span {
+      font-family: 'Zpix', monospace;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;      /* nothing underlined */
+      padding: 6px 14px;
+      border-radius: 6px;
+      color: #174619;
+    }
+    .year-nav a {                 /* other year that exists → clickable */
+      background-color: #f1e4a9;
+      border: 2px solid #174619;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+    .year-nav a:hover { filter: brightness(1.05); }
+    .year-nav .current {          /* the year you're on */
+      background-color: #4CAF50;
+      color: #fff;
+      border: 2px solid #174619;
+    }
+    .year-nav .disabled {         /* year with no page yet → plain muted text */
+      opacity: 0.4;
+      cursor: default;
+    }
   </style>
 </head>
 
@@ -329,6 +364,12 @@
     <a href="index.html" class="header-title">← back to home</a>
     <button id="toggleMusic" class="music-button">🔊 Music</button>
   </header>
+  <!-- Year navigation: prev | current | next -->
+  <div class="year-nav">
+    <span class="disabled">2024</span>
+    <span class="current">2025</span>
+    <a href="2026.html">2026</a>
+  </div>
   <div class="tabs">
     <button class="tab-btn active" onclick="switchLang('jp')">日本語</button>
     <button class="tab-btn" onclick="switchLang('vi')">Tiếng Việt</button>
