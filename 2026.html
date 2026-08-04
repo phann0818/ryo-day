@@ -624,7 +624,7 @@
           <div class="slide active" data-title="HCMC" data-description="12Bis Nguyen Hue - 08/02/26">
             <iframe src="https://www.youtube.com/embed/i9_vC6GTYUI?si=8a4PItR5YOvkh2yD?enablejsapi=1" allowfullscreen loading="lazy" title="Ho Chi Minh City"></iframe>
           </div>
-          <div class="slide active" data-title="HCMC" data-description="12Bis Nguyen Hue - 08/02/26">
+          <div class="slide" data-title="HCMC" data-description="12Bis Nguyen Hue - 08/02/26">
             <iframe src="https://www.youtube.com/embed/8Q2Ocp29u2Q?si=Hi_PiEDDPGAgC7Wp?enablejsapi=1" allowfullscreen loading="lazy" title="Ho Chi Minh City"></iframe>
           </div>
           <div class="slide" data-title="HN" data-description="Vincom Metropolis, 29 Lieu Giai - 08/02/26">
@@ -755,6 +755,8 @@ function closePopup() {
   document.getElementById('popupOverlay').classList.remove('active');
 }
 
+
+    
 function initializeMusic() {
   const audio = document.getElementById("backgroundMusic");
   const button = document.getElementById("toggleMusic");
@@ -791,7 +793,11 @@ function switchSection(section) {
   document.getElementById('projectView').style.display = section === 'project' ? 'block' : 'none';
   document.querySelectorAll('.sub-nav-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.sub-nav-btn')[section === 'messages' ? 0 : 1].classList.add('active');
+  localStorage.setItem('ryoActiveTab', section);   // <-- add this
 }
+
+// <-- add this line right after the function:
+switchSection(localStorage.getItem('ryoActiveTab') || 'messages');
 
 /* ===== VIDEO CAROUSEL (copied from index.html) ===== */
 let currentVideo = 0;
