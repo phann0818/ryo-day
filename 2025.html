@@ -309,16 +309,13 @@
         border-radius: 4px;
       }
     }
-    
-    @media (max-width: 400px) {
-      .messages-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .main-container {
-        padding: 15px;
-      }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+    .ptb-button { text-decoration: none; }   /* link styled as a button */
 
     /* ===== YEAR NAVIGATION (prev | current | next) ===== */
     .year-nav {
@@ -333,39 +330,53 @@
       font-family: 'Zpix', monospace;
       font-size: 15px;
       font-weight: bold;
-      text-decoration: none;      /* nothing underlined */
+      text-decoration: none;
       padding: 6px 14px;
       border-radius: 6px;
       color: #174619;
     }
-    .year-nav a {                 /* other year that exists → clickable */
+    .year-nav a {
       background-color: #f1e4a9;
       border: 2px solid #174619;
       cursor: pointer;
       transition: filter 0.2s;
     }
     .year-nav a:hover { filter: brightness(1.05); }
-    .year-nav .current {          /* the year you're on */
+    .year-nav .current {
       background-color: #4CAF50;
       color: #fff;
       border: 2px solid #174619;
     }
-    .year-nav .disabled {         /* year with no page yet → plain muted text */
+    .year-nav .disabled {
       opacity: 0.4;
       cursor: default;
     }
+    
+    @media (max-width: 400px) {
+      .messages-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-container {
+        padding: 15px;
+      }
+    }
+
+  
   </style>
 </head>
 
 <body>
   <!-- Background -->
-  <div class="background"></div>
-  <header class="header">
+<header class="header">
     <a href="index.html" class="header-title">← back to home</a>
-    <button id="toggleMusic" class="music-button">🔊 Music</button>
+    <div class="header-actions">
+      <button id="toggleMusic" class="music-button">🔊 Music</button>
+      <a href="photobooth.html" class="ptb-button">Photobooth</a>
+    </div>
   </header>
   <!-- Year navigation: prev | current | next -->
-  <div class="year-nav">
+<div class="year-nav">
     <span class="disabled">2024</span>
     <span class="current">2025</span>
     <a href="2026.html">2026</a>
