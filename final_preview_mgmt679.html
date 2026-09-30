@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Big Owl Audit: Review Guide (MGMT 679)</title>
+<style>
+:root{--bg:#F6F3EC;--fg:#1B2233;--muted:#5B6478;--card:#FFFFFF;--border:#DDD7CA;--accent:#1F7A5C;--accent-bg:#DDEFE6;--warn:#B85F0F;--warn-bg:#FBEBD8;--bad:#B23A48;--c1:#4C78A8;--c2:#D9822B;--c3:#1F7A5C;--code:#EFEBE1}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121826;--fg:#EDEAE2;--muted:#A3ADC2;--card:#1B2438;--border:#2E3A55;--accent:#5CC29B;--accent-bg:#183A31;--warn:#F2A65A;--warn-bg:#3A2A16;--bad:#F08A96;--c1:#7FA8D6;--c2:#F2A65A;--c3:#5CC29B;--code:#222D45}}
+:root[data-theme="dark"]{--bg:#121826;--fg:#EDEAE2;--muted:#A3ADC2;--card:#1B2438;--border:#2E3A55;--accent:#5CC29B;--accent-bg:#183A31;--warn:#F2A65A;--warn-bg:#3A2A16;--bad:#F08A96;--c1:#7FA8D6;--c2:#F2A65A;--c3:#5CC29B;--code:#222D45}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:17px}
+.wrap{max-width:860px;margin:0 auto;padding:32px 20px 80px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:2.1rem;line-height:1.2;margin:0 0 8px}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:1.5rem;margin:56px 0 12px;line-height:1.25}
+h3{font-size:1.1rem;margin:22px 0 6px}
+p{margin:0 0 12px}
+.sub{color:var(--muted);font-size:1.05rem;margin-bottom:20px}
+.kicker{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--warn);font-weight:700;margin-bottom:6px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:14px 0}
+.tldr{background:var(--accent-bg);border-color:transparent}
+.tldr ol{margin:8px 0 0;padding-left:22px}.tldr li{margin-bottom:8px}
+.warn{background:var(--warn-bg);border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.stat b{display:block;font-size:1.7rem;line-height:1.2}.stat span{color:var(--muted);font-size:.9rem}
+.stat.good b{color:var(--accent)}.stat.bad b{color:var(--bad)}
+.scroll{overflow-x:auto;margin:10px 0 14px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:520px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--code);font-weight:700}td.n,th.n{text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}tr.hl td{background:var(--accent-bg);font-weight:600}
+code{background:var(--code);padding:1px 6px;border-radius:6px;font-size:.88em}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+nav.toc a{font-size:.85rem;text-decoration:none;color:var(--fg);background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 12px}
+.step{border-left:4px solid var(--accent);padding-left:16px;margin:28px 0}
+.step h3{margin-top:0}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+details{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 16px;margin:12px 0}
+summary{cursor:pointer;font-weight:700}
+details ul{margin:8px 0 2px;padding-left:20px}details li{margin-bottom:6px}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:.95rem}
+.bar .l{width:120px;flex:none}.bar .t{flex:1;background:var(--code);border-radius:6px;height:26px;overflow:hidden}
+.bar .f{height:100%;border-radius:6px}.bar .v{width:64px;text-align:right;font-weight:700;flex:none}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin:4px 0 8px}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+svg text{fill:var(--muted);font-size:11px}
+.check label{display:flex;gap:10px;align-items:flex-start;margin:8px 0;cursor:pointer}
+.check input{margin-top:6px;flex:none}
+dl dt{font-weight:700;margin-top:12px}dl dd{margin:2px 0 0;color:var(--muted)}
+footer{margin-top:48px;color:var(--muted);font-size:.85rem}
+.theme{float:right;font-size:.8rem;background:var(--card);color:var(--fg);border:1px solid var(--border);border-radius:999px;padding:4px 12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+<button class="theme" id="themeBtn" type="button">Toggle dark / light</button>
+<div class="kicker">MGMT 679 group project</div>
+<h1>What was done in the notebook, and how to check it</h1>
+<p class="sub">A plain-language review guide for a teammate. It explains each step (what, why, result) and gives you specific things to verify, so you can challenge the work instead of just trusting it.</p>
+
+<nav class="toc">
+<a href="#tldr">Summary</a><a href="#map">Notebook map</a><a href="#money">The money math</a><a href="#steps">Step by step</a><a href="#audit">Audit table</a><a href="#reco">Recommendation</a><a href="#review">Review checklist</a><a href="#gloss">Glossary</a>
+</nav>
+
+<h2 id="tldr" style="margin-top:32px">1. The five-line summary</h2>
+<div class="card tldr">
+<ol>
+<li><b>Big Owl's profit claim is wrong.</b> It says $3,215; the correct number is <b>$1,310</b>. It forgot the $15 irritation cost paid whenever a targeted customer does not buy.</li>
+<li><b>Family size is what really drives buying:</b> 55% of 2-person households buy, 25% of 3-person, 10% of 4-person. 4K customers buy less than HD. Number of screens does nothing.</li>
+<li><b>Customer clusters are not useful for targeting.</b> Both Big Owl's clusters and our corrected ones buy at only 24% to 37%, all below the 44.4% break-even, and they ignore family size.</li>
+<li><b>Any sensible profit-based rule earns roughly $1,250 to $1,650</b> on the 1,000 test customers, versus a <b>loss of $5,780</b> for contacting everyone.</li>
+<li><b>Recommendation (CFO):</b> average the random forest and neural network scores and contact customers at 0.444 or higher: <b>310 customers, $1,405</b>. A simple "target family size 2" rule earns <b>$1,665</b> and is shown as a benchmark; whether it can be the headline depends on the professor.</li>
+</ol>
+</div>
+
+<div class="grid">
+<div class="stat bad"><b>$3,215 &rarr; $1,310</b><span>Big Owl's claimed vs corrected profit</span></div>
+<div class="stat good"><b>310 / 1,000</b><span>customers targeted by the recommended rule</span></div>
+<div class="stat good"><b>$1,405</b><span>expected profit on the test set</span></div>
+<div class="stat bad"><b>-$5,780</b><span>result of contacting everyone</span></div>
+</div>
+
+<h2 id="map">2. What we may and may not touch, and where things are</h2>
+<p>The starter notebook (<code>project_starter.ipynb</code>) is ours to edit only in Sections 1, 2, 3 and 4.3. Big Owl's notebook is read-only: it is the thing being audited.</p>
+<div class="scroll"><table>
+<tr><th>Notebook section</th><th>Status</th><th>What is in it (look for the comment on the first line)</th></tr>
+<tr><td>Setup cell</td><td>Do not change</td><td>Imports, loads <code>data</code>, creates the 90/10 split (first 9,000 rows train, last 1,000 rows test)</td></tr>
+<tr><td>Section 1</td><td>Ours</td><td>Summary statistics and purchase rates</td></tr>
+<tr><td>Section 2</td><td>Ours</td><td>Clustering, cluster profiles, radar plot, seed check, written descriptions</td></tr>
+<tr><td>Section 3</td><td>Ours</td><td><code># Step 3</code> logistic regression, interpretation only</td></tr>
+<tr><td>4.1 and 4.2</td><td><b>Locked, never run</b></td><td>The random forest (10 trees, depth 10) and neural network code. Their outputs come from a CSV instead</td></tr>
+<tr><td>4.3, first cell</td><td>Run as is</td><td>Reads <code>big_owl_test_predictions.csv</code> (true purchase, RF probability, NN probability)</td></tr>
+<tr><td>4.3, after "start changes here"</td><td>Ours</td><td><code># Step 4</code>, <code># Step 4b</code>, <code># Step 5</code>, <code># Step 6</code>, <code># Step 7a/7b</code>, plus the written CFO recommendation</td></tr>
+</table></div>
+<div class="card warn"><b>Ground rule used throughout:</b> no predictive model was trained or run by us. The logistic regression is used only to explain which variables matter, never to score customers. All targeting numbers come from the given RF and NN probabilities, plus one rule made of group averages.</div>
+
+<h2 id="money">3. The money math (read this first, everything depends on it)</h2>
+<p>The case gives three numbers: a <b>$5</b> cost for each customer given the free trial, a <b>$15</b> irritation cost when a targeted customer does not buy, and <b>$30</b> of value when a targeted customer does buy. Turning that into profit per targeted customer:</p>
+<div class="scroll"><table>
+<tr><th>Targeted customer...</th><th>Calculation</th><th class="n">Profit</th></tr>
+<tr><td>buys</td><td>$30 value - $5 trial</td><td class="n">+$25</td></tr>
+<tr><td>does not buy</td><td>-$5 trial - $15 irritation</td><td class="n">-$20</td></tr>
+</table></div>
+<p><b>Break-even:</b> contacting a customer with purchase probability <i>p</i> is worth it when 25<i>p</i> - 20(1-<i>p</i>) &gt; 0, i.e. <i>p</i> &gt; 20/45 = <b>0.444</b>. Big Owl used 0.5, which is not the economic threshold.</p>
+<div class="card"><b>Hand check you can do in 30 seconds.</b> Neural network at 0.5 targets 281 customers, 154 buy, 127 do not.<br>
+Big Owl's formula: 30 x 154 - 5 x 281 = 4,620 - 1,405 = <b>$3,215</b> (irritation ignored).<br>
+Correct formula: 25 x 154 - 20 x 127 = 3,850 - 2,540 = <b>$1,310</b>.<br>
+The gap is 127 x $15 = <b>$1,905</b>, exactly the missing irritation cost.</div>
+<p class="sub">Assumption to confirm as a group: we treat the $30 as revenue, the $5 trial as a cost on every targeted customer, and the $15 as a cost only on targeted non-buyers. This follows the wording of the case.</p>
+
+<h2 id="steps">4. Step by step</h2>
+
+<div class="step"><div class="tag">Step 1 &middot; Section 1</div>
+<h3>Summary statistics and what drives purchase</h3>
+<p><b>What was done.</b> Summary table of the five variables, then the purchase rate broken out by family size, TV resolution, number of screens, and by quintile (five equal-size groups) of age and weekly usage.</p>
+<p><b>Why.</b> Big Owl only described the "typical customer". It never asked which variables move the buying rate, which is the question that matters for targeting.</p>
+<p><b>Result.</b> 10,000 customers, no missing values, 30.3% bought overall.</p>
+<div class="bar"><span class="l">2-person household</span><span class="t"><span class="f" style="display:block;width:78%;background:var(--c3)"></span></span><span class="v">54.9%</span></div>
+<div class="bar"><span class="l">3-person household</span><span class="t"><span class="f" style="display:block;width:35.5%;background:var(--c1)"></span></span><span class="v">24.9%</span></div>
+<div class="bar"><span class="l">4-person household</span><span class="t"><span class="f" style="display:block;width:14%;background:var(--c1)"></span></span><span class="v">9.8%</span></div>
+<div class="bar"><span class="l">HD (1080p)</span><span class="t"><span class="f" style="display:block;width:50.7%;background:var(--c2)"></span></span><span class="v">35.5%</span></div>
+<div class="bar"><span class="l">4K (2160p)</span><span class="t"><span class="f" style="display:block;width:35.6%;background:var(--c2)"></span></span><span class="v">24.9%</span></div>
+<p>Screens: 30.5% (1 screen) vs 30.0% (2 screens), no real difference. Age rises gently from 26% to 34% across quintiles. Weekly usage is slightly U-shaped (32%, 29%, 27%, 30%, 33%), but the swing is small.</p>
+<details open><summary>How to check this step</summary><ul>
+<li>Recompute one number by hand or in a pivot table: purchase rate for family size 4 should be about 9.8% (3,261 customers).</li>
+<li>Note that Big Owl's own <code>describe()</code> output contains an index column (<code>Unnamed: 0</code>) and a leftover <code>cluster_label</code> column, so averages of those are meaningless. Ours selects only the six real columns.</li>
+<li>Big Owl calls usage "daily"; the case says minutes <i>per week</i>.</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 2 &middot; Section 2</div>
+<h3>Clustering (customer segments)</h3>
+<p><b>What was done.</b> K-means clustering on the five variables, in two versions: <b>standardized</b> (each variable rescaled to comparable size, our version) and <b>unstandardized</b> (Big Owl's version). K = 4 in both. For each cluster we show size, average age, family size, weekly minutes, share on 4K, purchase rate, and profit per targeted customer. Plus an elbow/silhouette plot, a radar plot scaled to the full data range, and two stability checks.</p>
+<p><b>Why.</b> Without standardizing, TV resolution (values 1080 or 2160) and weekly minutes (up to 250) dominate the distance calculation, and family size (2 to 4) barely counts. Big Owl also never looked at whether clusters buy differently.</p>
+<div class="scroll"><table>
+<tr><th>Our cluster (standardized)</th><th class="n">Size</th><th class="n">Age</th><th class="n">Min/week</th><th class="n">% 4K</th><th class="n">Buy rate</th><th class="n">Profit / targeted</th></tr>
+<tr><td>0 Older heavy viewers</td><td class="n">1,664</td><td class="n">53</td><td class="n">196</td><td class="n">49%</td><td class="n">33%</td><td class="n">-$4.99</td></tr>
+<tr><td>1 Young 4K viewers</td><td class="n">2,921</td><td class="n">23</td><td class="n">100</td><td class="n">100%</td><td class="n">24%</td><td class="n">-$9.15</td></tr>
+<tr><td>2 Young HD viewers</td><td class="n">2,977</td><td class="n">23</td><td class="n">101</td><td class="n">0%</td><td class="n">33%</td><td class="n">-$5.07</td></tr>
+<tr><td>3 Older light viewers</td><td class="n">2,438</td><td class="n">55</td><td class="n">50</td><td class="n">49%</td><td class="n">32%</td><td class="n">-$5.62</td></tr>
+</table></div>
+<p><b>Result.</b> The segments split on age, usage and resolution only. Family size is about 3.0 and screens about 1.5 in every cluster. Buying rates only range from 24% to 33%, all below the 44.4% break-even, so targeting a whole segment loses money. Big Owl's unstandardized clusters range from 24% to 37%, also below break-even.</p>
+<details open><summary>How to check this step</summary><ul>
+<li><b>K = 4 is a convenience choice, not proven.</b> The elbow curve is smooth and silhouette scores (0.22 to 0.33) keep rising up to K = 10. We used 4 only to compare with Big Owl.</li>
+<li><b>Agreement between the two versions:</b> adjusted Rand index 0.47 (1 = identical, 0 = random), so standardizing changes about half the assignments.</li>
+<li><b>Stability across random starts:</b> rerunning with seeds 2 to 5 gave 0.55, 1.0, 1.0, 1.0. One alternative start gives a noticeably different solution, so treat these segments as descriptive, not sacred. Big Owl does not set a seed at all, so its clusters change from run to run.</li>
+<li>The radar plot scales each variable to the range of the full data. (Scaling only the four cluster means, as Big Owl did, exaggerates tiny differences.)</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 3 &middot; Section 3</div>
+<h3>Logistic regression (explanation only)</h3>
+<p><b>What was done.</b> Three versions of a logistic regression: (A) Big Owl's exact specification, (B) family size as categories and 4K as a yes/no variable, (C) same as B but with age and usage standardized so effects are on a comparable scale. We report <b>odds ratios</b> (how much the odds of buying multiply), 95% confidence intervals and p-values.</p>
+<p><b>Why.</b> Big Owl compared raw coefficients measured in different units (per pixel, per year, per minute), which cannot be ranked against each other.</p>
+<div class="scroll"><table>
+<tr><th>Effect</th><th class="n">Odds ratio</th><th class="n">95% interval</th><th>Plain meaning</th></tr>
+<tr><td>Family size 3 vs 2</td><td class="n">0.263</td><td class="n">0.237 to 0.293</td><td>74% lower odds of buying</td></tr>
+<tr><td>Family size 4 vs 2</td><td class="n">0.083</td><td class="n">0.073 to 0.095</td><td>92% lower odds</td></tr>
+<tr><td>4K vs HD</td><td class="n">0.544</td><td class="n">0.495 to 0.599</td><td>46% lower odds</td></tr>
+<tr><td>Age, per standard deviation (about 17 years)</td><td class="n">1.181</td><td class="n">1.126 to 1.239</td><td>18% higher odds</td></tr>
+<tr><td>Weekly usage, per standard deviation (about 51 min)</td><td class="n">1.052</td><td class="n">1.004 to 1.103</td><td>5% higher odds, barely significant</td></tr>
+<tr><td>2 screens vs 1</td><td class="n">0.972</td><td class="n">0.884 to 1.068</td><td>no detectable effect (p = 0.55)</td></tr>
+</table></div>
+<p><b>Result.</b> Ranking of effects: family size, then 4K vs HD, then age, then usage, then screens.</p>
+<details open><summary>How to check this step</summary><ul>
+<li>Our version of Big Owl's model reproduces its coefficients exactly (0.0098, -1.2617, 0.0010, -0.0006, -0.0291), so Big Owl's <i>arithmetic</i> is right. What is wrong is the interpretation: it says resolution has a "smaller impact", but the -0.0006 is per pixel, and the 1,080-pixel move from HD to 4K roughly halves the odds.</li>
+<li>Family size as a category vs a single number barely changes fit (AIC 10,327.8 vs 10,328.8), so this is a minor point and should not be oversold in the report.</li>
+<li>Pseudo R-squared is 0.159: these five variables explain only a modest share of buying behavior. Expect no model to be very accurate.</li>
+<li>These are associations from one pilot, not proof of cause.</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 4 &middot; Section 4.3</div>
+<h3>Reproduce Big Owl's numbers, then correct them</h3>
+<p><b>What was done.</b> Using the given RF and NN probabilities at Big Owl's 0.5 threshold, we recomputed F1, precision and recall (they match Big Owl), and calculated profit two ways: Big Owl's formula and the correct one. We added the two baselines. A safety check confirms the predictions file lines up with the last 1,000 rows of the data.</p>
+<div class="scroll"><table>
+<tr><th>Rule (test set)</th><th class="n">Targeted</th><th class="n">Buyers</th><th class="n">Big Owl formula</th><th class="n">Correct profit</th></tr>
+<tr><td>Random forest at 0.5</td><td class="n">194</td><td class="n">117</td><td class="n">$2,540</td><td class="n">$1,385</td></tr>
+<tr><td>Neural network at 0.5 (Big Owl's choice)</td><td class="n">281</td><td class="n">154</td><td class="n">$3,215</td><td class="n">$1,310</td></tr>
+<tr><td>Contact everyone</td><td class="n">1,000</td><td class="n">316</td><td class="n">$4,480</td><td class="n">-$5,780</td></tr>
+<tr><td>Contact no one</td><td class="n">0</td><td class="n">0</td><td class="n">$0</td><td class="n">$0</td></tr>
+</table></div>
+<p><b>Result.</b> Big Owl overstates profit by $1,905. A telling detail: under its formula, contacting <i>everyone</i> would look like the best strategy ($4,480), when it actually loses $5,780. Also, the NN wins on F1 (0.516 vs 0.459) but the RF earns more at 0.5 ($1,385 vs $1,310) because its precision is higher (0.60 vs 0.55). F1 does not measure dollars.</p></div>
+
+<div class="step"><div class="tag">Step 4b &middot; Section 4.3</div>
+<h3>A simple rule with no model: group averages from the training rows only</h3>
+<p><b>What was done.</b> Using <i>only the first 9,000 customers</i>, we computed the purchase rate for each family size x TV resolution combination and marked those above the 44.4% break-even. No model was fitted. The rule ("contact those segments") was then applied to the 1,000 test customers.</p>
+<div class="scroll"><table>
+<tr><th>Segment (training rows)</th><th class="n">Buy rate</th><th class="n">Profit per targeted</th><th>Above break-even?</th></tr>
+<tr class="hl"><td>Family 2, HD</td><td class="n">63.0%</td><td class="n">+$8.36</td><td>Yes</td></tr>
+<tr class="hl"><td>Family 2, 4K</td><td class="n">46.3%</td><td class="n">+$0.83</td><td>Yes, barely</td></tr>
+<tr><td>Family 3, HD</td><td class="n">29.8%</td><td class="n">-$6.58</td><td>No</td></tr>
+<tr><td>Family 3, 4K</td><td class="n">19.8%</td><td class="n">-$11.11</td><td>No</td></tr>
+<tr><td>Family 4, HD</td><td class="n">11.9%</td><td class="n">-$14.65</td><td>No</td></tr>
+<tr><td>Family 4, 4K</td><td class="n">7.2%</td><td class="n">-$16.75</td><td>No</td></tr>
+</table></div>
+<p><b>Result.</b> The rule selects exactly "family size 2". On the test set it targets 342 customers, reaches 189 buyers (55.3%) and earns <b>$1,665</b>, more than the RF or NN at 0.5. It was built without looking at the test data, and the test hit rate matches the training rate.</p>
+<details open><summary>How to check this step</summary><ul>
+<li>The 4K half of the rule (46.3% vs a 44.4% cut-off) is fragile. Family 2 with HD only would target about 164 test customers and earn about $1,310.</li>
+<li>Open question: is a rule with no fitted model an acceptable final recommendation? See section 6.</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 5 &middot; Section 4.3</div>
+<h3>Profit curves: how much does the exact rule matter?</h3>
+<p><b>What was done.</b> For the RF, the NN and the <b>average</b> of both, we computed profit under (a) every probability threshold from 0 to 1, and (b) "contact the top N customers by score" for every N. We then tabulated four rules per model: threshold 0.5, threshold 0.444, top 25% (250 customers) and the best N.</p>
+<div class="legend"><span><i style="background:var(--c1)"></i>RF</span><span><i style="background:var(--c2)"></i>NN</span><span><i style="background:var(--c3)"></i>Average of both</span><span><i style="background:var(--fg);opacity:.5"></i>Family size 2 rule ($1,665, dashed)</span></div>
+<svg id="curve" viewBox="0 0 640 300" width="100%" role="img" aria-label="Profit versus number of customers targeted for random forest, neural network and their average"></svg>
+<div class="scroll"><table>
+<tr><th>Rule</th><th class="n">RF</th><th class="n">NN</th><th class="n">Average</th></tr>
+<tr><td>Threshold 0.5</td><td class="n">194 / $1,385</td><td class="n">281 / $1,310</td><td class="n">252 / $1,440</td></tr>
+<tr><td>Threshold 0.444 (break-even)</td><td class="n">255 / $1,290</td><td class="n">339 / $1,410</td><td class="n">310 / $1,405</td></tr>
+<tr><td>Top 25% (250 customers)</td><td class="n">250 / $1,345</td><td class="n">250 / $1,255</td><td class="n">250 / $1,480</td></tr>
+<tr><td>Best N (chosen on test set)</td><td class="n">299 / $1,490</td><td class="n">364 / $1,630</td><td class="n">277 / $1,570</td></tr>
+</table></div>
+<p class="sub">Each cell is customers targeted / profit. Family size 2 rule: 342 / $1,665. Contact everyone: -$5,780. Contact no one: $0.</p>
+<p><b>Result.</b> Every reasonable rule earns roughly $1,250 to $1,650. Profit is fairly flat between about 200 and 400 customers targeted and only drops fast beyond about 400 (for the average: $1,080 at 450, $530 at 500).</p>
+<details open><summary>How to check this step</summary><ul>
+<li>The "best N" row is <b>optimistic</b>: it is picked on the same 1,000 rows it is scored on. The 0.444 and top 25% rows are the honest ones.</li>
+<li>The 0.5 and 0.444 thresholds assume the model probabilities are trustworthy. Step 7 shows the NN's probabilities are too high in the upper deciles.</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 6 &middot; Section 4.3</div>
+<h3>Bootstrap: is the difference between rules real or noise?</h3>
+<p><b>What was done.</b> We resampled the 1,000 test customers with replacement 1,000 times and scored every rule on the same resamples. This gives a range for profit and lets us compare rules fairly (paired).</p>
+<div class="scroll"><table>
+<tr><th>Rule</th><th class="n">Mean profit</th><th class="n">90% range</th><th class="n">Family size 2 rule wins in</th></tr>
+<tr><td>NN at 0.5 (Big Owl)</td><td class="n">$1,318</td><td class="n">$725 to $1,940</td><td class="n">93% of resamples</td></tr>
+<tr><td>RF at 0.444</td><td class="n">$1,296</td><td class="n">$705 to $1,905</td><td class="n">94%</td></tr>
+<tr><td>NN at 0.444</td><td class="n">$1,418</td><td class="n">$755 to $2,105</td><td class="n">87%</td></tr>
+<tr class="hl"><td>Average at 0.444 (recommended)</td><td class="n">$1,410</td><td class="n">$760 to $2,050</td><td class="n">91%</td></tr>
+<tr><td>Average, top 25%</td><td class="n">$1,489</td><td class="n">$910 to $2,085</td><td class="n">78%</td></tr>
+<tr><td>Family size 2 rule</td><td class="n">$1,665</td><td class="n">$1,035 to $2,330</td><td class="n">n/a</td></tr>
+</table></div>
+<p><b>Result.</b> Every rule earns a positive profit in all 1,000 resamples, so running the campaign is clearly better than not. The family size 2 rule wins most of the time but every difference interval still includes zero, so the honest wording is "at least as good and probably better", not "proven better".</p>
+<details open><summary>How to check this step</summary><ul>
+<li>The bootstrap only captures noise from having 1,000 test customers. It treats the rules as fixed, so it does not capture what would change if the models were retrained.</li></ul></details></div>
+
+<div class="step"><div class="tag">Step 7 &middot; Section 4.3</div>
+<h3>Calibration and the final CFO table</h3>
+<p><b>What was done.</b> <b>Calibration</b> asks: when a model says "70% likely to buy", do 70% buy? We split the test customers into ten equal groups by score and compared predicted vs actual buying. Then we built the final table for the CFO.</p>
+<div class="scroll"><table>
+<tr><th>Model</th><th class="n">Decile 8 (pred vs actual)</th><th class="n">Decile 9</th><th class="n">Decile 10</th><th class="n">Average gap</th></tr>
+<tr><td>RF</td><td class="n">0.45 vs 0.48</td><td class="n">0.57 vs 0.50</td><td class="n">0.70 vs 0.68</td><td class="n">0.040</td></tr>
+<tr><td>NN</td><td class="n">0.56 vs 0.41</td><td class="n">0.68 vs 0.52</td><td class="n">0.75 vs 0.68</td><td class="n">0.055</td></tr>
+<tr><td>Average</td><td class="n">0.50 vs 0.47</td><td class="n">0.61 vs 0.51</td><td class="n">0.72 vs 0.68</td><td class="n">0.048</td></tr>
+</table></div>
+<p><b>Result.</b> The neural network is overconfident in its upper deciles (for example, it says 0.68 in decile 9 and only 52% actually buy), so a probability cutoff applied to raw NN scores over-targets. The RF is closer to reality.</p>
+<div class="scroll"><table>
+<tr><th>Rule</th><th class="n">Targeted</th><th class="n">Buyers</th><th class="n">Profit</th><th class="n">vs contact everyone</th><th class="n">vs Big Owl (corrected)</th></tr>
+<tr class="hl"><td>Average of RF and NN at 0.444</td><td class="n">310</td><td class="n">169</td><td class="n">$1,405</td><td class="n">+$7,185</td><td class="n">+$95</td></tr>
+<tr><td>Average of RF and NN, top 25%</td><td class="n">250</td><td class="n">144</td><td class="n">$1,480</td><td class="n">+$7,260</td><td class="n">+$170</td></tr>
+<tr><td>Family size 2 rule (benchmark)</td><td class="n">342</td><td class="n">189</td><td class="n">$1,665</td><td class="n">+$7,445</td><td class="n">+$355</td></tr>
+<tr><td>Big Owl's rule, corrected</td><td class="n">281</td><td class="n">154</td><td class="n">$1,310</td><td class="n">+$7,090</td><td class="n">0</td></tr>
+<tr><td>Contact everyone</td><td class="n">1,000</td><td class="n">316</td><td class="n">-$5,780</td><td class="n">0</td><td class="n">-$7,090</td></tr>
+<tr><td>Contact no one</td><td class="n">0</td><td class="n">0</td><td class="n">$0</td><td class="n">+$5,780</td><td class="n">-$1,310</td></tr>
+</table></div></div>
+
+<h2 id="audit">5. The audit in one table (Question 1)</h2>
+<p>For each of Big Owl's four parts: what holds up, what is wrong or missing, and why it matters.</p>
+<div class="scroll"><table>
+<tr><th>Part</th><th>Correct</th><th>Wrong or missing</th><th>Why it matters</th></tr>
+<tr><td><b>A.1 Summary</b></td><td>Statistics compute correctly</td><td>Index column and a leftover <code>cluster_label</code> inside the table; "daily" vs weekly; no purchase rates by driver</td><td>No view of what drives buying; the 30% base rate alone shows a blanket campaign loses money</td></tr>
+<tr><td><b>A.2 Clustering</b></td><td>Elbow, profiling and radar idea are reasonable</td><td>No feature scaling; K = 4 unsupported; no seed; no purchase rate per cluster; radar scaled on the cluster means</td><td>Segments split on units, not on what drives buying; every segment is below break-even</td></tr>
+<tr><td><b>A.3 Logistic</b></td><td>Coefficients are numerically right; family size as top driver is right; screens null is right</td><td>Compares raw coefficients across units; says resolution matters less</td><td>4K penalty is understated (odds about halve); model explains only a modest share (pseudo R-squared 0.16)</td></tr>
+<tr><td><b>A.4 Prediction</b></td><td>Split and probabilities are usable</td><td>Profit ignores the irritation cost; F1 at 0.5 instead of profit at 0.444; no baselines, no calibration; RF has only 10 trees; the NN was tuned on F1</td><td>Over-promised profit ($3,215 vs $1,310); its own formula would say "contact everyone" is best</td></tr>
+</table></div>
+<p class="sub">Also worth noting from Big Owl's notebook: the text says the NN search used 50 epochs and three activation functions, but the code runs 25 epochs and only two (relu and tanh).</p>
+
+<h2 id="reco">6. The recommendation and the open decisions</h2>
+<div class="card"><b>CFO objective: maximize profit.</b> Use the average of the RF and NN scores and contact customers scoring 0.444 or higher. On the 1,000 test customers: <b>310 targeted, 169 buyers, $1,405 profit</b>; contact everyone loses $5,780 and contact no one earns $0. Profit stays flat when the cutoff moves around, so the recommendation is not sensitive to the exact rule.</div>
+<div class="card warn"><b>Decisions the group still needs to make</b>
+<ol style="margin:8px 0 0;padding-left:22px">
+<li><b>Can a segment rule ("target family size 2") be the final recommendation?</b> The task says "targeting model" and grades against the given RF and NN predictions, so a model-based headline is the safe choice, with the family size 2 rule ($1,665) shown as a benchmark. If the professor says a segment rule is fine, it becomes the headline. This question is worth sending to the professor.</li>
+<li><b>Is the payoff interpretation right?</b> (+$25 and -$20 per targeted customer, see section 3.)</li>
+<li><b>How much do we say about K = 4?</b> We suggest one honest sentence: it was chosen for comparability, not because the data supports it.</li>
+</ol></div>
+<p>The 3-slide deck follows the same story: (1) Big Owl's $3,215 is really $1,310, (2) family size drives buying and segments miss it, (3) the CFO recommendation.</p>
+
+<h2 id="review">7. Your review checklist</h2>
+<p>Tick these as you go (nothing is saved). If any fail, that is exactly what to raise with the group.</p>
+<div class="card check">
+<label><input type="checkbox"> Restart the notebook and <b>Run all</b> (skipping 4.1 and 4.2). Every figure and table should regenerate without errors.</label>
+<label><input type="checkbox"> Do the hand check in section 3 (the $3,215 vs $1,310 arithmetic) and confirm you agree with the +$25 / -$20 payoffs.</label>
+<label><input type="checkbox"> Check that the segment rule uses only the first 9,000 rows (no test data) in <code># Step 4b</code>.</label>
+<label><input type="checkbox"> Confirm that no cell trains or calls a predictive model (the logistic only produces odds ratios).</label>
+<label><input type="checkbox"> Read the report text for overclaiming: "at least as good" for the family size 2 rule, not "proven better".</label>
+<label><input type="checkbox"> Decide whether the headline is the model-based rule or the family size 2 rule, after the professor answers.</label>
+<label><input type="checkbox"> Look for anything we missed in the audit (for example, other issues in Big Owl's 4.1 and 4.2 code) and add it to section 5.</label>
+</div>
+
+<h3>Known limitations (be upfront about these)</h3>
+<ul>
+<li>Everything is evaluated on one test set of 1,000 customers, so numbers move by a few hundred dollars from sampling noise (the bootstrap ranges show this).</li>
+<li>Rules like "best N" are picked on the same rows they are scored on, so they are optimistic.</li>
+<li>Family size 2 with 4K is only just above break-even.</li>
+<li>Results are associations from one pilot. A small holdout group in the real rollout would confirm them.</li>
+</ul>
+
+<h2 id="gloss">8. Glossary</h2>
+<dl>
+<dt>Break-even probability (0.444)</dt><dd>The purchase probability above which contacting a customer earns money on average: 20 / (25 + 20).</dd>
+<dt>Precision, recall, F1</dt><dd>Precision: of those we targeted, the share who bought. Recall: of all buyers, the share we reached. F1 mixes the two but ignores dollars.</dd>
+<dt>Threshold vs top-N</dt><dd>A threshold contacts everyone scoring above a cutoff. Top-N contacts the N highest scores.</dd>
+<dt>Standardizing</dt><dd>Rescaling each variable to a comparable size so no variable dominates just because of its units.</dd>
+<dt>Silhouette score, inertia (elbow)</dt><dd>Two ways to judge how many clusters fit. Here neither points to a clear answer.</dd>
+<dt>Adjusted Rand index (ARI)</dt><dd>How similar two clusterings are (1 identical, 0 random).</dd>
+<dt>Odds ratio</dt><dd>How much the odds of buying multiply for a change in a variable. Below 1 means lower odds, above 1 means higher.</dd>
+<dt>Calibration</dt><dd>Whether predicted probabilities match reality (70% predicted should mean about 70% actually buy).</dd>
+<dt>Bootstrap</dt><dd>Resampling the test customers many times to see how much a result would wobble by chance.</dd>
+</dl>
+
+<footer>Numbers on this page come from the notebook outputs (1,000-customer test set, pilot data of 10,000 customers).</footer>
+</div>
+<script>
+(function(){
+  try{
+    var btn=document.getElementById('themeBtn'),root=document.documentElement;
+    btn.addEventListener('click',function(){
+      var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches);
+      root.setAttribute('data-theme',dark?'light':'dark');
+    });
+  }catch(e){}
+  var N=[100,150,200,250,300,350,400,450,500];
+  var S=[['RF','--c1',[1060,1005,1355,1345,1470,1235,955,720,350]],
+         ['NN','--c2',[1060,1230,1400,1255,1245,1460,1270,1170,710]],
+         ['Average','--c3',[1060,1140,1355,1480,1470,1460,1270,1080,530]]];
+  var svg=document.getElementById('curve');
+  var L=52,R=16,T=14,B=38,W=640,H=300,ymin=0,ymax=1800;
+  function x(n){return L+(n-100)/(400)*(W-L-R);}
+  function y(v){return H-B-(v-ymin)/(ymax-ymin)*(H-T-B);}
+  var out='';
+  for(var v=0;v<=1800;v+=600){out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--border)"/><text x="'+(L-8)+'" y="'+(y(v)+4)+'" text-anchor="end">$'+v.toLocaleString()+'</text>';}
+  N.forEach(function(n){out+='<text x="'+x(n)+'" y="'+(H-B+16)+'" text-anchor="middle">'+n+'</text>';});
+  out+='<text x="'+((L+W-R)/2)+'" y="'+(H-4)+'" text-anchor="middle">Customers targeted (top N by score)</text>';
+  out+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(1665)+'" y2="'+y(1665)+'" style="stroke:var(--fg);opacity:.5" stroke-dasharray="6 5"/>';
+  S.forEach(function(s){
+    var pts=s[2].map(function(v,i){return x(N[i])+','+y(v);}).join(' ');
+    out+='<polyline points="'+pts+'" fill="none" stroke-width="2.5" style="stroke:var('+s[1]+')"/>';
+    s[2].forEach(function(v,i){out+='<circle cx="'+x(N[i])+'" cy="'+y(v)+'" r="3" style="fill:var('+s[1]+')"/>';});
+  });
+  svg.innerHTML=out;
+})();
+</script>
+</body>
+</html>
